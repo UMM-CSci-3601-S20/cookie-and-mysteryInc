@@ -315,7 +315,7 @@ public class NoteController {
       throw new ForbiddenResponse("Request not allowed; users can only edit their own notes");
     }
 
-    HashSet<String> validKeys = new HashSet<String>(Arrays.asList("body", "expireDate", "status"));
+    HashSet<String> validKeys = new HashSet<String>(Arrays.asList("body", "expiration", "status"));
     HashSet<String> forbiddenKeys = new HashSet<String>(Arrays.asList("doorBoardID", "addDate", "_id"));
     HashSet<String> validStatuses = new HashSet<String>(Arrays.asList("active", "draft", "deleted", "template"));
     for (String key: inputDoc.keySet()) {
