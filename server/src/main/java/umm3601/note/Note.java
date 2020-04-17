@@ -34,7 +34,7 @@ public class Note {
   // What they're saying is, "It's totally fine if this property is null,
   // but if it is we shouldn't serialize it into the document."
   @Nullable @JsonInclude(Include.NON_NULL)
-  public String expireDate;
+  public String expiration;
 
   public String status;
 

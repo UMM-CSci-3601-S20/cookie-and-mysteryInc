@@ -40,6 +40,11 @@ export class AddNoteComponent implements OnInit {
   building: string;
   officeNumber: string;
 
+  min: Date; // Earliest allowed date to be selected
+  max: Date; // lasted date allowed to be selected
+  selectedTime: string;
+
+
   add_note_validation_messages = {
     status: [
       {type: 'required', message: 'Status is required'},
@@ -69,6 +74,8 @@ export class AddNoteComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(1000),
       ])),
+      expiration: new FormControl('', Validators.compose([
+      ])),
 
     });
 
@@ -76,13 +83,28 @@ export class AddNoteComponent implements OnInit {
 
   ngOnInit() {
     this.createForms();
+    this.min = new Date();
+    this.max = new Date(new Date().setFullYear(this.min.getFullYear() + 5));
   }
 
 
   submitForm() {
     // Body.value = '';
     const noteToAdd: NewNote = this.addNoteForm.value;
+    const currentDate = new Date();
+    const newDate = new Date(currentDate.setHours(currentDate.getHours() + 5)); // open to change to what is needed
+
+
+    if (noteToAdd.expiration === '') {
+      this.selectedTime = newDate.toJSON();
+    } else {
+      this.selectedTime = noteToAdd.expiration;
+      console.log('The selected expire date is: ' + this.selectedTime);
+      this.selectedTime = this.convertToIsoDate(this.selectedTime);
+    }
+
     noteToAdd.doorBoardID = this.doorBoard_id;
+    noteToAdd.expiration = this.selectedTime;
     this.noteService.addNewNote(noteToAdd).subscribe(newID => {
       // Notify the DoorBoard component that a note has been added.
       this.newNoteAdded.emit();
@@ -96,6 +118,10 @@ export class AddNoteComponent implements OnInit {
         duration: 2000,
       });
     });
+  }
+  convertToIsoDate(selectedDate: string): string {
+    const tryDate = new Date(selectedDate);
+    return tryDate.toISOString();
   }
 
 }

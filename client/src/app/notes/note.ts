@@ -10,7 +10,7 @@ export interface Note extends NewNote {
 export interface NewNote {
   doorBoardID: string;
   body: string;
-  expireDate: string;
+  expiration: string;
   status: NoteStatus;
 }
 

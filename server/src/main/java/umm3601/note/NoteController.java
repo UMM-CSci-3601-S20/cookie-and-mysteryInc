@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.time.Instant;
 
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.client.MongoCollection;
@@ -45,6 +46,8 @@ public class NoteController {
 
   private final JwtProcessor jwtProcessor;
 
+  private long currentDateTime;
+
   JacksonCodecRegistry jacksonCodecRegistry = JacksonCodecRegistry.withDefaultObjectMapper();
 
   private final MongoCollection<Note> noteCollection;
@@ -69,6 +72,7 @@ public class NoteController {
 
     deathTimer = dt;
     this.jwtProcessor = jwtProcessor;
+    currentDateTime = Instant.now().toEpochMilli();
   }
 
   /**
@@ -122,6 +126,29 @@ public class NoteController {
     ctx.status(204);
   }
 
+  private void filterExpiredNotes(List<Note> notes){
+    System.out.println("Filtering out expired notes!!!!!");
+    for(int i = 0; i < notes.size(); i++){ // running through each index of the array
+      if(notes.get(i).expiration != null){ // makeing sure the expiration date exists
+      long testExpire = Instant.parse(notes.get(i).expiration).toEpochMilli();
+      currentDateTime = Instant.now().toEpochMilli();
+
+      if(checkIfExpired(testExpire) ){
+        String removeID = notes.get(i)._id;
+        noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
+        }
+      }
+    }
+  }
+
+  private boolean checkIfExpired(Long expiredDate){
+    if(expiredDate != null){
+    if(currentDateTime >= expiredDate){
+      return true;
+    }}
+    return false;
+  }
+
   /**
    * Get a sorted JSON response in ascending order that filters by the query parameters
    * supplied by the Javalin HTTP context
@@ -138,6 +165,9 @@ public class NoteController {
     if (ctx.queryParamMap().containsKey("doorBoardid")) {
       String targetDoorBoardID = ctx.queryParam("doorBoardid");
       filters.add(eq("doorBoardID", targetDoorBoardID));
+      List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
+      // from a specific owner id
+      filterExpiredNotes(notes); // filtering out and deleting expired notes
     }
     if (ctx.queryParamMap().containsKey("body")) {
       filters.add(regex("body", ctx.queryParam("body"), "i"));
@@ -207,7 +237,6 @@ public class NoteController {
     Note newNote = ctx.bodyValidator(Note.class)
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
       .check((note) -> note.body != null && note.body.length() > 0) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
-      .check((note) -> note.expireDate == null || note.expireDate.matches(ISO_8601_REGEX))
       .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
       .get();
 
@@ -232,11 +261,11 @@ public class NoteController {
       throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
     }
 
-    if(newNote.expireDate != null && !(newNote.status.equals("active"))) {
+    if(newNote.expiration != null && !(newNote.status.equals("active"))) {
       throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
     }
 
-    if(newNote.expireDate != null || newNote.status.equals("deleted")) {
+    if(newNote.expiration != null || newNote.status.equals("deleted")) {
       deathTimer.updateTimerStatus(newNote); //only make a timer if needed
     }
     noteCollection.insertOne(newNote);
