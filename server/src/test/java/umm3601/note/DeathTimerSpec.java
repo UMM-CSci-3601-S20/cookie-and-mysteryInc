@@ -81,7 +81,7 @@ public class DeathTimerSpec {
     fourthNote = new Note();
     fourthNoteID = new ObjectId().toHexString();
     fourthNote._id = fourthNoteID;
-    fourthNote.expireDate = "2023-05-05T22:06:00+0000";
+    fourthNote.expiration = "2023-05-05T22:06:00+0000";
     fourthNote.doorBoardID = "fourthDoorBoardID";
     fourthNote.body = "A fourth note body";
     fourthNote.status = "active";
@@ -103,7 +103,7 @@ public class DeathTimerSpec {
 
   @Test
   public void AddNewTask() throws IOException {
-    sampleNote.expireDate = "2021-03-07T22:03:38+0000";
+    sampleNote.expiration = "2021-03-07T22:03:38+0000";
     try {
       expirationDate = df.parse("2021-03-07T22:03:38+0000");
     } catch (ParseException e) {
@@ -121,11 +121,11 @@ public class DeathTimerSpec {
 
   @Test
   public void RemoveTask() throws IOException {
-    sampleNote.expireDate = "2021-03-07T22:03:38+0000";
+    sampleNote.expiration = "2021-03-07T22:03:38+0000";
     assertTrue(spyDeathTimer.updateTimerStatus(sampleNote));
     TimerTask newTask = spyDeathTimer.pendingDeletion.get(sampleNoteID);
 
-    sampleNote.expireDate = null;
+    sampleNote.expiration = null;
     assertFalse(spyDeathTimer.updateTimerStatus(sampleNote));
     assertEquals(0, spyDeathTimer.pendingDeletion.size());
     assertFalse(newTask.cancel());
@@ -141,9 +141,9 @@ public class DeathTimerSpec {
 
   @Test
   public void ChangeTask() throws IOException {
-    sampleNote.expireDate = "2021-03-07T22:03:38+0000";
+    sampleNote.expiration = "2021-03-07T22:03:38+0000";
     assertTrue(spyDeathTimer.updateTimerStatus(sampleNote));
-    sampleNote.expireDate = "2025-03-07T22:03:38+0000";
+    sampleNote.expiration = "2025-03-07T22:03:38+0000";
     assertTrue(spyDeathTimer.updateTimerStatus(sampleNote));
 
     assertEquals(1, spyDeathTimer.pendingDeletion.size());
@@ -161,7 +161,7 @@ public class DeathTimerSpec {
 
   @Test
   public void SingleTaskUnchanged() throws IOException {
-    sampleNote.expireDate = "2021-03-07T22:03:38+0000";
+    sampleNote.expiration = "2021-03-07T22:03:38+0000";
     try {
       expirationDate = df.parse("2021-03-07T22:03:38+0000");
     } catch (ParseException e) {
@@ -180,7 +180,7 @@ public class DeathTimerSpec {
 
   @Test
   public void IndependentTasks() throws IOException {
-    sampleNote.expireDate = "2021-03-07T22:03:38+0000";
+    sampleNote.expiration = "2021-03-07T22:03:38+0000";
 
     assertTrue(spyDeathTimer.updateTimerStatus(sampleNote));
     assertTrue(spyDeathTimer.updateTimerStatus(fourthNote));
@@ -197,8 +197,8 @@ public class DeathTimerSpec {
     assertEquals(((ExpireTask) secondTask).target, fourthNoteID);
 
     try {
-      verify(spyDeathTimer).schedule(firstTask, df.parse(sampleNote.expireDate));
-      verify(spyDeathTimer).schedule(secondTask, df.parse(fourthNote.expireDate));
+      verify(spyDeathTimer).schedule(firstTask, df.parse(sampleNote.expiration));
+      verify(spyDeathTimer).schedule(secondTask, df.parse(fourthNote.expiration));
     } catch (ParseException e) {
       fail("Could not parse the date string.");
     }
@@ -240,7 +240,7 @@ public class DeathTimerSpec {
     assertEquals(ExpireTask.class, secondTask.getClass());
     verify(spyDeathTimer).schedule(firstTask, spyDeathTimer.DELETED_POST_PURGE_DELAY);
     try {
-      verify(spyDeathTimer).schedule(secondTask, df.parse(fourthNote.expireDate));
+      verify(spyDeathTimer).schedule(secondTask, df.parse(fourthNote.expiration));
     } catch (ParseException e) {
       fail("Could not parse the date string.");
     }

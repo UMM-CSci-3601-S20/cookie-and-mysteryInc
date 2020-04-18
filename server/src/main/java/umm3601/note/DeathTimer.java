@@ -62,10 +62,10 @@ public class DeathTimer extends Timer {
       pendingDeletion.put(noteId, timerTask);
       schedule(timerTask, DELETED_POST_PURGE_DELAY);
       output = true;
-    } else if (noteStatus.equals("active") && n.expireDate != null) {
+    } else if (noteStatus.equals("active") && n.expiration != null) {
       Date expiration;
       try {
-        expiration = df.parse(n.expireDate);
+        expiration = df.parse(n.expiration);
       } catch (ParseException e) {
         throw new IllegalArgumentException("Unable to parse the note's date", e);
       }

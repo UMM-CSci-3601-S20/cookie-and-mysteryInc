@@ -12,7 +12,7 @@ describe('Note service: ', () => {
       doorBoardID: 'test-id',
       body: 'This is the body of the first test id. It is somewhat long.',
       addDate: new Date(),
-      expireDate: '2025-03-06T22:03:38+0000',
+      expiration: '2025-03-06T22:03:38+0000',
       status: 'active'
     },
     {
@@ -20,7 +20,7 @@ describe('Note service: ', () => {
       doorBoardID: 'test-id',
       body: 'This is the second test id.',
       addDate: new Date(),
-      expireDate: '2025-03-06T22:03:38+0000',
+      expiration: '2025-03-06T22:03:38+0000',
       status: 'deleted'
     },
     {
@@ -28,7 +28,7 @@ describe('Note service: ', () => {
       doorBoardID: 'test-id',
       body: 'Third test id body.',
       addDate: new Date(),
-      expireDate: '2025-03-06T22:03:38+0000',
+      expiration: '2025-03-06T22:03:38+0000',
       status: 'template'
     }
   ];
@@ -36,7 +36,7 @@ describe('Note service: ', () => {
   const newNote: NewNote = {
       doorBoardID: 'test-id',
       body: 'Fourth body.',
-      expireDate: '2025-03-06T22:03:38+0000',
+      expiration: '2025-03-06T22:03:38+0000',
       status: 'active'
   };
 
