@@ -20,7 +20,7 @@ export class NoteService {
    * @returns a list of the notes belonging to this doorBoard, filtered by body and status
    *
    */
-  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string, status?: NoteStatus} ): Observable<Note[]> {
+  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string, status?: NoteStatus }): Observable<Note[]> {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardid', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
@@ -30,6 +30,16 @@ export class NoteService {
       if (filters.status) {
         httpParams = httpParams.set('status', filters.status);
       }
+    }
+    return this.httpClient.get<Note[]>(this.noteUrl, {
+      params: httpParams,
+    });
+  }
+
+  getNotes(filters?: { owner_id?: string}): Observable<Note[]> {
+    let httpParams: HttpParams = new HttpParams();
+    if (filters.owner_id) {
+      httpParams = httpParams.set('owner_id', filters.owner_id);
     }
     return this.httpClient.get<Note[]>(this.noteUrl, {
       params: httpParams,
@@ -73,4 +83,12 @@ export class NoteService {
 
   // n.b. the server http redirection and serverside implementation of these features are complete.
   // howere, deleteNote() is untested.
+
+  deleteNote(id: string): Observable<string> {
+    let httpParams: HttpParams = new HttpParams();
+    httpParams = httpParams.set('owner_id', id);
+    console.log('NOTE SERVICE CALLED');
+    return this.httpClient.delete<string>(this.noteUrl + '/' + id);
+  }
+
 }

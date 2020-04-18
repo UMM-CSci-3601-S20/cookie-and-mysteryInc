@@ -14,5 +14,4 @@ export interface NewNote {
   status: NoteStatus;
 }
 
-
 export type NoteStatus = 'active' | 'template' | 'draft' | 'deleted';
