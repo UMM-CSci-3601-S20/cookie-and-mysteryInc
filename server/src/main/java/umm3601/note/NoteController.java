@@ -90,6 +90,25 @@ public class NoteController {
       .first();
   }
 
+/**
+   * Delete the note specified by the `id` parameter in the request.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+
+  public void deleteNote(Context ctx) {
+
+
+    String id = ctx.pathParam("id");
+
+    // This throws an UnauthorizedResponse if the user isn't logged in.
+    String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
+
+    System.out.println("SERVER CALLED: " + id);
+    noteCollection.deleteOne(eq("_id", new ObjectId(id)));
+    System.out.println("NOTE DELETED");
+  }
+
   /**
    * Delete a note belonging to a specific doorBoard.
    * Uses the following parameters in the request:
@@ -99,6 +118,7 @@ public class NoteController {
    *
    * @param ctx a Javalin HTTP context
    */
+  /*
   public void deleteNote(Context ctx) {
     String id = ctx.pathParam("id");
 
@@ -113,7 +133,7 @@ public class NoteController {
     }
 
     if (note == null) {
-      throw new NotFoundResponse("The requested does not exist.");
+      throw new NotFoundResponse("The requested note does not exist.");
     }
 
     String subOfOwnerOfNote = getDoorBoard(note.doorBoardID).sub;
@@ -122,18 +142,19 @@ public class NoteController {
     }
 
     noteCollection.deleteOne(eq("_id", new ObjectId(id)));
-    deathTimer.clearKey(id);
+    // deathTimer.clearKey(id);
     ctx.status(204);
   }
+  */
 
-  private void filterExpiredNotes(List<Note> notes){
+  private void filterExpiredNotes(List<Note> notes) {
     System.out.println("Filtering out expired notes!!!!!");
     for(int i = 0; i < notes.size(); i++){ // running through each index of the array
-      if(notes.get(i).expiration != null){ // makeing sure the expiration date exists
+      if(notes.get(i).expiration != null){ // making sure the expiration date exists
       long testExpire = Instant.parse(notes.get(i).expiration).toEpochMilli();
       currentDateTime = Instant.now().toEpochMilli();
 
-      if(checkIfExpired(testExpire) ){
+      if(checkIfExpired(testExpire) ) {
         String removeID = notes.get(i)._id;
         noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
         }
@@ -141,9 +162,9 @@ public class NoteController {
     }
   }
 
-  private boolean checkIfExpired(Long expiredDate){
-    if(expiredDate != null){
-    if(currentDateTime >= expiredDate){
+  private boolean checkIfExpired(Long expiredDate) {
+    if(expiredDate != null) {
+    if(currentDateTime >= expiredDate) {
       return true;
     }}
     return false;
