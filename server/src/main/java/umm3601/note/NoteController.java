@@ -23,6 +23,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonCodecRegistry;
+import static com.mongodb.client.model.Updates.set;
 
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.ConflictResponse;
@@ -33,6 +34,7 @@ import io.javalin.http.UnauthorizedResponse;
 import umm3601.JwtProcessor;
 import umm3601.UnprocessableResponse;
 import umm3601.doorboard.DoorBoard;
+
 
 
 /**
@@ -274,9 +276,28 @@ public class NoteController {
     ctx.json(ImmutableMap.of("id", newNote._id));
   }
 
+  // public void editNote(Context ctx) {
+  //   String id = ctx.pathParamMap().get("id");
+
+  //   Note newNote= ctx.bodyValidator(Note.class)
+  //   .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+  //   String newBody = newNote.body;
+
+  //   Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("body", newBody));
+
+  //   if (oldNote == null) {
+  //     ctx.status(400);
+  //     throw new NotFoundResponse("The requested note was not found");
+  //   } else {
+  //     ctx.status(200);
+  //     ctx.json(ImmutableMap.of("id", id));
+  //   }
+  // }
+
   /**
    * Edit an existing note
    */
+  // This is team dropTables version of edit for the server
   public void editNote(Context ctx) {
 
     Document inputDoc = ctx.bodyAsClass(Document.class); //throws 400 error

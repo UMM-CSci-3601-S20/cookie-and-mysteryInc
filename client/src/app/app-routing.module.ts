@@ -19,7 +19,9 @@ const routes: Routes = [
   {path: 'doorBoards/:id', component: DoorBoardPageComponent},
   {path: 'notes', component: DoorBoardPageComponent},
   {path: 'notes/new', component: AddNoteComponent},
-  {path: 'notes/edit', component: EditNoteComponent},
+  // {path: ':id/edit', component: EditNoteComponent},
+  // {path: 'edit/:id', component: EditNoteComponent, canActivate: [AuthGuard]},
+  {path: 'notes/edit/:id', component: EditNoteComponent, canActivate: [AuthGuard]},
   {path: 'your-doorBoard', component: DoorBoardComponent, canActivate: [AuthGuard]},
 ];
 

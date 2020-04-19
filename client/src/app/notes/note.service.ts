@@ -73,4 +73,12 @@ export class NoteService {
 
   // n.b. the server http redirection and serverside implementation of these features are complete.
   // howere, deleteNote() is untested.
+
+  editNote(editNote: Note, id: string): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/edit/' + id, editNote).pipe(map(res => res.id));
+  }
+
+  getNoteById(id: string): Observable<Note> {
+    return this.httpClient.get<Note>(this.noteUrl + '/' + id);
+  }
 }
