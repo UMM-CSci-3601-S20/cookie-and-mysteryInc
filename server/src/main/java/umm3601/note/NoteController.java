@@ -95,19 +95,19 @@ public class NoteController {
    *
    * @param ctx a Javalin HTTP context
    */
-
+  /*
   public void deleteNote(Context ctx) {
 
 
     String id = ctx.pathParam("id");
 
     // This throws an UnauthorizedResponse if the user isn't logged in.
-    String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
 
     System.out.println("SERVER CALLED: " + id);
     noteCollection.deleteOne(eq("_id", new ObjectId(id)));
     System.out.println("NOTE DELETED");
   }
+  */
 
   /**
    * Delete a note belonging to a specific doorBoard.
@@ -118,7 +118,7 @@ public class NoteController {
    *
    * @param ctx a Javalin HTTP context
    */
-  /*
+
   public void deleteNote(Context ctx) {
     String id = ctx.pathParam("id");
 
@@ -145,7 +145,7 @@ public class NoteController {
     // deathTimer.clearKey(id);
     ctx.status(204);
   }
-  */
+
 
   private void filterExpiredNotes(List<Note> notes) {
     System.out.println("Filtering out expired notes!!!!!");
