@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.sound.sampled.SourceDataLine;
+
 import java.time.Instant;
 
 import com.google.common.collect.ImmutableMap;
@@ -90,25 +93,6 @@ public class NoteController {
       .first();
   }
 
-/**
-   * Delete the note specified by the `id` parameter in the request.
-   *
-   * @param ctx a Javalin HTTP context
-   */
-  /*
-  public void deleteNote(Context ctx) {
-
-
-    String id = ctx.pathParam("id");
-
-    // This throws an UnauthorizedResponse if the user isn't logged in.
-
-    System.out.println("SERVER CALLED: " + id);
-    noteCollection.deleteOne(eq("_id", new ObjectId(id)));
-    System.out.println("NOTE DELETED");
-  }
-  */
-
   /**
    * Delete a note belonging to a specific doorBoard.
    * Uses the following parameters in the request:
@@ -124,7 +108,7 @@ public class NoteController {
 
     // This throws an UnauthorizedResponse if the user isn't logged in.
     String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
-
+    System.out.println("It got to the Note Controller");
     Note note;
     try {
       note = noteCollection.find(eq("_id", new ObjectId(id))).first();
