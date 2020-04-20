@@ -42,7 +42,7 @@
               <p matLine class="note-list-body">{{note.body}}</p>
               <p matLine class="note-list-expiration-date">{{note.expiration}}</p>
               <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
-              <button mat-button class="note-action edit" matTooltip="Edit Note" matTooltipPosition="above" [routerLink]="'notes/' + 'edit/' + note._id ">
+              <button mat-button class="note-action edit" matTooltip="Edit Note" matTooltipPosition="above" [routerLink]="'/notes/' + 'edit/' + note._id ">
                 <mat-icon aria-label="Edit note">create</mat-icon>
               </button>
             </mat-card-content>
