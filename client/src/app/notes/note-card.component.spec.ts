@@ -40,7 +40,14 @@ const COMMON_IMPORTS: any[] = [
 describe('NoteCardComponent', () => {
   let noteCard: NoteCardComponent;
   let fixture: ComponentFixture<NoteCardComponent>;
-
+  let testNote: Note = {
+    _id: 'test_id',
+    doorBoardID: 'doorboard',
+    body: 'Filler text',
+    addDate: new Date(),
+    expiration:  '2099-04-17T04:18:09.302Z',
+    status : 'active'
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
@@ -53,15 +60,21 @@ describe('NoteCardComponent', () => {
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(NoteCardComponent);
       noteCard = fixture.componentInstance;
+
       fixture.detectChanges();
     });
   }));
 
-  it('contains all the notes', () => {
-    expect(noteCard.serverFilteredNotes.length).toBe(8);
+  it('contains a doorBoardID \'doorboard\'', () => {
+    expect(testNote.doorBoardID === 'doorboard').toBe(true);
   });
 
-  it('contains a message \'Eighth id test body.\'', () => {
-    expect(noteCard.serverFilteredNotes.some((note: Note) => note.body === 'Eighth id test body.')).toBe(true);
+  it('contains a message \'Filler text\'', () => {
+    expect(testNote.body === 'Filler text').toBe(true);
   });
+
+  it('contains a expiration date \'2099-04-17T04:18:09.302Z\'', () => {
+    expect(testNote.expiration === '2099-04-17T04:18:09.302Z').toBe(true);
+  });
+
 });

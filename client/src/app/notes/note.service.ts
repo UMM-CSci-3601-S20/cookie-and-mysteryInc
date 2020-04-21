@@ -81,4 +81,7 @@ export class NoteService {
     return this.httpClient.delete<string>(this.noteUrl + '/' + id);
   }
 
+  getNoteByID(id: string): Note {
+  return null;
+  }
 }

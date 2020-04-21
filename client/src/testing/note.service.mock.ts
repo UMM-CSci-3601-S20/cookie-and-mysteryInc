@@ -89,5 +89,14 @@ export class MockNoteService extends NoteService {
    return of(notesObtained);
 
   }
+  getNoteByID( _id: string): Note {
+    let noteToReturn;
+    for(let i = 0; i < 8; i++){
+      if(_id === MockNoteService.testNotes[i]._id) {
+         noteToReturn = MockNoteService.testNotes[i];
+    }
+      return noteToReturn;
+  }
+}
 
 }
