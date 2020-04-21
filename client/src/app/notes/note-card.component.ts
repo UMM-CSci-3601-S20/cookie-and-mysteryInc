@@ -25,7 +25,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   getNotesFromServer(): void {
     this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
     .subscribe(notes =>
-      this.serverFilteredNotes = notes.reverse()
+      this.serverFilteredNotes
       , err => {
       console.log(err);
     });

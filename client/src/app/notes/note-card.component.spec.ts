@@ -58,10 +58,10 @@ describe('NoteCardComponent', () => {
   }));
 
   it('contains all the notes', () => {
-    expect(noteCard.serverFilteredNotes.length).toBe(3);
+    expect(noteCard.serverFilteredNotes.length).toBe(8);
   });
 
-  it('contains a message \'Spirate pur, Spirate\'', () => {
-    expect(noteCard.serverFilteredNotes.some((note: Note) => note.body === 'Spirate pur, Spirate')).toBe(true);
+  it('contains a message \'Eighth id test body.\'', () => {
+    expect(noteCard.serverFilteredNotes.some((note: Note) => note.body === 'Eighth id test body.')).toBe(true);
   });
 });

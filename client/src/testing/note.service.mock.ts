@@ -77,11 +77,11 @@ export class MockNoteService extends NoteService {
     super(null);
   }
 
-  getNotesByDoorBoard(DoorBoardId: string): Observable<Note[]> {
+  getNotesByDoorBoard(DoorBoardID: string): Observable<Note[]> {
    let notesObtained: Note[];
    let amount = 0;
    for(let i = 0; i < 8; i++){
-      if (DoorBoardId === MockNoteService.testNotes[i].doorBoardID) {
+      if (DoorBoardID === MockNoteService.testNotes[i].doorBoardID) {
         notesObtained[amount] = MockNoteService.testNotes[i];
         amount++;
       }
