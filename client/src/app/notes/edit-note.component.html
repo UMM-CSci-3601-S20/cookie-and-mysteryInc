@@ -21,9 +21,10 @@
           </mat-card-content>
           <mat-card-actions align="end">
             <button mat-button id="confirmAddNoteButton" type="button" color="primary"
-              [routerLink] = "''">
+            onclick="history.back()">
                       CANCEL
               </button>
+              <!--[routerLink]="'/doorBoards/'"-->
             <button mat-button id="confirmEditNoteButton" type="button" color="primary"
                     [disabled]="!editNoteForm.valid" type="submit">
                     EDIT NOTE

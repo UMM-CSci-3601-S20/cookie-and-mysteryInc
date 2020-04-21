@@ -66,6 +66,9 @@ public class Server {
     // List notes, filtered using query parameters
     server.get("api/notes", noteController::getNotesByDoorBoard);
 
+    //get a single note
+    server.get("api/notes/:id", noteController::getNoteByID);
+
 
 
     // Delete specific note
@@ -75,7 +78,8 @@ public class Server {
     server.post("api/notes/new", noteController::addNewNote);
 
     // Edit a note
-    server.patch("api/notes/edit/:id", noteController::editNote);
+    //server.patch("api/notes/edit/:id", noteController::editNote);
+    server.post("api/notes/edit/:id", noteController::editNote);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
