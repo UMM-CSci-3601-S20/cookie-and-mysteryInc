@@ -72,6 +72,7 @@ export class MockNoteService extends NoteService {
     }
   ];
 
+  public static FAKE_BODY = 'This is definitely the note you wanted';
 
   constructor() {
     super(null);
@@ -88,6 +89,17 @@ export class MockNoteService extends NoteService {
     }
    return of(notesObtained);
 
+  }
+
+  getNoteById(id: string): Observable<Note> {
+    // If the specified ID is for the first test note,
+    // return that note, otherwise return `null` so
+    // we can test illegal note requests.
+    if (id === MockNoteService.testNotes[0]._id) {
+      return of(MockNoteService.testNotes[0]);
+    } else {
+      return of(null);
+    }
   }
 
 }
