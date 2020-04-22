@@ -99,7 +99,7 @@ describe('AddNoteComponent', () => {
   describe('Expiration Date Field', () => {
     let expirationControl: AbstractControl;
     beforeEach(() => {
-      expirationControl = addNoteComponent.addNoteForm.controls[`expireDate`];
+      expirationControl = addNoteComponent.addNoteForm.controls[`expiration`];
     });
     it('Expiration date can be null', () => {
       expirationControl.setValue('');
