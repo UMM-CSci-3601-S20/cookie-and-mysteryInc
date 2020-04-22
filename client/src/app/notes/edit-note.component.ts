@@ -13,7 +13,6 @@ import {Location} from '@angular/common';
   templateUrl: 'edit-note.component.html',
   styleUrls: ['edit-note.component.scss'],
 })
-
 export class EditNoteComponent implements OnInit {
 
   editNoteForm: FormGroup;
@@ -56,8 +55,11 @@ export class EditNoteComponent implements OnInit {
       if (this.getNoteSub) {
         this.getNoteSub.unsubscribe();
       }
-      this.getNoteSub = this.noteService.getNoteById(this.id).subscribe(retrievedNote => this.
-        editNoteForm.get('body').setValue(retrievedNote.body));
+      console.log('The note id is = ' + this.id);
+      this.getNoteSub = this.noteService.getNoteById(this.id).subscribe((retrievedNote: Note) => {
+        console.log('The retrieved note is = ' + retrievedNote);
+        this.editNoteForm.get('body').setValue(retrievedNote.body);
+      });
     });
   }
 
