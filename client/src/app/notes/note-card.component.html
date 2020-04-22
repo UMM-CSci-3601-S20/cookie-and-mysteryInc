@@ -1,0 +1,20 @@
+
+    <!--Each message is its own mat-card-->
+    <mat-card class="note-card" *ngIf="this.note">
+      <mat-card-content id="noteCardTimestamp" align="end">
+      <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
+      </mat-card-content>
+
+      <mat-card-content>
+        {{ this.note.body}}
+      </mat-card-content>
+
+
+     <!-- Time stamp needs to be in here when it is implemented-->
+
+    <mat-card-actions align="start">
+      <p>
+        <button mat-button class="deleteBtn" (click)="deleteNoteFromServer()" mdbWave2sEffect onclick="history.go(0)"> <mat-icon>delete</mat-icon> </button>
+      </p>
+    </mat-card-actions>
+    </mat-card>
