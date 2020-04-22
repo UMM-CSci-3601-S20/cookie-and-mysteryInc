@@ -36,8 +36,9 @@ describe('AddNoteComponent', () => {
         RouterTestingModule
       ],
       declarations: [AddNoteComponent],
-      providers: [{ provide: NoteService, useValue: new MockNoteService()},
-        {provide: DoorBoardService, useValue: new MockDoorBoardService() }]
+      providers: [
+        { provide: NoteService, useValue: new MockNoteService()},
+        { provide: DoorBoardService, useValue: new MockDoorBoardService() }]
     }).compileComponents().catch(error => {
       expect(error).toBeNull();
     });
