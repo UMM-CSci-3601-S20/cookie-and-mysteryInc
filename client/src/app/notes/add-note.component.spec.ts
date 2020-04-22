@@ -96,4 +96,18 @@ describe('AddNoteComponent', () => {
       expect(bodyControl.hasError('maxlength')).toBeTruthy();
     });
   });
+  describe('Expiration Date Field', () => {
+    let expirationControl: AbstractControl;
+    beforeEach(() => {
+      expirationControl = addNoteComponent.addNoteForm.controls[`expireDate`];
+    });
+    it('Expiration date can be null', () => {
+      expirationControl.setValue('');
+      expect(expirationControl.valid).toBeTruthy();
+  });
+    it('Expiration is valid when a date is entered', () => {
+        expirationControl.setValue(new Date());
+        expect(expirationControl.valid).toBeTruthy();
+    });
+});
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -6,7 +6,15 @@ import { NewNote } from './note';
 import { NoteService } from './note.service';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { DoorBoard } from '../doorBoard/doorBoard';
+import { NgModule } from '@angular/core';
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
+@NgModule({
+  providers: [
+    // use french locale
+    {provide: OWL_DATE_TIME_LOCALE, useValue: LOCALE_ID},
+  ],
+})
 
 
 
