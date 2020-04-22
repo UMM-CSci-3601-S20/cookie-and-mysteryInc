@@ -51,6 +51,7 @@ import { DoorBoardComponent } from './your-doorBoard/your-doorBoard.component';
 
 // Authentication
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NoteCardComponent } from './notes/note-card.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -79,6 +80,7 @@ const MATERIAL_MODULES: any[] = [
     AddDoorBoardComponent,
     DoorBoardPageComponent,
     EditNoteComponent,
+    NoteCardComponent,
     AddNoteComponent,
     DoorBoardComponent,
     NavBarComponent,

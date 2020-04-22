@@ -70,13 +70,13 @@ describe('Note service: ', () => {
 
       const req = httpTestingController.expectOne(request =>
         request.url.startsWith(noteService.noteUrl)
-          && request.params.has('doorBoardid')
+          && request.params.has('doorBoardID')
       );
 
       expect(req.request.method).toEqual('GET');
 
      // Check that the name parameter was 'Chris'
-      expect(req.request.params.get('doorBoardid')).toEqual('test-id');
+      expect(req.request.params.get('doorBoardID')).toEqual('test-id');
 
       req.flush(testNotes);
     } );
@@ -88,13 +88,13 @@ describe('Note service: ', () => {
 
       const req = httpTestingController.expectOne(request =>
         request.url.startsWith(noteService.noteUrl)
-          && request.params.has('doorBoardid')
+          && request.params.has('doorBoardID')
           && request.params.has('status')
       );
 
       expect(req.request.method).toEqual('GET');
 
-      expect(req.request.params.get('doorBoardid')).toEqual('test-id');
+      expect(req.request.params.get('doorBoardID')).toEqual('test-id');
       expect(req.request.params.get('status')).toEqual('active');
 
       req.flush(testNotes);
