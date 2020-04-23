@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { MockDoorBoardService } from 'src/testing/doorBoard.service.mock';
+import { Subscription } from 'rxjs';
+
 
 /*
  * The ActivatedRouteStub that was in here had HttpParams in it that were set
@@ -34,8 +36,9 @@ describe('EditNoteComponent', () => {
   let fixture: ComponentFixture<EditNoteComponent>;
   let activatedRoute: ActivatedRouteStub;
 
+  // Activated route stub needs to be initialized. When it's left blank, it passes null
   beforeEach(() => {
-    activatedRoute = new ActivatedRouteStub();
+     activatedRoute = new ActivatedRouteStub({id: MockNoteService.testNotes[0]._id});
   });
 
   beforeEach(async(() => {
@@ -62,11 +65,12 @@ describe('EditNoteComponent', () => {
   }));
 
   beforeEach(() => {
-    activatedRoute.setParamMap({id: 'first_id'});
     calledClose = false;
     fixture = TestBed.createComponent(EditNoteComponent);
     editComponent = fixture.componentInstance;
-    editComponent.ngOnInit();
+    // We already called the component, so when use ngOnInIt below, the beforeEach would
+    // reinitialize the component
+    // editComponent.ngOnInit();
     fixture.detectChanges();
     editNoteForm = editComponent.editNoteForm;
     expect(editNoteForm).toBeDefined();
@@ -77,6 +81,10 @@ describe('EditNoteComponent', () => {
     expect(editComponent).toBeTruthy();
     expect(editNoteForm).toBeTruthy();
   });
+
+  // it('id should be "first_id"', () => {
+  //   expect(this.id).toEqual('first_id');
+  // });
 
   it('form should auto-populate to a valid state', () => {
     expect(editNoteForm.valid).toBeTruthy();
@@ -96,7 +104,7 @@ describe('EditNoteComponent', () => {
        * that has the id that you're setting in the paramMap above.
        * - NFM - 22 Apr 2020
        */
-      expect(bodyControl.value).toEqual(MockNoteService.FAKE_BODY);
+      expect(bodyControl.value).toEqual(MockNoteService.testNotes[0].body);
     });
 
     it('should not allow empty bodies', () => {

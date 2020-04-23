@@ -19,6 +19,7 @@ export class EditNoteComponent implements OnInit {
 
   note: Note;
   id: string;
+  body: string;
   getNoteSub: Subscription;
 
   constructor(private fb: FormBuilder, private _location: Location, private noteService: NoteService,

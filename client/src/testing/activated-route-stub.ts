@@ -10,7 +10,10 @@ import { ReplaySubject } from 'rxjs';
 export class ActivatedRouteStub {
   // Use a ReplaySubject to share previous values with subscribers
   // and pump new values into the `paramMap` observable
-  private subject = new ReplaySubject<ParamMap>();
+
+  // To avoid grabbing the wrong value for the route subscriber we put
+  // a buffer to grab the singular value
+  private subject = new ReplaySubject<ParamMap>(1);
 
   constructor(initialParams?: Params) {
     this.setParamMap(initialParams);
