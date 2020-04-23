@@ -167,8 +167,9 @@ public class NoteController {
     // the client has the proper credentials to make the get request.
 
     List<Bson> filters = new ArrayList<Bson>(); // start with a blank JSON document
-    if (ctx.queryParamMap().containsKey("doorBoardid")) {
-      String targetDoorBoardID = ctx.queryParam("doorBoardid");
+    if (ctx.queryParamMap().containsKey("doorBoardID")) {
+      String targetDoorBoardID = ctx.queryParam("doorBoardID");
+      System.out.println(targetDoorBoardID);
       filters.add(eq("doorBoardID", targetDoorBoardID));
       List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
       // from a specific owner id

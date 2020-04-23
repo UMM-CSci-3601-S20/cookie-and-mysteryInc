@@ -15,26 +15,26 @@ import { ActivatedRoute } from '@angular/router';
 export class NoteCardComponent implements OnInit, OnDestroy {
  // This would be in the doorboard component notes: Note[];
   getNotesSub: Subscription;
-  public serverFilteredNotes: Note[];
+  //public serverFilteredNotes: Note[];
   id: string;
   @Input() note: Note;
   @Input() simple ? = false;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
-  getNotesFromServer(): void {
-    this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
+ /* getNotesFromServer(): void {
+    //this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
     .subscribe(notes =>
       this.serverFilteredNotes
       , err => {
       console.log(err);
     });
-  }
+  }*/
 
   deleteNoteFromServer(): void {
     this.getNotesSub = this.noteService.deleteNote(this.note._id).subscribe( deleted =>{
       console.log('Note deleted');
-      this.getNotesFromServer();
+      //this.getNotesFromServer();
     }, err => {
         console.log(err);
       }
@@ -43,7 +43,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getNotesFromServer();
+   // this.getNotesFromServer();
   }
 
   ngOnDestroy(): void {
