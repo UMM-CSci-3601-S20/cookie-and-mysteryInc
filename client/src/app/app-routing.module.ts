@@ -16,6 +16,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'doorBoards', component: DoorBoardListComponent},
   {path: 'doorBoards/new', component: AddDoorBoardComponent, canActivate: [AuthGuard]},
+  {path: 'doorBoard/:id/notes/new', component: AddNoteComponent},
   {path: 'doorBoards/:id', component: DoorBoardPageComponent},
   {path: 'notes', component: DoorBoardPageComponent},
   {path: 'notes/new', component: AddNoteComponent},
