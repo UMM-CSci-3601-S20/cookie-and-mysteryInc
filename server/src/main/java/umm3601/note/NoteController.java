@@ -298,9 +298,12 @@ public class NoteController {
     Note newNote= ctx.bodyValidator(Note.class)
     .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
     String newBody = newNote.body;
+    String newExpirationDate = newNote.expiration;
 
     Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("body", newBody));
-
+    System.out.println("OLD EXPIRE: " + oldNote.expiration);
+    oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", newExpirationDate));
+    System.out.println("NEW EXPIRE: " + oldNote.expiration);
     if (oldNote == null) {
       ctx.status(400);
       throw new NotFoundResponse("The requested note was not found");
