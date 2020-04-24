@@ -98,7 +98,7 @@ public class NoteController {
    * Uses the following parameters in the request:
    *
    * `id` parameter -> note id
-   * `doorBoardid` -> which doorBoard's notes
+   * `doorBoardID` -> which doorBoard's notes
    *
    * @param ctx a Javalin HTTP context
    */
@@ -221,12 +221,12 @@ public class NoteController {
     // You can't view everyone's notes (unless you're only asking for active
     // notes.)
 
-    if (!ctx.queryParamMap().containsKey("doorBoardid")) {
+    if (!ctx.queryParamMap().containsKey("doorBoardID")) {
       throw new ForbiddenResponse(
         "Request not allowed; users can only view their own notes.");
     }
 
-    String subOfOwnerOfDoorBoard = getDoorBoard(ctx.queryParam("doorBoardid")).sub;
+    String subOfOwnerOfDoorBoard = getDoorBoard(ctx.queryParam("doorBoardID")).sub;
     if (!currentUserSub.equals(subOfOwnerOfDoorBoard)) {
       throw new ForbiddenResponse(
         "Request not allowed; users can only view their own notes.");

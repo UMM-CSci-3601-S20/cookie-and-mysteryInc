@@ -222,7 +222,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getAllNotesForDoorBoard1() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID);
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID);
 
     useJwtForUser1();
 
@@ -244,7 +244,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getDraftNotesForDoorBoard1() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=draft");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=draft");
 
     useJwtForUser1();
 
@@ -262,7 +262,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getActiveNotesForDoorBoard1() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=active");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=active");
 
     useJwtForUser1();
 
@@ -287,7 +287,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getAllNotesForDoorBoard1WithoutJwtFails() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID);
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID);
 
     useInvalidJwt();
 
@@ -300,7 +300,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getDraftNotesForDoorBoard1WithoutJwtFails() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=draft");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=draft");
 
     useInvalidJwt();
 
@@ -315,7 +315,7 @@ public class NoteControllerSpec {
   // You're allowed to see them even if you aren't logged in.
   @Test
   public void getActiveNotesForDoorBoard1WithoutJwtIsFine() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=active");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=active");
 
     useInvalidJwt();
 
@@ -340,7 +340,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getAllNotesForDoorBoard1LoggedInAsWrongDoorBoardFails() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID);
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID);
 
     useJwtForSam();
 
@@ -353,7 +353,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getDraftNotesForDoorBoard1LoggedInAsWrongDoorBoardFails() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=draft");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=draft");
 
     useJwtForSam();
 
@@ -366,7 +366,7 @@ public class NoteControllerSpec {
 
   @Test
   public void getActiveNotesForDoorBoard1LoggedInAsWrongDoorBoardIsFine() {
-    mockReq.setQueryString("doorBoardid=" + doorBoard1ID + "&status=active");
+    mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=active");
 
     useJwtForSam();
 
@@ -386,7 +386,7 @@ public class NoteControllerSpec {
   }
 
   /*
-   * Tests for GET api/notes without the doorBoardid query parameter.
+   * Tests for GET api/notes without the doorBoardID query parameter.
    *
    * This is always allowed if you specify status=active; anyone is allowed to
    * view any active notes.
