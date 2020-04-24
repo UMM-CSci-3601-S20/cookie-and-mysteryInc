@@ -57,7 +57,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
-        status: this.noteStatus,
+        //status: this.noteStatus,
         body: this.noteBody
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
@@ -153,6 +153,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       }
       this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
       this.doorBoard = doorBoard;
+      console.log(this.doorBoard.email);
       this.createGmailConnection(this.doorBoard.email);
     });
   });

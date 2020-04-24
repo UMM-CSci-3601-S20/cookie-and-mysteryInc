@@ -42,7 +42,8 @@ export class DoorBoardService {
     return doorBoard;
   }
 
-  filterDoorBoards(doorBoards: DoorBoard[], filters: { name?: string, email?: string, building?: string, officeNumber?: string, sub?: string}):
+  filterDoorBoards(doorBoards: DoorBoard[],
+    filters: { name?: string, email?: string, building?: string, officeNumber?: string, sub?: string}):
    DoorBoard[] {
 
     let filteredDoorBoards = doorBoards;

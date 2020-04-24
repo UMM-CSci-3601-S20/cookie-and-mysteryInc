@@ -220,12 +220,12 @@ public class NoteController {
     // You can't view everyone's notes (unless you're only asking for active
     // notes.)
 
-    if (!ctx.queryParamMap().containsKey("doorBoardid")) {
+    if (!ctx.queryParamMap().containsKey("doorBoardID")) {
       throw new ForbiddenResponse(
         "Request not allowed; users can only view their own notes.");
     }
 
-    String subOfOwnerOfDoorBoard = getDoorBoard(ctx.queryParam("doorBoardid")).sub;
+    String subOfOwnerOfDoorBoard = getDoorBoard(ctx.queryParam("doorBoardID")).sub;
     if (!currentUserSub.equals(subOfOwnerOfDoorBoard)) {
       throw new ForbiddenResponse(
         "Request not allowed; users can only view their own notes.");
@@ -242,42 +242,52 @@ public class NoteController {
     Note newNote = ctx.bodyValidator(Note.class)
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
       .check((note) -> note.body != null && note.body.length() > 0) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
-      .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
+      //.check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
       .get();
 
     // This will throw an UnauthorizedResponse if the user isn't logged in.
     String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
 
 
-    DoorBoard doorBoard;
-    try {
-      doorBoard = getDoorBoard(newNote.doorBoardID);
-    } catch (IllegalArgumentException e) {
-      throw new BadRequestResponse(
-        newNote.doorBoardID + "does not refer to an existing DoorBoard.");
-    }
+    // DoorBoard doorBoard;
+    // try {
+    //   doorBoard = getDoorBoard(newNote.doorBoardID);
+    // } catch (IllegalArgumentException e) {
+    //   throw new BadRequestResponse(
+    //     newNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    // }
 
-    if (doorBoard == null) {
-      throw new BadRequestResponse(
-        newNote.doorBoardID + "does not refer to an existing DoorBoard.");
-    }
+    // if (doorBoard == null) {
+    //   throw new BadRequestResponse(
+    //     newNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    // }
 
-    if (!doorBoard.sub.equals(currentUserSub)) {
-      throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
-    }
+    // if (!doorBoard.sub.equals(currentUserSub)) {
+    //   throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
+    // }
 
-    if(newNote.expiration != null && !(newNote.status.equals("active"))) {
-      throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
-    }
+    // if(newNote.expiration != null && !(newNote.status.equals("active"))) {
+    //   throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
+    // }
 
-    if(newNote.expiration != null || newNote.status.equals("deleted")) {
-      deathTimer.updateTimerStatus(newNote); //only make a timer if needed
-    }
+    // if(newNote.expiration != null || newNote.status.equals("deleted")) {
+    //   deathTimer.updateTimerStatus(newNote); //only make a timer if needed
+    // }
     noteCollection.insertOne(newNote);
 
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newNote._id));
   }
+
+  // public void addNewNote(Context ctx) {
+
+  //   Note newNote = ctx.bodyValidator(Note.class)
+  //   .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+
+  //   noteCollection.insertOne(newNote);
+  //   ctx.status(201);
+  //   ctx.json(ImmutableMap.of("id", newNote._id));
+  // }
 
   /**
    * Edit an existing note
