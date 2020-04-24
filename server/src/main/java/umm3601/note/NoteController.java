@@ -239,32 +239,36 @@ public class NoteController {
    * @param ctx a Javalin HTTP context
    */
   public void addNewNote(Context ctx) {
+    System.out.println("Got to addNewNote method in NoteController");
+    //System.out.println(note.doorBoardID);
+    System.out.println("<" + ctx.body() + ">");
     Note newNote = ctx.bodyValidator(Note.class)
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
-      .check((note) -> note.body != null && note.body.length() > 0) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
+      .check((note) -> note.body != null && note.body.length() > 1) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
       //.check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
       .get();
+      System.out.println("We validated good");
 
     // This will throw an UnauthorizedResponse if the user isn't logged in.
     String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
 
 
-    // DoorBoard doorBoard;
-    // try {
-    //   doorBoard = getDoorBoard(newNote.doorBoardID);
-    // } catch (IllegalArgumentException e) {
-    //   throw new BadRequestResponse(
-    //     newNote.doorBoardID + "does not refer to an existing DoorBoard.");
-    // }
+    DoorBoard doorBoard;
+    try {
+      doorBoard = getDoorBoard(newNote.doorBoardID);
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse(
+        newNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    }
 
-    // if (doorBoard == null) {
-    //   throw new BadRequestResponse(
-    //     newNote.doorBoardID + "does not refer to an existing DoorBoard.");
-    // }
+    if (doorBoard == null) {
+      throw new BadRequestResponse(
+        newNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    }
 
-    // if (!doorBoard.sub.equals(currentUserSub)) {
-    //   throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
-    // }
+    if (!doorBoard.sub.equals(currentUserSub)) {
+      throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
+    }
 
     // if(newNote.expiration != null && !(newNote.status.equals("active"))) {
     //   throw new ConflictResponse("Expiration dates can only be assigned to active notices.");

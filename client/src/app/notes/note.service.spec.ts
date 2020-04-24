@@ -81,24 +81,24 @@ describe('Note service: ', () => {
       req.flush(testNotes);
     } );
 
-    it('sends along the status query-parameter', () => {
-      noteService.getNotesByDoorBoard('test-id', { status: 'active' }).subscribe(notes => {
-        expect(notes).toBe(testNotes);
-      });
+    // it('sends along the status query-parameter', () => {
+    //   noteService.getNotesByDoorBoard('test-id', { status: 'active' }).subscribe(notes => {
+    //     expect(notes).toBe(testNotes);
+    //   });
 
-      const req = httpTestingController.expectOne(request =>
-        request.url.startsWith(noteService.noteUrl)
-          && request.params.has('doorBoardID')
-          && request.params.has('status')
-      );
+    //   const req = httpTestingController.expectOne(request =>
+    //     request.url.startsWith(noteService.noteUrl)
+    //       && request.params.has('doorBoardID')
+    //       && request.params.has('status')
+    //   );
 
-      expect(req.request.method).toEqual('GET');
+    //   expect(req.request.method).toEqual('GET');
 
-      expect(req.request.params.get('doorBoardID')).toEqual('test-id');
-      expect(req.request.params.get('status')).toEqual('active');
+    //   expect(req.request.params.get('doorBoardID')).toEqual('test-id');
+    //   expect(req.request.params.get('status')).toEqual('active');
 
-      req.flush(testNotes);
-    });
+    //   req.flush(testNotes);
+    // });
   });
 
   describe('the addNewNote() method', () => {

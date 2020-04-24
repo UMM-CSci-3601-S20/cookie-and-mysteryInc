@@ -22,19 +22,19 @@ export class NoteCardComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
-  getNotesFromServer(): void {
-    this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
-    .subscribe(notes =>
-      this.serverFilteredNotes
-      , err => {
-      console.log(err);
-    });
-  }
+  // getNotesFromServer(): void {
+  //   this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
+  //   .subscribe(notes =>
+  //     this.serverFilteredNotes
+  //     , err => {
+  //     console.log(err);
+  //   });
+  // }
 
   deleteNoteFromServer(): void {
     this.getNotesSub = this.noteService.deleteNote(this.note._id).subscribe( deleted =>{
       console.log('Note deleted');
-      this.getNotesFromServer();
+      // this.getNotesFromServer();
     }, err => {
         console.log(err);
       }
@@ -43,7 +43,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getNotesFromServer();
+  // this.getNotesFromServer();
   }
 
   ngOnDestroy(): void {
