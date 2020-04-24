@@ -121,7 +121,7 @@ export class AddNoteComponent implements OnInit {
         duration: 2000,
       });
       // after submission, navigate back to the owner's doorboard
-      this.router.navigate(['/doorBoard/' + this.doorBoard_id + '/notes']);
+      this.router.navigate(['/doorBoards/' + this.doorBoard_id ]);
     }, err => {
       this.snackBar.open('Failed to add the note', null, {
         duration: 2000,
