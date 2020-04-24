@@ -72,11 +72,6 @@ export class AddNoteComponent implements OnInit {
 
     // add note form validations
     this.addNoteForm = this.fb.group({
-      status: new FormControl('active', Validators.compose([
-        Validators.required,
-        Validators.pattern('^(active|draft|template)$'),
-      ])),
-
       body: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(1),
@@ -121,6 +116,8 @@ export class AddNoteComponent implements OnInit {
       this.snackBar.open('Added Note ', null, {
         duration: 2000,
       });
+      // after submission, navigate back to the owner's doorboard
+      this.router.navigate(['/doorBoard/' + this.doorBoard_id + '/notes']);
     }, err => {
       this.snackBar.open('Failed to add the note', null, {
         duration: 2000,
