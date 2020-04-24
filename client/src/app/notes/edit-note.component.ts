@@ -2,7 +2,7 @@ import { OnInit, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Note } from './note';
+import { Note, NewNote } from './note';
 import { NoteService } from './note.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,6 +21,10 @@ export class EditNoteComponent implements OnInit {
   id: string;
   body: string;
   getNoteSub: Subscription;
+// vars for expirations
+  min: Date; // Earliest allowed date to be selected
+  max: Date; // lasted date allowed to be selected
+  selectedTime: string;
 
   constructor(private fb: FormBuilder, private _location: Location, private noteService: NoteService,
               private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
@@ -51,6 +55,8 @@ export class EditNoteComponent implements OnInit {
 
    ngOnInit() {
     this.createForms();
+    this.min = new Date();
+    this.max = new Date(new Date().setFullYear(this.min.getFullYear() + 5));
     this.route.paramMap.subscribe((pmap) => {
       this.id = pmap.get('id');
       if (this.getNoteSub) {
@@ -65,7 +71,21 @@ export class EditNoteComponent implements OnInit {
   }
 
   submitForm() {
-    this.noteService.editNote(this.editNoteForm.value, this.id).subscribe(newID => {
+    const noteToEdit: Note = this.editNoteForm.value;
+    const currentDate = new Date();
+    const newDate = new Date(currentDate.setHours(currentDate.getHours() + 5)); // open to change to what is needed
+
+
+    if (noteToEdit.expiration === '') {
+      this.selectedTime = newDate.toJSON();
+    } else {
+      this.selectedTime = noteToEdit.expiration;
+      console.log('The selected expire date is: ' + this.selectedTime);
+      this.selectedTime = this.convertToIsoDate(this.selectedTime);
+    }
+
+    noteToEdit.expiration = this.selectedTime;
+    this.noteService.editNote(noteToEdit, this.id).subscribe(newID => {
       this.snackBar.open('Successfully edited note', null, {
         duration: 2000,
       });
@@ -82,5 +102,8 @@ export class EditNoteComponent implements OnInit {
       this.getNoteSub.unsubscribe();
     }
   }
-
+  convertToIsoDate(selectedDate: string): string {
+    const tryDate = new Date(selectedDate);
+    return tryDate.toISOString();
+  }
 }
