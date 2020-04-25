@@ -53,6 +53,10 @@ import { DoorBoardComponent } from './your-doorBoard/your-doorBoard.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NoteCardComponent } from './notes/note-card.component';
 
+
+//Viewer page
+import { ViewerComponent } from './viewer/viewer.component';
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
@@ -84,7 +88,8 @@ const MATERIAL_MODULES: any[] = [
     AddNoteComponent,
     DoorBoardComponent,
     NavBarComponent,
-    DoorBoardCardComponent
+    DoorBoardCardComponent,
+    ViewerComponent
   ],
   imports: [
     BrowserModule,

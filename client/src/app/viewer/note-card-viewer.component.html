@@ -1,0 +1,15 @@
+
+    <!--Each message is its own mat-card-->
+    <mat-card class="note-card-viewer" *ngIf="this.note">
+      <mat-card-content id="noteCardTimestamp" align="end">
+      <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
+      </mat-card-content>
+
+      <mat-card-content>
+        {{ this.note.body}}
+      </mat-card-content>
+
+
+     <!-- Time stamp needs to be in here when it is implemented-->
+
+    </mat-card>
