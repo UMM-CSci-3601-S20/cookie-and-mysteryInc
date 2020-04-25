@@ -10,7 +10,6 @@ import com.mongodb.client.MongoDatabase;
 
 import io.javalin.Javalin;
 import umm3601.doorboard.DoorBoardController;
-import umm3601.note.DeathTimer;
 import umm3601.note.NoteController;
 
 import com.auth0.jwk.JwkProvider;
