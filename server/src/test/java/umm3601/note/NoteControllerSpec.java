@@ -65,7 +65,6 @@ public class NoteControllerSpec {
   MockHttpServletResponse mockRes = new MockHttpServletResponse();
 
   @Mock(name = "dt")
-  DeathTimer dtMock;
 
   private ObjectId samsNoteId;
   private Date samsDate;
@@ -127,7 +126,6 @@ public class NoteControllerSpec {
     // Reset our mock objects
     mockReq.resetAll();
     mockRes.resetAll();
-    when(dtMock.updateTimerStatus(any(Note.class))).thenReturn(true);
 
     MongoCollection<Document> noteDocuments = db.getCollection("notes");
     noteDocuments.drop();
@@ -586,7 +584,6 @@ public class NoteControllerSpec {
     assertNotNull(addedNote.getDate("addDate"));
     assertNull(addedNote.getString("expiration"));
     assertEquals("active", addedNote.getString("status"));
-    verify(dtMock, never()).updateTimerStatus(any(Note.class));
   }
 
   @Test
@@ -642,7 +639,6 @@ public class NoteControllerSpec {
 
     // Make sure that the database is unchanged
     assertEquals(1, db.getCollection("notes").countDocuments(eq("_id", samsNoteId)));
-    verify(dtMock, never()).clearKey(anyString());
   }
 
   @Test
@@ -658,7 +654,6 @@ public class NoteControllerSpec {
 
     // Make sure that the database is unchanged
     assertEquals(1, db.getCollection("notes").countDocuments(eq("_id", samsNoteId)));
-    verify(dtMock, never()).clearKey(anyString());
   }
 
 
