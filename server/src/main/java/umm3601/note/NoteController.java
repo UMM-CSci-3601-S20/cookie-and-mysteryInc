@@ -44,8 +44,6 @@ public class NoteController {
 
   private final String ISO_8601_REGEX = "([+-]\\d\\d)?\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d([+, -.])\\d\\d\\d[\\dZ]";
 
-  private static DeathTimer deathTimer;
-
   private final JwtProcessor jwtProcessor;
 
   private long currentDateTime;
@@ -72,7 +70,6 @@ public class NoteController {
     doorBoardCollection = database.getCollection("doorBoards").withDocumentClass(DoorBoard.class)
         .withCodecRegistry(jacksonCodecRegistry);
 
-    deathTimer = dt;
     this.jwtProcessor = jwtProcessor;
     currentDateTime = Instant.now().toEpochMilli();
   }
@@ -124,7 +121,6 @@ public class NoteController {
     }
 
     noteCollection.deleteOne(eq("_id", new ObjectId(id)));
-    deathTimer.clearKey(id);
     ctx.status(204);
   }
 
@@ -283,9 +279,6 @@ public class NoteController {
       throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
     }
 
-    if(newNote.expiration != null || newNote.status.equals("deleted")) {
-      deathTimer.updateTimerStatus(newNote); //only make a timer if needed
-    }
     noteCollection.insertOne(newNote);
 
     ctx.status(201);
@@ -313,119 +306,6 @@ public class NoteController {
     }
   }
 
-  /**
-   * Edit an existing note
-   */
-  // This is team dropTables version of edit for the server
-  // public void editNote(Context ctx) {
-
-  //   Document inputDoc = ctx.bodyAsClass(Document.class); //throws 400 error
-  //   Document toEdit = new Document();
-  //   Document toReturn = new Document();
-
-  //   String id = ctx.pathParam("id");
-  //   if(inputDoc.isEmpty()) {
-  //     throw new BadRequestResponse("PATCH request must contain a body.");
-  //   }
-
-
-  //   Note note;
-
-  //   try {
-  //     note = noteCollection.find(eq("_id", new ObjectId(id))).projection(new Document("addDate", 0)).first();
-  //     // This really isn't the right way to do things.  Retrieving the database object
-  //     // in order to check if it exists is inefficient.  We will need to do this at some
-  //     // point, in order to enforce non-active notices not gaining expiration dates--but
-  //     // we can probably move that later.  It's a question of: do the expensive thing always;
-  //     // or do the cheap thing always, and sometimes the expensive thing as well.
-  //   } catch(IllegalArgumentException e) {
-  //     throw new BadRequestResponse("The requested note id wasn't a legal Mongo Object ID.");
-  //   }
-
-  //   if (note == null) {
-  //     throw new NotFoundResponse("The requested note does not exist.");
-  //   }
-
-  //   // verifyJwtFromHeader will throw an UnauthorizedResponse if the user isn't logged in.
-  //   String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
-
-  //   String subOfOwnerOfNote = getDoorBoard(note.doorBoardID).sub;
-
-  //   if (!subOfOwnerOfNote.equals(currentUserSub)) {
-  //     throw new ForbiddenResponse("Request not allowed; users can only edit their own notes");
-  //   }
-
-  //   HashSet<String> validKeys = new HashSet<String>(Arrays.asList("body", "expiration", "status"));
-  //   HashSet<String> forbiddenKeys = new HashSet<String>(Arrays.asList("doorBoardID", "addDate", "_id"));
-  //   HashSet<String> validStatuses = new HashSet<String>(Arrays.asList("active", "draft", "deleted", "template"));
-  //   for (String key: inputDoc.keySet()) {
-  //     if(forbiddenKeys.contains(key)) {
-  //       throw new BadRequestResponse("Cannot edit the field " + key + ": this field is not editable and should be considered static.");
-  //     } else if (!(validKeys.contains(key))){
-  //       throw new ConflictResponse("Cannot edit the nonexistent field " + key + ".");
-  //     }
-  //   }
-
-
-  //   String noteStatus = note.status;
-  //     // At this point, we're taking information from the user and putting it directly into the database.
-  //     // I'm unsure of how to properly sanitize this; StackOverflow just says to use PreparedStatements instead
-  //     // of Statements, but thanks to the magic of mongodb I'm not using either.  At this point I'm going to cross
-  //     // my fingers really hard and pray that this will be fine.
-
-  //     if(inputDoc.containsKey("body")) {
-  //       toEdit.append("body", inputDoc.get("body"));
-  //     }
-  //     if (inputDoc.containsKey("status")) {
-  //       if (validStatuses.contains(inputDoc.get("status"))) {
-  //         toEdit.append("status", inputDoc.get("status"));
-  //         noteStatus = inputDoc.get("status").toString();
-  //         if(!inputDoc.get("status").equals("active")) {
-  //           toReturn.append("$unset", new Document("expireDate", ""));
-  //           //Only active notices can have expiration dates, so if a notice becomes inactive, it loses
-  //           //its expiration date.
-  //         }
-  //       } else {
-  //         throw new UnprocessableResponse(
-  //             "The 'status' field must contain one of 'active', 'draft', 'deleted', or 'template'.");
-  //       }
-  //     }
-
-  //     if(inputDoc.containsKey("expireDate")){
-  //       if(inputDoc.get("expireDate") == null) {
-  //         toReturn.append("$unset", new Document("expireDate", "")); //If expireDate is specifically included with a null value, remove the expiration date.
-  //       } else if (!noteStatus.equals("active")) {
-  //         throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
-  //         //Order of clauses means we don't mind of someone manually zeroes their expireDate when making something inactive.
-  //       } else if(inputDoc.get("expireDate").toString() //This assumes that we're using the same string encoding they are, but it's our own API we should be fine.
-  //       .matches(ISO_8601_REGEX)) {
-  //         toEdit.append("expireDate", inputDoc.get("expireDate"));
-  //       } else {
-  //         throw new UnprocessableResponse("The 'expireDate' field must contain an ISO 8061 time string.");
-  //       }
-  //       //This is not the right error to throw here.  It would probably make more sense to throw a
-  //       // 400 or 415.  Possibly throw a 422 on attempts to set the expireDate in the past?
-
-  //       //This would most likely be done by checking new StdDateFormat().parse(inputDoc.get("expireDate").toString()).isAfter(new StdDateFormate().parse(note.addDate))
-
-  //     }
-
-  //     //If the message includes a change to status or expiration date, update timers here
-
-  //     if(!(toEdit.isEmpty())) {
-  //       toReturn.append("$set", toEdit);
-  //     }
-  //     noteCollection.updateOne(eq("_id", new ObjectId(id)), toReturn);
-  //     //Should probably only run update if expiration date or status changed
-
-  //     deathTimer.updateTimerStatus(noteCollection.find(eq("_id", new ObjectId(id))).first());
-
-  //     //we're getting the note, we can(should) send it back with a 201 instead of just a 204
-  //     //alternatively, give 204 if all the changed fields have the same values and 201 otherwise
-  //     ctx.status(204);
-  //   }
-
-
     /**
      * Silently purge a single notice from the database.
      *
@@ -437,10 +317,7 @@ public class NoteController {
      */
     protected void singleDelete(String id) {
       noteCollection.deleteOne(eq("_id", new ObjectId(id)));
-      deathTimer.clearKey(id);
     }
-
-
 
     /**
      * Flags a single notice as deleted.
@@ -453,13 +330,7 @@ public class NoteController {
      * @param id the id of the note to be flagged.
      */
     protected void flagOneForDeletion(String id) {
-      noteCollection.updateOne(eq("_id", new ObjectId(id)),
-       new Document("$set", new Document("status", "deleted").append("expireDate", null)));
-      deathTimer.updateTimerStatus(noteCollection.find(eq("_id", new ObjectId(id))).first());
     }
-
-
-
   }
 
 

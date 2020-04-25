@@ -479,15 +479,6 @@ public class NoteControllerSpec {
     assertNotNull(addedNote.getDate("addDate")); // we don't know when it was created, so we just want to make sure the date exists.
     assertEquals("2025-04-17T04:18:09.302Z", addedNote.getString("expiration"));
     assertEquals("active", addedNote.getString("status"));
-
-    verify(dtMock).updateTimerStatus(noteCaptor.capture());
-    Note newNote = noteCaptor.getValue();
-    assertEquals(id, newNote._id);
-    assertEquals(doorBoard1ID.toHexString(), newNote.doorBoardID);
-    assertEquals("Test Body", newNote.body);
-    assertEquals(addedNote.getDate("addDate"), newNote.getAddDate());
-    assertEquals("2025-04-17T04:18:09.302Z", newNote.expiration);
-    assertEquals("active", newNote.status);
   }
 
   @Test
@@ -636,7 +627,6 @@ public class NoteControllerSpec {
 
     assertEquals(0, db.getCollection("notes").countDocuments(eq("_id", samsNoteId)));
     // Make sure we stop the Death Timer
-    verify(dtMock).clearKey(anyString());
   }
 
   @Test
