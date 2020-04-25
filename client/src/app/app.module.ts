@@ -56,6 +56,7 @@ import { NoteCardComponent } from './notes/note-card.component';
 
 //Viewer page
 import { ViewerComponent } from './viewer/viewer.component';
+import { NoteCardViewerComponent } from './viewer/note-card-viewer.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -89,7 +90,8 @@ const MATERIAL_MODULES: any[] = [
     DoorBoardComponent,
     NavBarComponent,
     DoorBoardCardComponent,
-    ViewerComponent
+    ViewerComponent,
+    NoteCardViewerComponent
   ],
   imports: [
     BrowserModule,
