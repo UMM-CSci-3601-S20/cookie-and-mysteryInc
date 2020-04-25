@@ -13,10 +13,13 @@ import { map } from 'rxjs/operators';
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { async } from '@angular/core/testing';
+
 
 @NgModule({
   imports: [NgxQRCodeModule]
 })
+
 
 @Component({
   selector: 'app-doorBoard-page-component',
@@ -26,27 +29,6 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 })
 
 export class DoorBoardPageComponent implements OnInit, OnDestroy {
-
-  qrcodename : string;
-  title = 'generate-qrcode';
-  elementType: 'url' | 'canvas' | 'img' = 'url';
-  value: string;
-  display = false;
-  href : string;
-  generateQRCode(){
-    if(this.qrcodename == ''){
-      this.display = false;
-      alert("Please enter the name");
-      return;
-    }
-    else{
-      this.value = this.qrcodename + '/viewer';
-      this.display = true;
-    }
-  }
-  downloadImage(){
-    this.href = document.getElementsByTagName('img')[0].src;
-  }
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
@@ -74,6 +56,27 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
+
+  qrcodename : string;
+  title = 'generate-qrcode';
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+  value: string;
+  display = false;
+  href: string;
+  generateQRCode(){
+    if(this.qrcodename === ''){
+      this.display = false;
+      alert('Please enter the name');
+      return;
+    }
+    else{
+      this.value = this.qrcodename + '/viewer';
+      this.display = true;
+    }
+  }
+  downloadImage(){
+    this.href = document.getElementsByTagName('img')[0].src;
+  }
 
 
 

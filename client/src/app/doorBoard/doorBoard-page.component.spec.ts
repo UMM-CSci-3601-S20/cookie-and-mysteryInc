@@ -68,14 +68,35 @@ describe('DoorBoardPageComponent', () => {
     .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach((() => {
     fixture = TestBed.createComponent(DoorBoardPageComponent);
     fixture.detectChanges();
+    component = fixture.componentInstance;
+    component.ngOnInit();
 
     component = fixture.componentInstance;
-  });
+  }));
 
   it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
 
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(DoorBoardPageComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it(`should have as title 'generate-qrcode'`, () => {
+    const fixture = TestBed.createComponent(DoorBoardPageComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app.title).toEqual('generate-qrcode');
+  });
+
+  it('should render title in a h1 tag', () => {
+    const fixture = TestBed.createComponent(DoorBoardPageComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to generate-qrcode!');
   });
 });
