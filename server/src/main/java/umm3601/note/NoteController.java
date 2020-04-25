@@ -59,7 +59,6 @@ public class NoteController {
 
   public NoteController(
       MongoDatabase database,
-      DeathTimer dt,
       JwtProcessor jwtProcessor) {
     jacksonCodecRegistry.addCodecForClass(Note.class);
     jacksonCodecRegistry.addCodecForClass(DoorBoard.class);

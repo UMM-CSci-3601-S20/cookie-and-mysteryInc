@@ -46,7 +46,6 @@ public class Server {
     // Initialize dependencies
     NoteController noteController = new NoteController(
       database,
-      DeathTimer.getDeathTimerInstance(),
       new JwtProcessor(new JwtGetter(), auth0JwkProvider));
 
     DoorBoardController doorBoardController = new DoorBoardController(
