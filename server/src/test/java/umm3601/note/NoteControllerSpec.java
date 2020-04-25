@@ -862,19 +862,4 @@ public class NoteControllerSpec {
   // Additionally, should attempting to edit a non-editable field (id, doorBoardID, or
   // addDate) throw a 422, 409, 400, or 403?
 
-  @Test
-  public void FlagSinglePost() throws IOException {
-    noteController.flagOneForDeletion(samsNoteId.toHexString());
-
-    assertEquals("deleted", db.getCollection("notes").find(eq("_id", samsNoteId)).first().getString("status"));
-    verify(dtMock).updateTimerStatus(any(Note.class));
-  }
-
-  @Test
-  public void PurgeSinglePost() throws IOException {
-    noteController.singleDelete(samsNoteId.toHexString());
-
-    assertEquals(0, db.getCollection("notes").countDocuments(eq("_id", samsNoteId)));
-    verify(dtMock).clearKey(samsNoteId.toHexString());
-  }
 }
