@@ -1,6 +1,6 @@
 
 import { Note, NoteStatus } from '../notes/note';
-import { OnInit, Component, OnDestroy, Input } from '@angular/core';
+import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
 import { DoorBoardService } from './doorBoard.service';
 import { DoorBoard } from './doorBoard';
 import { Subscription, Observable } from 'rxjs';
@@ -12,7 +12,11 @@ import { map } from 'rxjs/operators';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
+@NgModule({
+  imports: [NgxQRCodeModule]
+})
 
 @Component({
   selector: 'app-doorBoard-page-component',
@@ -22,6 +26,27 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 })
 
 export class DoorBoardPageComponent implements OnInit, OnDestroy {
+
+  qrcodename : string;
+  title = 'generate-qrcode';
+  elementType: 'url' | 'canvas' | 'img' = 'url';
+  value: string;
+  display = false;
+  href : string;
+  generateQRCode(){
+    if(this.qrcodename == ''){
+      this.display = false;
+      alert("Please enter the name");
+      return;
+    }
+    else{
+      this.value = this.qrcodename + '/viewer';
+      this.display = true;
+    }
+  }
+  downloadImage(){
+    this.href = document.getElementsByTagName('img')[0].src;
+  }
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')

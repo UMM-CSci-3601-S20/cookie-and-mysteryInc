@@ -58,6 +58,9 @@ import { NoteCardComponent } from './notes/note-card.component';
 import { ViewerComponent } from './viewer/viewer.component';
 import { NoteCardViewerComponent } from './viewer/note-card-viewer.component';
 
+//QR code
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
@@ -105,6 +108,7 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    NgxQRCodeModule,
   ],
   providers: [
     DoorBoardService,
