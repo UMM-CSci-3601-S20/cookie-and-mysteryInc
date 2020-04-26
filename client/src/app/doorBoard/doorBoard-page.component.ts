@@ -13,12 +13,6 @@ import { map } from 'rxjs/operators';
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { async } from '@angular/core/testing';
-
-
-@NgModule({
-  imports: [NgxQRCodeModule]
-})
 
 
 @Component({

@@ -92,11 +92,4 @@ describe('DoorBoardPageComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('generate-qrcode');
   });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(DoorBoardPageComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to generate-qrcode!');
-  });
 });
