@@ -159,9 +159,7 @@ public class NoteController {
     }
   }
 
-  private boolean checkIfExpired(Long expiredDate){
-    if(expiredDate != null){
-    if(currentDateTime >= expiredDate){
+
   private boolean checkIfExpired(Long expiredDate) {
     if(expiredDate != null) {
     if(currentDateTime >= expiredDate) {
@@ -291,9 +289,9 @@ public class NoteController {
     //   throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
     // }
 
-    if(newNote.expiration != null || newNote.status.equals("deleted")) {
-      deathTimer.updateTimerStatus(newNote); //only make a timer if needed
-    }
+    // if(newNote.expiration != null || newNote.status.equals("deleted")) {
+    //   deathTimer.updateTimerStatus(newNote); //only make a timer if needed
+    // }
     noteCollection.insertOne(newNote);
 
     ctx.status(201);
