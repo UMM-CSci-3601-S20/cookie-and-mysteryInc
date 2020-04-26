@@ -1,8 +1,8 @@
 
 import { Note, NoteStatus } from '../notes/note';
-import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
-import { DoorBoardService } from './doorBoard.service';
-import { DoorBoard } from './doorBoard';
+import { OnInit, Component, OnDestroy, Input } from '@angular/core';
+import { DoorBoardService } from '../doorBoard/doorBoard.service';
+import { DoorBoard } from '../doorBoard/doorBoard';
 import { Subscription, Observable } from 'rxjs';
 import { NoteService } from '../notes/note.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,17 +12,16 @@ import { map } from 'rxjs/operators';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 
 @Component({
-  selector: 'app-doorBoard-page-component',
-  templateUrl: 'doorBoard-page.component.html',
-  styleUrls: ['doorBoard-page.component.scss'],
+  selector: 'app-viewer-component',
+  templateUrl: 'viewer.component.html',
+  styleUrls: ['viewer.component.scss'],
   providers: []
 })
 
-export class DoorBoardPageComponent implements OnInit, OnDestroy {
+export class ViewerComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
@@ -51,27 +50,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
 
-  qrcodename : string;
-  title = 'generate-qrcode';
-  elementType: 'url' | 'canvas' | 'img' = 'url';
-  value: string;
-  display = false;
-  href: string;
-  generateQRCode(){
-    if(this.qrcodename === ''){
-      this.display = false;
-      alert('Please enter the name');
-      return;
-    }
-    else{
-      this.value = this.qrcodename + '/viewer';
-      this.display = true;
-    }
-  }
-  downloadImage(){
-    this.href = document.getElementsByTagName('img')[0].src;
-  }
-
 
 
 
@@ -79,7 +57,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
-        //status: this.noteStatus,
+        status: this.noteStatus,
         body: this.noteBody
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
@@ -168,14 +146,13 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       if (this.getNotesSub) {
         this.getNotesSub.unsubscribe();
       }
-      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe( notes => this.notes = notes);
+      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe(note => this.notes = note);
       this.getNotesFromServer();
       if (this.getDoorBoardSub) {
         this.getDoorBoardSub.unsubscribe();
       }
       this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
       this.doorBoard = doorBoard;
-      console.log(this.doorBoard.email);
       this.createGmailConnection(this.doorBoard.email);
     });
   });

@@ -1,0 +1,60 @@
+.viewer-card {
+    margin: 3px;
+    text-size-adjust: 0.75rem;
+    line-height: 0.7rem;
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mat-radio-group {
+    font-size: small;
+}
+
+.radioButton {
+    margin: 0.4rem;
+}
+
+    // .gcal-embed iframe {
+    //   width: max-content;
+    //   min-width: 30rem;
+    //   max-width: 60rem;
+    // }
+
+.gcal-embed {
+    min-width: 478px;
+    width: 100%;
+}
+
+.gcal-embed iframe {
+    min-width: 478px;
+    position: absolute;
+    width: 55%;
+    height: 100%;
+}
+
+
+  .grid-container {
+    display: grid;
+    margin: 0.5rem;
+}
+
+  .note-card {
+    margin: 0.5rem;
+    max-width: 20rem;
+    white-space: pre-wrap;
+}
+
+  .fxLayout{
+    justify-content: center;
+}
+
+  .add-note {
+    margin: 1rem;
+}
+
+  .note-list-add-date {
+    font-size: smallest;
+}

@@ -20,6 +20,19 @@
     </mat-card>
   </div>
 
+    <div style="text-align:center">
+      <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br>
+      <button (click)="generateQRCode()">Generate Your DoorBoard QR Code</button>
+      <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
+      </ngx-qrcode><br>
+      <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download Image</a>
+    </div>
+    <router-outlet></router-outlet>
+
+    <div *ngIf="compareSubs() | async">
+      <!--New Note-->
+    <app-add-note [doorBoard_id]="this.id" (newNoteAdded)="getNotesFromServer()" class="add-note">
+    </app-add-note >
   <div class="add-button-container">
     <!--This is where we add our new notes. The DoorBoard ID is automatically set for each new note to match the id of the DoorBoard-->
     <button mat-raised-button class="add-note-button" matTooltip="Add Note" matTooltipPosition="below"

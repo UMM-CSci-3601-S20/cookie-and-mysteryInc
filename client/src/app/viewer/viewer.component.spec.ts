@@ -5,9 +5,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteStub } from '../../testing/activated-route-stub';
 
 // DoorBoard imports
-import { DoorBoard } from './doorBoard';
-import { DoorBoardService } from './doorBoard.service';
-import { DoorBoardPageComponent } from './doorBoard-page.component';
+import { DoorBoard } from '../doorBoard/doorBoard';
+import { DoorBoardService } from '../doorBoard/doorBoard.service';
+import { DoorBoardPageComponent } from '../doorBoard/doorBoard-page.component';
 import { MockDoorBoardService } from '../../testing/doorBoard.service.mock';
 
 // Note imports
@@ -27,6 +27,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewerComponent } from './viewer.component';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
@@ -46,9 +47,9 @@ const COMMON_IMPORTS: any[] = [
   RouterTestingModule,
 ];
 
-describe('DoorBoardPageComponent', () => {
-  let component: DoorBoardPageComponent;
-  let fixture: ComponentFixture<DoorBoardPageComponent>;
+describe('ViewerComponent', () => {
+  let component: ViewerComponent;
+  let fixture: ComponentFixture<ViewerComponent>;
   const activatedRoute: ActivatedRouteStub = new ActivatedRouteStub();
 
 
@@ -58,7 +59,7 @@ describe('DoorBoardPageComponent', () => {
         RouterTestingModule,
         MatCardModule
       ],
-      declarations: [DoorBoardPageComponent],
+      declarations: [ViewerComponent],
       providers: [
         {provide: DoorBoardService, useValue: new MockDoorBoardService()},
         {provide: NoteService, useValue: new MockNoteService()},
@@ -69,7 +70,7 @@ describe('DoorBoardPageComponent', () => {
   }));
 
   beforeEach((() => {
-    fixture = TestBed.createComponent(DoorBoardPageComponent);
+    fixture = TestBed.createComponent(ViewerComponent);
     fixture.detectChanges();
     component = fixture.componentInstance;
     component.ngOnInit();
@@ -87,9 +88,5 @@ describe('DoorBoardPageComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'generate-qrcode'`, () => {
-    const fixture = TestBed.createComponent(DoorBoardPageComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('generate-qrcode');
-  });
+
 });

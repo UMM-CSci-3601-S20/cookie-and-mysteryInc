@@ -52,3 +52,39 @@ flex-wrap: wrap;
     height: 100%;
     }
 
+
+.grid-container {
+  display: grid;
+  margin: 0.5rem;
+}
+
+.note-card {
+  margin: 0.5rem;
+  max-width: 20rem;
+  white-space: pre-wrap;
+}
+
+
+.fxLayout{
+  justify-content: center;
+}
+
+.add-note {
+  margin: 1rem;
+}
+
+.note-list-add-date {
+  font-size: smallest;
+}
+
+button {
+  padding: 10px;
+  background-color: skyblue;
+  margin-top: 10px;
+}
+a {
+  padding: 10px;
+  background-color: skyblue;
+  margin-top: 10px;
+  text-decoration: none;
+}
