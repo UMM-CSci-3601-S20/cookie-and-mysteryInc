@@ -9,46 +9,11 @@ display: flex;
 flex-wrap: wrap;
 }
 
-.mat-radio-group{
-  font-size: small;
-}
-
-.radioButton {
-  margin: 0.4rem;
-}
-
-  // .gcal-embed iframe {
-  //   width: max-content;
-  //   min-width: 30rem;
-  //   max-width: 60rem;
-  // }
-
-  .gcal-embed {
-    min-width: 478px;
-    width: 100%;
-    }
-
-
-
-    .gcal-embed iframe {
-    min-width: 478px;
-    position: absolute;
-    width: 55%;
-    height: 100%;
-    }
-
-
-.grid-container {
-  display: grid;
-  margin: 0.5rem;
-}
-
 .note-card {
   margin: 0.5rem;
   max-width: 20rem;
   white-space: pre-wrap;
 }
-
 
 .fxLayout{
   justify-content: center;
@@ -58,6 +23,32 @@ flex-wrap: wrap;
   margin: 1rem;
 }
 
-.note-list-add-date {
-  font-size: smallest;
+.add-button-container {
+  align-content: center;
+  padding-left: 25%;
+  margin: 1rem;
 }
+
+// .gcal-embed iframe {
+  //   width: max-content;
+  //   min-width: 30rem;
+  //   max-width: 60rem;
+  // }
+
+  .gcal-grid-container {
+    display: grid;
+    margin: 0.5rem;
+  }
+
+  .gcal-embed {
+    min-width: 478px;
+    width: 100%;
+    }
+
+    .gcal-embed iframe {
+    min-width: 478px;
+    position: absolute;
+    width: 55%;
+    height: 100%;
+    }
+

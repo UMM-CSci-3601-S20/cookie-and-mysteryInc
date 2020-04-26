@@ -11,30 +11,30 @@ is potentially helpful and contributed to the shaping of this example -->
         </mat-card-header>
         <mat-card-content fxLayout="column">
 
-          <mat-form-field>
-            <mat-label>Status</mat-label>
-            <mat-select id="statusField" required formControlName="status">
-              <mat-option value="active">Active</mat-option>
-              <mat-option value="draft">Draft</mat-option>
-              <mat-option value="template">Template</mat-option>
-            </mat-select>
-            <mat-error *ngIf="addNoteForm.get('status').hasError('required')">You must make a selection</mat-error>
-            <mat-error
-              *ngIf="addNoteForm.get('status').hasError('pattern') && !addNoteForm.get('status').hasError('required')">
-              Your selection is invalid
-            </mat-error>
-          </mat-form-field>
+          <!-- <mat-form-field>
+            <mat-label>Message</mat-label>
 
-          <mat-form-field>
-            <mat-label>Body</mat-label>
-            <textarea matInput id="bodyField" #bodyInput placeholder="Body" formControlName="body" required [cdkTextareaAutosize]></textarea>
-          </mat-form-field>
+                  <textarea matInput id="bodyfield" placeholder="Message" formControlName="body" required
+                  cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
+                </textarea>
+            <mat-error *ngFor="let validation of add_note_validation_messages.body">
+              <mat-error class="error-message" id="message-error"
+                    *ngIf="addNoteForm.get('message').hasError(validation.type) && (addNoteForm.get('message').dirty || addNoteForm.get('message').touched)">
+                  {{validation.message}}
+                  </mat-error>
+            </mat-error>
+              </mat-form-field> -->
+
+              <mat-form-field>
+                <mat-label>Body</mat-label>
+                <textarea matInput id="bodyField" #bodyInput placeholder="Body" formControlName="body" required [cdkTextareaAutosize]></textarea>
+              </mat-form-field>
 
           <mat-form-field>
             <mat-label>Expiration Date</mat-label>
             <input [min]="min" [max]="max" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
             placeholder="Date Time" matInput id="expireField" placeholder="Expiration" formControlName="expiration">
-            <mat-hint id="expireHint" >If no expiration date is selected, then it will automatically expire in 5 hours</mat-hint>
+            <mat-hint id="expireHint" >If no expiration date is selected, then the note will automatically expire in 5 hours</mat-hint>
             <owl-date-time [hour12Timer]="true" #dt1></owl-date-time>
           </mat-form-field>
 
@@ -45,6 +45,7 @@ is potentially helpful and contributed to the shaping of this example -->
             type="submit">
             ADD NOTE
           </button>
+          <button mat-button id="cancelButton" type="button" color="secondary" mdbWave2sEffect onclick="history.back()">CANCEL</button>
         </mat-card-actions>
       </mat-card>
     </div>

@@ -240,11 +240,15 @@ public class NoteController {
    * @param ctx a Javalin HTTP context
    */
   public void addNewNote(Context ctx) {
+    System.out.println("Got to addNewNote method in NoteController");
+    //System.out.println(note.doorBoardID);
+    System.out.println("<" + ctx.body() + ">");
     Note newNote = ctx.bodyValidator(Note.class)
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
-      .check((note) -> note.body != null && note.body.length() > 0) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
-      .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
+      .check((note) -> note.body != null && note.body.length() > 1) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
+      //.check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
       .get();
+      System.out.println("We validated good");
 
     // This will throw an UnauthorizedResponse if the user isn't logged in.
     String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
@@ -267,18 +271,28 @@ public class NoteController {
       throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
     }
 
-    if(newNote.expiration != null && !(newNote.status.equals("active"))) {
-      throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
-    }
+    // if(newNote.expiration != null && !(newNote.status.equals("active"))) {
+    //   throw new ConflictResponse("Expiration dates can only be assigned to active notices.");
+    // }
 
-    if(newNote.expiration != null || newNote.status.equals("deleted")) {
-      deathTimer.updateTimerStatus(newNote); //only make a timer if needed
-    }
+    // if(newNote.expiration != null || newNote.status.equals("deleted")) {
+    //   deathTimer.updateTimerStatus(newNote); //only make a timer if needed
+    // }
     noteCollection.insertOne(newNote);
 
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newNote._id));
   }
+
+  // public void addNewNote(Context ctx) {
+
+  //   Note newNote = ctx.bodyValidator(Note.class)
+  //   .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+
+  //   noteCollection.insertOne(newNote);
+  //   ctx.status(201);
+  //   ctx.json(ImmutableMap.of("id", newNote._id));
+  // }
 
   /**
    * Edit an existing note

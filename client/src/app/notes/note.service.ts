@@ -20,16 +20,16 @@ export class NoteService {
    * @returns a list of the notes belonging to this doorBoard, filtered by body and status
    *
    */
-  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string, status?: NoteStatus }): Observable<Note[]> {
+  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string}): Observable<Note[]> {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
       if (filters.body) {
         httpParams = httpParams.set('body', filters.body);
       }
-      if (filters.status) {
-        httpParams = httpParams.set('status', filters.status);
-      }
+      // if (filters.status) {
+      //   httpParams = httpParams.set('status', filters.status);
+      // }
     }
     return this.httpClient.get<Note[]>(this.noteUrl, {
       params: httpParams,
@@ -62,6 +62,7 @@ export class NoteService {
   }
 
   addNewNote(newNote: NewNote): Observable<string> {
+    console.log('Got to addNewNote in note.service.ts ');
     // Send a post request to add a new note with the note data as the body.
     // const test = this.httpClient.post<{id: string}>(this.noteUrl + '/new', newNote).pipe(map(res => res.id));
     return this.httpClient.post<{id: string}>(this.noteUrl + '/new', newNote).pipe(map(res => res.id));
