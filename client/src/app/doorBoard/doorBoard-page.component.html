@@ -1,39 +1,33 @@
 <div class="page">
-  <div>
-    <!--doorBoard card-->
-    <mat-card class="doorBoard-card" *ngIf="this.doorBoard">
-      <mat-card-header>
-        <mat-card-title class="doorBoard-card-title">DoorBoard Info</mat-card-title>
-      </mat-card-header>
-      <mat-card-content id=nameField>
-        Name: {{getName()}}
-      </mat-card-content>
-      <mat-card-content id=buildingField>
-        Building: {{getBuilding()}}
-      </mat-card-content>
-      <mat-card-content id=officeNumberField>
-        Office Number: {{getOfficeNumber()}}
-      </mat-card-content>
-      <mat-card-content id=emailField>
-        E-mail: {{getEmail()}}
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <div fxLayout="row" class="top-row-container">
 
-    <div style="text-align:center">
+    <div class="dropdown">
+      <button mat-fab class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+        <mat-icon class="md-12" aria-label="DoorBoard Info">info</mat-icon>
+      </button>
+      <div *ngIf="!confirmDropDown" class="dropdown-content">
+        <p>Owner: {{getName()}}</p>
+        <p>Email: {{getEmail()}}</p>
+        <p>Building: {{getBuilding()}}</p>
+        <p>Office Number: {{getOfficeNumber()}}</p>
+      </div>
+    </div>
+
+    <div class="doorboard-title">
+      <h1>{{getName()}}'s DoorBoard</h1>
+    </div>
+
+    <div class="qrCode" style="text-align:center">
       <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br>
-      <button (click)="generateQRCode()">Generate Your DoorBoard QR Code</button>
+      <button (click)="generateQRCode()" >Generate Your DoorBoard QR Code</button>
       <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
       </ngx-qrcode><br>
       <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download Image</a>
     </div>
     <router-outlet></router-outlet>
+  </div>
 
-    <div *ngIf="compareSubs() | async">
-      <!--New Note-->
-    <app-add-note [doorBoard_id]="this.id" (newNoteAdded)="getNotesFromServer()" class="add-note">
-    </app-add-note >
-  <div class="add-button-container">
+  <div fxLayout="row wrap" class="add-button-container">
     <!--This is where we add our new notes. The DoorBoard ID is automatically set for each new note to match the id of the DoorBoard-->
     <button mat-raised-button class="add-note-button" matTooltip="Add Note" matTooltipPosition="below"
       routerLink="/doorBoard/{{this.id}}/notes/new">Add New Note
@@ -44,6 +38,7 @@
     </button>
   </div>
 
+
     <!--Notes-->
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container">
           <app-note-card simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card>
@@ -53,7 +48,7 @@
 
 
     <!--google calendar and related-->
-    <div class="grid-container">
+  <div fxLayout="row" class="grid-container">
     <div class="gcal-embed" *ngIf="this.doorBoard">
       <iframe [src]="this.GcalURL" style="border: 0" width="450" style="border: 0" height="700" frameborder="0"
         scrolling="auto"></iframe>
