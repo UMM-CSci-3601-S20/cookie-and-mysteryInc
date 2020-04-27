@@ -64,7 +64,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
-        status: this.noteStatus,
+        //status: this.noteStatus,
         body: this.noteBody
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
