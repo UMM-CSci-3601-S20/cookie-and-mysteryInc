@@ -260,7 +260,7 @@ public class NoteController {
     Note newNote = ctx.bodyValidator(Note.class)
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
       .check((note) -> note.body != null && note.body.length() > 1) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
-      //.check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
+      // .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
       .get();
       System.out.println("We validated good");
 
