@@ -1,7 +1,11 @@
-.doorBoard-card {
+.doorBoard-card-title {
   margin: 3px;
   text-size-adjust: 0.75rem;
   line-height: 0.7rem;
+}
+
+.navbar {
+  right: 50px;
 }
 
 .page {
@@ -9,24 +13,39 @@ display: flex;
 flex-wrap: wrap;
 }
 
+.top-row-container {
+background-color: orange;
+}
+
+.dropDown {
+background-color: red;
+align-content: left;
+}
+
+.doorBoard-title {
+text-align: center;
+margin-left: 10em;
+}
+
+.qrCode {
+margin-left: 50em;
+
+}
+
 .note-card {
-  margin: 0.5rem;
-  max-width: 20rem;
-  white-space: pre-wrap;
+margin: 0.5rem;
+max-width: 20rem;
+white-space: pre-wrap;
 }
 
-.fxLayout{
-  justify-content: center;
-}
-
-.add-note {
-  margin: 1rem;
-}
+// .fxLayout{
+// justify-content: center;
+// }
 
 .add-button-container {
-  align-content: center;
-  padding-left: 25%;
-  margin: 1rem;
+align-content: center;
+margin: 1em;
+
 }
 
 // .gcal-embed iframe {
@@ -37,7 +56,7 @@ flex-wrap: wrap;
 
   .gcal-grid-container {
     display: grid;
-    margin: 0.5rem;
+    margin: 5rem;
   }
 
   .gcal-embed {
@@ -59,28 +78,27 @@ flex-wrap: wrap;
 }
 
 .note-card {
-  margin: 0.5rem;
-  max-width: 20rem;
-  white-space: pre-wrap;
+  // margin: 0.5rem;
+  // max-width: 20rem;
+  // white-space: pre-wrap;
+  display: flex;
+  flex-direction: row;
 }
 
+// controls the list of notes
+// .fxLayout{
+//   justify-content: center;
+// }
 
-.fxLayout{
-  justify-content: center;
-}
-
-.add-note {
-  margin: 1rem;
-}
 
 .note-list-add-date {
   font-size: smallest;
 }
 
 button {
-  padding: 10px;
+  //padding: 10px;
   background-color: skyblue;
-  margin-top: 10px;
+  //margin-top: 10px;
 }
 a {
   padding: 10px;
@@ -88,3 +106,14 @@ a {
   margin-top: 10px;
   text-decoration: none;
 }
+
+.note-card-container {
+  display: flex;
+  flex-direction: column;
+  //flex-wrap: wrap;
+}
+
+// .note-card {
+//   display: flex;
+//   flex-direction: column;
+// }
