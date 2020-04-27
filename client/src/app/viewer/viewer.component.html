@@ -1,27 +1,20 @@
 <div class="page">
   <div>
-    <!--Viewer card-->
-    <mat-card class="viewer-card" *ngIf="this.doorBoard">
-      <mat-card-header>
-        <mat-card-title class="viewer-card-title">DoorBoard Info</mat-card-title>
-      </mat-card-header>
-      <mat-card-content id=nameField>
-        Name: {{getName()}}
-      </mat-card-content>
-      <mat-card-content id=buildingField>
-        Building: {{getBuilding()}}
-      </mat-card-content>
-      <mat-card-content id=officeNumberField>
-        Office Number: {{getOfficeNumber()}}
-      </mat-card-content>
-      <mat-card-content id=emailField>
-        E-mail: {{getEmail()}}
-      </mat-card-content>
-    </mat-card>
+    <div class="dropdown">
+      <button mat-fab class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+        <mat-icon class="md-12" aria-label="DoorBoard Info">info</mat-icon>
+      </button>
+      <div *ngIf="!confirmDropDown" class="dropdown-content">
+        <p>Owner: {{getName()}}</p>
+        <p>Email: {{getEmail()}}</p>
+        <p>Building: {{getBuilding()}}</p>
+        <p>Office Number: {{getOfficeNumber()}}</p>
+      </div>
+    </div>
 
-    <div *ngIf="compareSubs() | async">
-
-  </div>
+    <div class="doorboard-title">
+      <h1>{{getName()}}'s DoorBoard</h1>
+    </div>
   </div>
 
     <!--Notes-->

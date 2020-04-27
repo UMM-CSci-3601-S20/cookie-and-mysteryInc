@@ -49,9 +49,16 @@ export class ViewerComponent implements OnInit, OnDestroy {
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
+  confirmDropDown = true;
 
 
-
+  public toggleDropDown(): void {
+    if (this.confirmDropDown === true) {
+      this.confirmDropDown = false;
+    } else {
+      this.confirmDropDown = true;
+    }
+  }
 
   public getNotesFromServer(): void {
     this.unsub();
