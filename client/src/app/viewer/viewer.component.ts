@@ -1,8 +1,8 @@
 
 import { Note, NoteStatus } from '../notes/note';
-import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
-import { DoorBoardService } from './doorBoard.service';
-import { DoorBoard } from './doorBoard';
+import { OnInit, Component, OnDestroy, Input } from '@angular/core';
+import { DoorBoardService } from '../doorBoard/doorBoard.service';
+import { DoorBoard } from '../doorBoard/doorBoard';
 import { Subscription, Observable } from 'rxjs';
 import { NoteService } from '../notes/note.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,22 +14,23 @@ import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
 
 
-
 @Component({
-  selector: 'app-doorBoard-page-component',
-  templateUrl: 'doorBoard-page.component.html',
-  styleUrls: ['doorBoard-page.component.scss'],
+  selector: 'app-viewer-component',
+  templateUrl: 'viewer.component.html',
+  styleUrls: ['viewer.component.scss'],
   providers: []
 })
 
-export class DoorBoardPageComponent implements OnInit, OnDestroy {
+export class ViewerComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
   enabled: boolean;
-  confirmDropDown = true;
+
   constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
               private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
+
+
 
   public notes: Note[];
   public serverFilteredNotes: Note[];
@@ -48,28 +49,15 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
+  confirmDropDown = true;
 
-  qrcodename : string;
-  title = 'generate-qrcode';
-  elementType: 'url' | 'canvas' | 'img' = 'url';
-  url: string;
-  value: string;
-  display: boolean;
-  href: string;
-  generateQRCode() {
-    if (this.qrcodename === '') {
-      this.display = false;
-      alert('Please enter a url');
-      return;
+
+  public toggleDropDown(): void {
+    if (this.confirmDropDown === true) {
+      this.confirmDropDown = false;
     } else {
-      this.value = this.qrcodename + '/viewer';
-      this.display = true;
+      this.confirmDropDown = true;
     }
-  }
-
-
-  downloadImage(){
-    this.href = document.getElementsByTagName('img')[0].src;
   }
 
   public getNotesFromServer(): void {
@@ -157,13 +145,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleDropDown(): void {
-    if (this.confirmDropDown === true) {
-      this.confirmDropDown = false;
-    } else {
-      this.confirmDropDown = true;
-    }
-  }
 
   ngOnInit(): void {
     // Subscribe doorBoard's notes
@@ -172,18 +153,18 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       if (this.getNotesSub) {
         this.getNotesSub.unsubscribe();
       }
-      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe( notes => this.notes = notes);
+      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe(note => this.notes = note);
       this.getNotesFromServer();
       if (this.getDoorBoardSub) {
         this.getDoorBoardSub.unsubscribe();
       }
       this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
       this.doorBoard = doorBoard;
-      console.log(this.doorBoard.email);
       this.createGmailConnection(this.doorBoard.email);
     });
   });
   }
+
 
   ngOnDestroy(): void {
     if (this.getNotesSub) {

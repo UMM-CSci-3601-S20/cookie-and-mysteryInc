@@ -7,6 +7,7 @@ import { DoorBoardPageComponent } from './doorBoard/doorBoard-page.component';
 import { EditNoteComponent } from './notes/edit-note.component';
 import { AddNoteComponent } from './notes/add-note.component';
 import { DoorBoardComponent} from './your-doorBoard/your-doorBoard.component';
+import { ViewerComponent } from './viewer/viewer.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './auth/interceptor.service';
@@ -17,10 +18,15 @@ const routes: Routes = [
   {path: 'doorBoards', component: DoorBoardListComponent},
   {path: 'doorBoards/new', component: AddDoorBoardComponent, canActivate: [AuthGuard]},
   {path: 'doorBoards/:id', component: DoorBoardPageComponent},
+  {path: 'doorBoard/:id/notes/new', component: AddNoteComponent},
+  {path: 'notes/new', component: AddNoteComponent},
   {path: 'notes', component: DoorBoardPageComponent},
   {path: 'notes/new', component: AddNoteComponent},
-  {path: 'notes/edit', component: EditNoteComponent},
+  // {path: ':id/edit', component: EditNoteComponent},
+  // {path: 'edit/:id', component: EditNoteComponent, canActivate: [AuthGuard]},
+  {path: 'notes/edit/:id', component: EditNoteComponent, canActivate: [AuthGuard]},
   {path: 'your-doorBoard', component: DoorBoardComponent, canActivate: [AuthGuard]},
+  {path: 'doorBoards/:id/viewer', component: ViewerComponent},
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, LOCALE_ID } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NewNote } from './note';
 import { NoteService } from './note.service';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
@@ -30,14 +30,14 @@ export class AddNoteComponent implements OnInit {
   // @Input('cdkTextareaAutosize')
   // enabled = true;
 
-  @Input() doorBoard_id: string;
+  doorBoard_id: string;
   @ViewChild('bodyInput') bodyInput: ElementRef;
 
   addNoteForm: FormGroup;
   @Output() newNoteAdded = new EventEmitter();
   constructor(private fb: FormBuilder, private noteService: NoteService,
               private snackBar: MatSnackBar, private router: Router,
-              private doorBoardService: DoorBoardService) {
+              private doorBoardService: DoorBoardService, private route: ActivatedRoute) {
   }
 
   @Input() doorBoard: DoorBoard;
@@ -61,7 +61,7 @@ export class AddNoteComponent implements OnInit {
 
     body: [,
       {type: 'required', message: 'Body is required'},
-      {type: 'minLength', message: 'Body must no be empty'},
+      {type: 'minLength', message: 'Body must not be empty'},
       {type: 'maxLength', message: 'Cannot exceed 1000 characters'}
     ],
 
@@ -72,11 +72,6 @@ export class AddNoteComponent implements OnInit {
 
     // add note form validations
     this.addNoteForm = this.fb.group({
-      status: new FormControl('active', Validators.compose([
-        Validators.required,
-        Validators.pattern('^(active|draft|template)$'),
-      ])),
-
       body: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(1),
@@ -91,6 +86,8 @@ export class AddNoteComponent implements OnInit {
 
   ngOnInit() {
     this.createForms();
+    this.route.paramMap.subscribe((pmap) => {
+      this.doorBoard_id = pmap.get('id')});
     this.min = new Date();
     this.max = new Date(new Date().setFullYear(this.min.getFullYear() + 5));
   }
@@ -111,8 +108,10 @@ export class AddNoteComponent implements OnInit {
       this.selectedTime = this.convertToIsoDate(this.selectedTime);
     }
 
+    console.log(this.doorBoard_id);
     noteToAdd.doorBoardID = this.doorBoard_id;
     noteToAdd.expiration = this.selectedTime;
+    console.log("New note =" + JSON.stringify(noteToAdd));
     this.noteService.addNewNote(noteToAdd).subscribe(newID => {
       // Notify the DoorBoard component that a note has been added.
       this.newNoteAdded.emit();
@@ -121,6 +120,8 @@ export class AddNoteComponent implements OnInit {
       this.snackBar.open('Added Note ', null, {
         duration: 2000,
       });
+      // after submission, navigate back to the owner's doorboard
+      this.router.navigate(['/doorBoards/' + this.doorBoard_id ]);
     }, err => {
       this.snackBar.open('Failed to add the note', null, {
         duration: 2000,

@@ -10,7 +10,6 @@ import com.mongodb.client.MongoDatabase;
 
 import io.javalin.Javalin;
 import umm3601.doorboard.DoorBoardController;
-import umm3601.note.DeathTimer;
 import umm3601.note.NoteController;
 
 import com.auth0.jwk.JwkProvider;
@@ -46,7 +45,6 @@ public class Server {
     // Initialize dependencies
     NoteController noteController = new NoteController(
       database,
-      DeathTimer.getDeathTimerInstance(),
       new JwtProcessor(new JwtGetter(), auth0JwkProvider));
 
     DoorBoardController doorBoardController = new DoorBoardController(
@@ -66,14 +64,20 @@ public class Server {
     // List notes, filtered using query parameters
     server.get("api/notes", noteController::getNotesByDoorBoard);
 
+    //get a single note
+    server.get("api/notes/:id", noteController::getNoteByID);
+
+
+
     // Delete specific note
     server.delete("api/notes/:id", noteController::deleteNote);
 
     // Add new note
     server.post("api/notes/new", noteController::addNewNote);
 
-    // Update a note
-    server.patch("api/notes/:id", noteController::editNote);
+    // Edit a note
+    //server.patch("api/notes/edit/:id", noteController::editNote);
+    server.post("api/notes/edit/:id", noteController::editNote);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
