@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
+
 
 
 @Component({
@@ -27,11 +27,9 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
   enabled: boolean;
-
+  confirmDropDown = true;
   constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
               private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
-
-
 
   public notes: Note[];
   public serverFilteredNotes: Note[];
@@ -54,32 +52,31 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   qrcodename : string;
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
+  url: string;
   value: string;
-  display = false;
+  display: boolean;
   href: string;
-  generateQRCode(){
-    if(this.qrcodename === ''){
+  generateQRCode() {
+    if (this.qrcodename === '') {
       this.display = false;
-      alert('Please enter the name');
+      alert('Please enter a url');
       return;
-    }
-    else{
+    } else {
       this.value = this.qrcodename + '/viewer';
       this.display = true;
     }
   }
+
+
   downloadImage(){
     this.href = document.getElementsByTagName('img')[0].src;
   }
-
-
-
 
   public getNotesFromServer(): void {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
-        //status: this.noteStatus,
+        status: this.noteStatus,
         body: this.noteBody
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
@@ -160,6 +157,13 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  public toggleDropDown(): void {
+    if (this.confirmDropDown === true) {
+      this.confirmDropDown = false;
+    } else {
+      this.confirmDropDown = true;
+    }
+  }
 
   ngOnInit(): void {
     // Subscribe doorBoard's notes
@@ -180,7 +184,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     });
   });
   }
-
 
   ngOnDestroy(): void {
     if (this.getNotesSub) {

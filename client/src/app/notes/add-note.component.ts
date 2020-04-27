@@ -54,10 +54,10 @@ export class AddNoteComponent implements OnInit {
 
 
   add_note_validation_messages = {
-    // status: [
-    //   {type: 'required', message: 'Status is required'},
-    //   {type: 'pattern', message: 'Must be active, draft or template'}, // don't want to create a deleted message
-    // ],
+    status: [
+      {type: 'required', message: 'Status is required'},
+      {type: 'pattern', message: 'Must be active, draft or template'}, // don't want to create a deleted message
+    ],
 
     body: [,
       {type: 'required', message: 'Body is required'},

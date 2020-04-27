@@ -28,23 +28,7 @@ describe('DoorBoard list', () => {
     });
   });
 
-  it('Should type something in the office number filter and check that it returned correct elements', async () => {
-    await page.typeInput('doorBoard-officenumber-input', '112');
-    page.getDoorBoardListItems().each(e => {
-      expect(e.element(by.className('doorBoard-list-officenumber')).getText()).toEqual('112');
-    });
-  });
 
-
-  it('Should type something in the office number filter and building filter and check that it returned correct elements', async () => {
-    await page.typeInput('doorBoard-officenumber-input', '112');
-    await page.typeInput('doorBoard-building-input', 'White House');
-
-    page.getDoorBoardListItems().each(e => {
-      expect(e.element(by.className('doorBoard-list-officenumber')).getText()).toEqual('112');
-      expect(e.element(by.className('doorBoard-list-building')).getText()).toEqual('White House');
-    });
-  });
 
   it('Should type something partial in the company filter and check that it returned correct elements', async () => {
     await page.typeInput('doorBoard-building-input', 'House');

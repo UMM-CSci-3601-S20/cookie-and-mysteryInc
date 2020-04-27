@@ -20,16 +20,16 @@ export class NoteService {
    * @returns a list of the notes belonging to this doorBoard, filtered by body and status
    *
    */
-  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string}): Observable<Note[]> {
+  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string , status?: NoteStatus}): Observable<Note[]> {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
       if (filters.body) {
         httpParams = httpParams.set('body', filters.body);
       }
-      // if (filters.status) {
-      //   httpParams = httpParams.set('status', filters.status);
-      // }
+      if (filters.status) {
+        httpParams = httpParams.set('status', filters.status);
+      }
     }
     return this.httpClient.get<Note[]>(this.noteUrl, {
       params: httpParams,
