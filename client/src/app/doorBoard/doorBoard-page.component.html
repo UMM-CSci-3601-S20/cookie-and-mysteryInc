@@ -10,6 +10,7 @@
         <p>Email: {{getEmail()}}</p>
         <p>Building: {{getBuilding()}}</p>
         <p>Office Number: {{getOfficeNumber()}}</p>
+        <a href="{{getGcal()}}">{{getName()}}'s Google Calendar</a>
       </div>
     </div>
 
@@ -48,11 +49,11 @@
 
 
     <!--google calendar and related-->
-  <div fxLayout="row" class="grid-container">
+  <!-- <div fxLayout="row" class="grid-container">
     <div class="gcal-embed" *ngIf="this.doorBoard">
       <iframe [src]="this.GcalURL" style="border: 0" width="450" style="border: 0" height="700" frameborder="0"
         scrolling="auto"></iframe>
     </div>
-  </div>
+  </div> -->
 </div>
 

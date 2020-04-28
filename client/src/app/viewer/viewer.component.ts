@@ -107,6 +107,12 @@ export class ViewerComponent implements OnInit, OnDestroy {
     return this.doorBoard.email;
   }
 
+  public getGcal(): string {
+    let gmailUrl = this.getEmail().replace(/@/g, '%40');
+    gmailUrl = 'https://calendar.google.com/calendar/embed?mode=WEEK&showPrint=0&src=' + gmailUrl;
+    return gmailUrl;
+  }
+
   public getSub(): string {
     if (this.doorBoard){
     return this.doorBoard.sub;
