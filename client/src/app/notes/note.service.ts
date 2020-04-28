@@ -45,11 +45,10 @@ export class NoteService {
   filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, isPinned?: boolean } ): Note[] {
 
     let filteredNotes = notes;
-    if(filters.isPinned){
-      filteredNotes = filteredNotes.filter(note => {
+
+    filteredNotes = filteredNotes.filter(note => {
         return note.isPinned === filters.isPinned;
-      });
-    }
+    });
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
       filteredNotes = filteredNotes.filter(note => {
