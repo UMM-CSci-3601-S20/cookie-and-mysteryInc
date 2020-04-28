@@ -12,6 +12,7 @@ export class MockNoteService extends NoteService {
       body: 'This is the body of the first test id. It is somewhat long.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'active'
     },
     {
@@ -20,6 +21,7 @@ export class MockNoteService extends NoteService {
       body: 'This is the second test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'active'
     },
     {
@@ -28,6 +30,7 @@ export class MockNoteService extends NoteService {
       body: 'Third test id body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'template'
     },
     {
@@ -36,6 +39,7 @@ export class MockNoteService extends NoteService {
       body: 'This is the fourth test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'template'
     },
     {
@@ -44,6 +48,7 @@ export class MockNoteService extends NoteService {
       body: 'Fifth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'draft'
     },
     {
@@ -52,6 +57,7 @@ export class MockNoteService extends NoteService {
       body: 'Sixth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'draft'
     },
     {
@@ -60,6 +66,7 @@ export class MockNoteService extends NoteService {
       body: 'Fifth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'deleted'
     },
     {
@@ -68,6 +75,7 @@ export class MockNoteService extends NoteService {
       body: 'Eighth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'deleted'
     }
   ];

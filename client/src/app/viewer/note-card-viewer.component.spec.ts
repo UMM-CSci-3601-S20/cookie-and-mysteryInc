@@ -46,6 +46,7 @@ describe('NoteCardComponent', () => {
     body: 'Filler text',
     addDate: new Date(),
     expiration:  '2099-04-17T04:18:09.302Z',
+    isPinned: true,
     status : 'active'
   };
   beforeEach(() => {
