@@ -48,6 +48,7 @@ export class AddNoteComponent implements OnInit {
   building: string;
   officeNumber: string;
   status: string;
+  favorite: boolean;
 
   min: Date; // Earliest allowed date to be selected
   max: Date; // lasted date allowed to be selected
@@ -98,6 +99,7 @@ export class AddNoteComponent implements OnInit {
     // Body.value = '';
     const noteToAdd: NewNote = this.addNoteForm.value;
     noteToAdd.status = 'active';
+    //noteToAdd.favorite = false;
     const currentDate = new Date();
     const newDate = new Date(currentDate.setHours(currentDate.getHours() + 5)); // open to change to what is needed
 
