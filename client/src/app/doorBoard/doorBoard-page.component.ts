@@ -34,6 +34,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public notes: Note[];
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
+  public pinnedNotes: Note[];
   public GcalURL: SafeResourceUrl;
 
   doorBoard: DoorBoard;
@@ -45,6 +46,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteStatus: NoteStatus = 'active';
   public noteAddDate: Date;
   public noteExpireDate: Date;
+  public isPinned: boolean;
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
@@ -77,7 +79,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
         status: this.noteStatus,
-        body: this.noteBody
+        body: this.noteBody,
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
         this.updateFilter();
@@ -90,8 +92,12 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate
+        isPinned: false
+      });
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isPinned: true
       });
 }
 

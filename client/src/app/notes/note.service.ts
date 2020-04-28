@@ -30,6 +30,7 @@ export class NoteService {
       if (filters.status) {
         httpParams = httpParams.set('status', filters.status);
       }
+
     }
     return this.httpClient.get<Note[]>(this.noteUrl, {
       params: httpParams,
@@ -41,10 +42,14 @@ export class NoteService {
    * @param notes: the list of notes being filtered
    * @param filters: filtering by `addDate` and `expireDate`
    */
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, isPinned?: boolean } ): Note[] {
 
     let filteredNotes = notes;
-
+    if(filters.isPinned){
+      filteredNotes = filteredNotes.filter(note => {
+        return note.isPinned === filters.isPinned;
+      });
+    }
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
       filteredNotes = filteredNotes.filter(note => {
@@ -88,6 +93,10 @@ export class NoteService {
 
   editNote(editNote: Note, id: string): Observable<string> {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/edit/' + id, editNote).pipe(map(res => res.id));
+  }
+
+  pinNote(pinNote: Note, id: string): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/pin/' + id, pinNote).pipe(map(res => res.id));
   }
 
   getNoteById(id: string): Observable<Note> {

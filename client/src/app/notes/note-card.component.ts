@@ -20,7 +20,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   @Input() note: Note;
   @Input() simple ? = false;
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService) { }
+  constructor(private route: ActivatedRoute, private  noteService: NoteService) { }
 
  /* getNotesFromServer(): void {
     //this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
@@ -38,8 +38,15 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     }, err => {
         console.log(err);
       }
-
     );
+  }
+
+  pinNote(): void {
+    this.noteService.pinNote(this.note, this.note._id).subscribe(result => {
+      console.log('Note pin changed')
+    }, err => {
+      console.log(err);
+    });
   }
 
   ngOnInit(): void {
