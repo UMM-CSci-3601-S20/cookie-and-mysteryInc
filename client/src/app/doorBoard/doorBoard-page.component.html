@@ -2,8 +2,8 @@
   <div fxLayout="row" class="top-row-container">
 
     <div class="dropdown">
-      <button mat-fab class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
-        <mat-icon class="md-12" aria-label="DoorBoard Info">info</mat-icon>
+      <button mat-raised-button class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+        <h1>{{getName()}}'s DoorBoard</h1>
       </button>
       <div *ngIf="!confirmDropDown" class="dropdown-content">
         <p>Owner: {{getName()}}</p>
@@ -13,13 +13,13 @@
       </div>
     </div>
 
-    <div class="doorboard-title">
+    <!-- <div class="doorboard-title">
       <h1>{{getName()}}'s DoorBoard</h1>
-    </div>
+    </div> -->
 
     <div class="qrCode" style="text-align:center">
       <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br>
-      <button (click)="generateQRCode()" >Generate Your DoorBoard QR Code</button>
+      <button mat-raised-button (click)="generateQRCode()" >Generate Your DoorBoard QR Code</button>
       <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
       </ngx-qrcode><br>
       <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download Image</a>
