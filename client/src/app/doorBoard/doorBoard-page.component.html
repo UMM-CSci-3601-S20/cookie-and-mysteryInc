@@ -19,7 +19,7 @@
     </div>
 
     <div class="qrCode" style="text-align:center">
-      <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br>
+      <!-- <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br> -->
       <button (click)="generateQRCode()" >Generate Your DoorBoard QR Code</button>
       <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
       </ngx-qrcode><br>
