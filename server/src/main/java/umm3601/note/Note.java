@@ -36,6 +36,8 @@ public class Note {
   @Nullable @JsonInclude(Include.NON_NULL)
   public String expiration;
 
+  public boolean isPinned;
+
   public String status;
 
 }

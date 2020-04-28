@@ -79,6 +79,9 @@ public class Server {
     //server.patch("api/notes/edit/:id", noteController::editNote);
     server.post("api/notes/edit/:id", noteController::editNote);
 
+    // Pin a note
+    server.post("api/notes/pin/:id", noteController::pinNote);
+
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
       ctx.json(e); // you probably want to remove this in production

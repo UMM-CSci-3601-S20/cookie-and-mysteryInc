@@ -158,6 +158,7 @@ public class NoteControllerSpec {
       + "body: \"I am running 5 minutes late to my non-existent office\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2099-04-17T04:18:09.302Z\", "
+      + "isPinned: true,"
       + "status: \"active\""
       + "}"));
     testNotes.add(Document.parse("{ "
@@ -165,6 +166,7 @@ public class NoteControllerSpec {
       + "body: \"I am never coming to my office again\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2099-04-17T04:18:09.302Z\", "
+      + "isPinned: true,"
       + "status: \"active\""
       + "}"));
     testNotes.add(Document.parse("{ "
@@ -172,6 +174,7 @@ public class NoteControllerSpec {
       + "body: \"Not many come to my office I offer donuts\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2019-04-17T04:18:09.302Z\", "
+      + "isPinned: true,"
       + "status: \"active\""
       + "}"));
 
@@ -181,6 +184,7 @@ public class NoteControllerSpec {
       .append("body", "I am sam")
       .append("addDate", "2020-03-07T22:03:38+0000")
       .append("expiration", "2099-04-17T04:18:09.302Z")
+      .append("isPinned", true)
       .append("status", "active");
 
     noteDocuments.insertMany(testNotes);
@@ -508,6 +512,7 @@ public class NoteControllerSpec {
       + "\"doorBoardID\": \"" + new ObjectId() + "\", "
       + "\"body\": \"Faily McFailface\", "
       + "\"expiration\": \"2025-04-17T04:18:09.302Z\", "
+      + "\"isPinned\": true,"
       + "\"status\": \"active\""
       + "}";
 
@@ -532,6 +537,7 @@ public class NoteControllerSpec {
       + "\"body\": \"Faily McFailface\", "
       + "\"addDate\": \"2020-03-07T22:03:38+0000\", "
       + "\"expiration\": \"2025-04-17T04:18:09.302Z\", "
+      + "\"isPinned\": true,"
       + "\"status\": \"active\""
       + "}";
 

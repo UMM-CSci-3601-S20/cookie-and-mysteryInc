@@ -101,6 +101,7 @@ public class NoteController {
    * @param ctx a Javalin HTTP context
    */
 
+
   public void deleteNote(Context ctx) {
     String id = ctx.pathParam("id");
 
@@ -196,6 +197,8 @@ public class NoteController {
       filters.add(eq("status", ctx.queryParam("status")));
     }
 
+
+
     String sortBy = ctx.queryParam("sortBy", "status"); //Sort by query param, default being `status`
     String sortOrder = ctx.queryParam("sortorder", "asc");
 
@@ -261,6 +264,7 @@ public class NoteController {
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
       .check((note) -> note.body != null && note.body.length() > 1) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
       .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
+      .check((note)-> note.isPinned == false || note.isPinned == true)
       .get();
       System.out.println("We validated good");
 
@@ -320,6 +324,20 @@ public class NoteController {
       ctx.status(200);
       ctx.json(ImmutableMap.of("id", id));
     }
+  }
+
+  public void pinNote(Context ctx){
+    String id = ctx.pathParamMap().get("id");
+    Note noteToChange = ctx.bodyValidator(Note.class).get();
+    if(!noteToChange.isPinned){// if the isPinned is specifically not true then we will make it true to pin it
+      noteToChange.isPinned = true;
+    }
+    else if(noteToChange.isPinned){
+      noteToChange.isPinned = false;
+    }
+     Note noteChanged = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", noteToChange.isPinned));
+    ctx.status(200);
+    ctx.json(ImmutableMap.of("id", id));
   }
 
     /**
