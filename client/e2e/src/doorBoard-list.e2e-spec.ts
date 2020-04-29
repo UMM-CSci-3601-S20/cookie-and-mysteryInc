@@ -22,9 +22,9 @@ describe('DoorBoard list', () => {
   });
 
   it('Should type something in the building filter and check that it returned correct elements', async () => {
-    await page.typeInput('doorBoard-building-input', 'White House');
+    await page.typeInput('doorBoard-building-input', 'White House, 112');
     page.getDoorBoardListItems().each(e => {
-      expect(e.element(by.className('doorBoard-list-building')).getText()).toEqual('White House');
+      expect(e.element(by.className('doorBoard-list-building-officeNumber')).getText()).toEqual('White House, 112');
     });
   });
 
@@ -34,11 +34,11 @@ describe('DoorBoard list', () => {
     await page.typeInput('doorBoard-building-input', 'House');
 
     // Go through each of the cards that are being shown and get the buildings
-    const buildings = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-building')).getText());
+    const buildings = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-building-officeNumber')).getText());
 
     // We should see these buildings
-    expect(buildings).toContain('White House');
-    expect(buildings).toContain('Dancing House');
+    expect(buildings).toContain('White House, 112');
+    expect(buildings).toContain('Dancing House, 251');
   });
 
 
