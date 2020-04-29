@@ -19,7 +19,9 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   id: string;
   @Input() note: Note;
   @Input() simple ? = false;
-
+  content: any;
+  isClicked = false;
+  confirmIcon = false;
   constructor(private route: ActivatedRoute, private  noteService: NoteService) { }
 
  /* getNotesFromServer(): void {
@@ -48,6 +50,10 @@ export class NoteCardComponent implements OnInit, OnDestroy {
       console.log(err);
     });
   }
+
+  addToSummary(content){
+    content.isSelected = true;
+}
 
   ngOnInit(): void {
    // this.getNotesFromServer();

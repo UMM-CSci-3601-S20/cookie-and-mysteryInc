@@ -3,7 +3,15 @@
     <mat-card class="note-card" *ngIf="this.note">
 
       <mat-card-actions>
-      <button class="pinBtn"(click)="pinNote()"> Pin Note</button>
+      <span *ngIf="confirmIcon">
+      <button class="pinBtn"(click)="pinNote()" (click)="isClicked = !isClicked" [class.pinBtn]="isClicked" onclick="history.go(0)" (click)="confirmIcon=false">
+      <mat-icon>bookmark</mat-icon>
+      </button>
+      </span>
+      <button class="pinBtn"(click)="pinNote()" (click)="isClicked = !isClicked" [class.pinBtn]="isClicked" onclick="history.go(0)" *ngIf="!confirmIcon" (click)="confirmIcon=true">
+      <mat-icon>bookmark_border</mat-icon>
+      </button>
+
       </mat-card-actions>
       <mat-card-content id="noteCardTimestamp" align="end">
       <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
