@@ -2,13 +2,15 @@
   <div fxLayout="row" class="top-row-container">
 
     <div class="dropdown">
-      <button mat-raised-button class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+      <button mat-raised-button class="info-button" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
         <h1>{{getName()}}'s DoorBoard</h1>
       </button>
       <div *ngIf="!confirmDropDown" class="dropdown-content">
-        <p> {{getEmail()}}</p>
-        <p> {{getBuilding()}}, {{getOfficeNumber()}}</p>
-
+      <br>
+      <div>
+        <h3> Email: {{getEmail()}} </h3>
+        <h3> Office: {{getBuilding()}} {{getOfficeNumber()}}</h3>
+      </div>
       </div>
     </div>
 
@@ -17,11 +19,10 @@
     </div> -->
 
     <div class="qrCode" style="text-align:center">
-      <input type="text" placeholder="Enter above URL here" [(ngModel)]="qrcodename"><br>
-      <button mat-raised-button (click)="generateQRCode()" >Generate Your DoorBoard QR Code</button>
+      <button mat-raised-button (click)="generateQRCode()">Generate Your DoorBoard QR Code</button>
       <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
       </ngx-qrcode><br>
-      <a [href]="href" *ngIf="display" (click)="downloadImage()" download>Download Image</a>
+      <a mat-raised-button [href]="href" *ngIf="display" (click)="downloadImage()" download>Download Image</a>
     </div>
     <router-outlet></router-outlet>
   </div>
@@ -31,11 +32,12 @@
     <button mat-raised-button class="add-note-button" matTooltip="Add Note" matTooltipPosition="below"
       routerLink="/doorBoard/{{this.id}}/notes/new">Add New Note
     </button>
-
+    <div class='divider'></div>
     <button mat-raised-button class="return-button" routerLink="/doorBoards" matTooltip="Return to List of Owners" matTooltipPosition="below">
       Return to List of Owners
     </button>
   </div>
+
 
 
     <!--Notes-->
