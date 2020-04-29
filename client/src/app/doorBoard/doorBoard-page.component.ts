@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
@@ -23,12 +24,13 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 })
 
 export class DoorBoardPageComponent implements OnInit, OnDestroy {
+  thisUrl = location.href;
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
   enabled: boolean;
   confirmDropDown = true;
-  constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
+  constructor(private doorBoardService: DoorBoardService, private router: Router, private noteService: NoteService,
               private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
 
   public notes: Note[];
@@ -38,7 +40,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
   doorBoard: DoorBoard;
   id: string;
-
+  public href: string;
   getNotesSub: Subscription;
   getDoorBoardSub: Subscription;
 
@@ -55,16 +57,19 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   url: string;
   value: string;
   display: boolean;
-  href: string;
+  // generateQRCode() {
+  //   if (this.qrcodename === '') {
+  //     this.display = false;
+  //     alert('Please enter a url');
+  //     return;
+  //   } else {
+  //     this.value = this.qrcodename + '/viewer';
+  //     this.display = true;
+  //   }
+  // }
   generateQRCode() {
-    if (this.qrcodename === '') {
-      this.display = false;
-      alert('Please enter a url');
-      return;
-    } else {
-      this.value = this.qrcodename + '/viewer';
-      this.display = true;
-    }
+    this.value = this.thisUrl + '/viewer';
+    this.display = true;
   }
 
 
