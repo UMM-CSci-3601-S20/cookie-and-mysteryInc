@@ -6,10 +6,9 @@
         <h1>{{getName()}}'s DoorBoard</h1>
       </button>
       <div *ngIf="!confirmDropDown" class="dropdown-content">
-        <p>Owner: {{getName()}}</p>
-        <p>Email: {{getEmail()}}</p>
-        <p>Building: {{getBuilding()}}</p>
-        <p>Office Number: {{getOfficeNumber()}}</p>
+        <p> {{getEmail()}}</p>
+        <p> {{getBuilding()}}, {{getOfficeNumber()}}</p>
+
       </div>
     </div>
 
