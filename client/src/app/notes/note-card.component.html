@@ -4,11 +4,11 @@
 
       <mat-card-actions>
       <span *ngIf="confirmIcon">
-      <button class="pinBtn"(click)="pinNote()" (click)="isClicked = !isClicked" [class.pinBtn]="isClicked" onclick="history.go(0)" (click)="confirmIcon=false">
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmIcon=false">
       <mat-icon>bookmark</mat-icon>
       </button>
       </span>
-      <button class="pinBtn"(click)="pinNote()" (click)="isClicked = !isClicked" [class.pinBtn]="isClicked" onclick="history.go(0)" *ngIf="!confirmIcon" (click)="confirmIcon=true">
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmIcon" (click)="confirmIcon=true">
       <mat-icon>bookmark_border</mat-icon>
       </button>
 
@@ -20,9 +20,6 @@
       <mat-card-content>
         {{ this.note.body}}
 
-      </mat-card-content>
-      <mat-card-content>
-        {{this.note.isPinned}}
       </mat-card-content>
 
 
