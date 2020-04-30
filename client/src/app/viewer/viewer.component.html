@@ -17,23 +17,18 @@
     </div>
   </div>
 
-    <!--Notes-->
-    <div class="grid-container">
-    <div fxFlex>
-            <!-- <div *ngIf="compareSubs() | async">
-                <mat-radio-group  name="radioGroup" [(ngModel)]="noteStatus" (change)="radioChange($event)" id="note-status-select">
-                  <mat-radio-button class="radioButton" value="active">Active</mat-radio-button>
-                  <mat-radio-button class="radioButton" value="template">Template</mat-radio-button>
-                  <mat-radio-button class="radioButton" value="draft">Draft</mat-radio-button>
-                  <mat-radio-button class="radioButton" value="deleted">Deleted</mat-radio-button>
-                </mat-radio-group>
-             </div> -->
-          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-card-container">
-          <app-note-card-viewer simple="true" *ngFor="let note of this.filteredNotes" class="note-card-viewer" [note]="note" fxFlex="1 1 250px"></app-note-card-viewer>
-          </div>
-      </div>
-    </div>
+ <!--Pinned Notes-->
+ <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
+  <p>Pinned Notes</p>
+  <app-note-card-viewer simple="true" *ngFor="let note of this.pinnedNotes"   class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
+</div>
 
+
+<!--Notes-->
+<div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
+  <p>All Notes</p>
+  <app-note-card-viewer simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
+</div>
 
     <!--google calendar and related-->
     <div class="grid-container">
@@ -43,4 +38,3 @@
     </div>
   </div>
 </div>
-
