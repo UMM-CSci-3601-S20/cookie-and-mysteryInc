@@ -78,4 +78,8 @@ describe('NoteCardComponent', () => {
     expect(testNote.expiration === '2099-04-17T04:18:09.302Z').toBe(true);
   });
 
+  it('test_id isPinned is true' , () => {
+    expect(testNote.isPinned === true ).toBe(true);
+  });
+
 });
