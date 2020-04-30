@@ -305,14 +305,36 @@ public class NoteController {
     String id = ctx.pathParamMap().get("id");
 
     Note newNote= ctx.bodyValidator(Note.class)
-    .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).
+    get();
     String newBody = newNote.body;
     String newExpirationDate = newNote.expiration;
 
-    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("body", newBody));
-    System.out.println("OLD EXPIRE: " + oldNote.expiration);
+    Note oldNote =  noteCollection.find(eq("_id", new ObjectId(id))).first();
+    String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
+    System.out.println("OLDNOTE DOORBOARD ID +" + oldNote.doorBoardID);
+
+    DoorBoard doorBoard;
+    try {
+      doorBoard = getDoorBoard(oldNote.doorBoardID);
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse(
+        oldNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    }
+
+    if (doorBoard == null) {
+      throw new BadRequestResponse(
+        oldNote.doorBoardID + "does not refer to an existing DoorBoard.");
+    }
+    System.out.println("Owner sub: + " + doorBoard.sub);
+    System.out.println("USERSUB sub: + " + currentUserSub);
+    if (!doorBoard.sub.equals(currentUserSub)) {
+      throw new ForbiddenResponse("You can only add notes to your own DoorBoard.");
+    }
+
+
+     oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("body", newBody));
     oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", newExpirationDate));
-    System.out.println("NEW EXPIRE: " + oldNote.expiration);
     if (oldNote == null) {
       ctx.status(400);
       throw new NotFoundResponse("The requested note was not found");
