@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NoteService } from '../notes/note.service';
-import { Note } from './note';
+import { Note, NewNote, SaveNote } from './note';
 import { ActivatedRoute } from '@angular/router';
 
 // this is a template for a single note essentially
@@ -17,8 +17,10 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   getNotesSub: Subscription;
   //public serverFilteredNotes: Note[];
   id: string;
-  @Input() note: Note;
+  favorite: boolean;
+  @Input() note: SaveNote;
   @Input() simple ? = false;
+  @Input() confirmFavoriteIcon = false;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
@@ -40,6 +42,16 @@ export class NoteCardComponent implements OnInit, OnDestroy {
       }
 
     );
+  }
+
+  favoriteNote(): void{
+    this.getNotesSub = this.noteService.favoriteNote(this.note, this.note._id).subscribe ();
+    console.log(this.note.favorite);
+  }
+
+  unfavoriteNote(): void{
+    this.getNotesSub = this.noteService.unfavoriteNote(this.note, this.note._id).subscribe ();
+    console.log(this.note.favorite);
   }
 
   ngOnInit(): void {

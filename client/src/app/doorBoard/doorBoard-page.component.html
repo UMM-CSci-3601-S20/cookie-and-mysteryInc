@@ -49,7 +49,7 @@
 
     <!--Notes-->
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container">
-          <app-note-card simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card>
+          <app-note-card simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" [confirmFavoriteIcon]="note.favorite" fxFlex="1 1 280px"></app-note-card>
           </div>
 
 

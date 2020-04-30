@@ -38,4 +38,8 @@ public class Note {
 
   public String status;
 
+  public Boolean isExpired;
+
+  public Boolean favorite;
+
 }

@@ -64,10 +64,16 @@ public class Server {
     // List notes, filtered using query parameters
     server.get("api/notes", noteController::getNotesByDoorBoard);
 
+    server.get("api/notes/favorite", noteController::getFavoriteNotes);
+
     //get a single note
     server.get("api/notes/:id", noteController::getNoteByID);
 
+    //favoriting a note
+    server.post("api/notes/:id/favorite", noteController::favoriteNote);
 
+    //unfavoriting a note
+    server.post("api/notes/:id/unfavorite", noteController::unfavoriteNote);
 
     // Delete specific note
     server.delete("api/notes/:id", noteController::deleteNote);

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
-import { Note, NoteStatus, NewNote } from './note';
+import { Note, NoteStatus, NewNote, SaveNote } from './note';
 
 @Injectable()
 export class NoteService {
@@ -36,6 +36,19 @@ export class NoteService {
     });
   }
 
+  getFavoriteNotes(doorBoardID: string, filters?: { favorite?: boolean}): Observable<Note[]> {
+    let httpParams: HttpParams = new HttpParams();
+    httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
+    if (filters) {
+      if (filters.favorite) {
+        httpParams = httpParams.set('favorite', filters.favorite.toString());
+      }
+    }
+    return this.httpClient.get<Note[]>(this.noteUrl, {
+      params: httpParams,
+    });
+  }
+
   /**
    *
    * @param notes: the list of notes being filtered
@@ -44,6 +57,8 @@ export class NoteService {
   filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date } ): Note[] {
 
     let filteredNotes = notes;
+
+
 
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
@@ -60,6 +75,8 @@ export class NoteService {
 */
     return filteredNotes;
   }
+
+
 
   addNewNote(newNote: NewNote): Observable<string> {
     console.log('Got to addNewNote in note.service.ts ');
@@ -82,6 +99,8 @@ export class NoteService {
     return this.httpClient.delete<string>(this.noteUrl + '/' + id);
   }
 
+  //favoriteNote(
+
   getNoteByID(id: string): Note {
   return null;
   }
@@ -92,5 +111,13 @@ export class NoteService {
 
   getNoteById(id: string): Observable<Note> {
     return this.httpClient.get<Note>(this.noteUrl + '/' + id);
+  }
+
+  favoriteNote(favoriteNote: Note, id: string): Observable<string>{
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/favorite', favoriteNote).pipe(map(res => res.id));
+  }
+
+  unfavoriteNote(unfavoriteNote: Note, id: string): Observable<string>{
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/unfavorite', unfavoriteNote).pipe(map(res => res.id));
   }
 }

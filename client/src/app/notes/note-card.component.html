@@ -17,12 +17,14 @@
         <button mat-button class="note-action edit" matTooltip="Edit Note" matTooltipPosition="above" [routerLink]="'/notes/' + 'edit/' + note._id ">
           <mat-icon aria-label="Edit note">create</mat-icon>
         </button>
-        <button mat-button class = "note-action not-favorite" matTooltip = "Favorite Note">
-          <mat-icon aria-label = "Unfavorite note" >star_border</mat-icon>
+        <button mat-button class = "note-action not-favorite" (click)="favoriteNote()" onclick="history.go(0)" *ngIf="!confirmFavoriteIcon" (click)="confirmIcon=true" matTooltip = "Favorite Note">
+          <mat-icon aria-label = "favorite note" >star_border</mat-icon>
         </button>
-        <button mat-button class="note-action favorite" (click)="null">
-          <mat-icon aria-label="Favorite note" [ngStyle]="{'color':'yellow'}">star</mat-icon>
+        <span *ngIf="confirmFavoriteIcon">
+        <button mat-button class="note-action favorite" (click)="unfavoriteNote()" onclick="history.go(0)" (click)="confirmIcon=false" matTooltip = "Unfavorite note">
+          <mat-icon aria-label="unFavorite note" [ngStyle]="{'color':'yellow'}">star</mat-icon>
         </button>
+        </span>
         <button mat-button class="deleteBtn" (click)="deleteNoteFromServer()" mdbWave2sEffect onclick="history.go(0)">
           <mat-icon>delete</mat-icon> </button>
       </p>

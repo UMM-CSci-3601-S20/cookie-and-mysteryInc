@@ -204,6 +204,39 @@ public class NoteController {
       .into(new ArrayList<>()));
   }
 
+  public void getFavoriteNotes(Context ctx) {
+    checkCredentialsForGetNotesRequest(ctx);
+
+    // If we've gotten this far without throwing an exception,
+    // the client has the proper credentials to make the get request.
+
+    List<Bson> filters = new ArrayList<Bson>(); // start with a blank JSON document
+    if (ctx.queryParamMap().containsKey("doorBoardID")) {
+      String targetDoorBoardID = ctx.queryParam("doorBoardID");
+      System.out.println(targetDoorBoardID);
+      filters.add(eq("doorBoardID", targetDoorBoardID));
+      List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
+      // from a specific owner id
+      filterExpiredNotes(notes); // filtering out and deleting expired notes
+    }
+    // if (ctx.queryParamMap().containsKey("body")) {
+    //   filters.add(regex("body", ctx.queryParam("body"), "i"));
+    // }
+    // if (ctx.queryParamMap().containsKey("status")) {
+    //   filters.add(eq("status", ctx.queryParam("status")));
+    // }
+    if (ctx.queryParamMap().containsKey("favorite")) {
+      filters.add(eq("favorite", ctx.queryParam("favorite")));
+    }
+
+    String sortBy = ctx.queryParam("sortBy", "favorite"); //Sort by query param, default being `status`
+    String sortOrder = ctx.queryParam("sortorder", "asc");
+
+    ctx.json(noteCollection.find(filters.isEmpty() ? new Document() : and(filters))
+      .sort(sortOrder.equals("desc") ?  Sorts.descending(sortBy) : Sorts.ascending(sortBy))
+      .into(new ArrayList<>()));
+  }
+
   /**
    * Check whether the user is allowed to perform this get request, or if
    * we should abort and send back some sort of error response.
@@ -296,6 +329,46 @@ public class NoteController {
 
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newNote._id));
+  }
+
+  /**
+   * favorite an existing note
+   * @param ctx
+   */
+  public void favoriteNote(Context ctx) {
+    String id = ctx.pathParamMap().get("id");
+
+    // Note newNote = ctx.bodyValidator(Note.class)
+    // .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    //Boolean newFavorite = newNote.favorite;
+
+    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("favorite", true));
+
+    if (oldNote == null) {
+      ctx.status(400);
+      throw new NotFoundResponse("The requested note was not found");
+    } else {
+      ctx.status(200);
+      ctx.json(ImmutableMap.of("id", id));
+    }
+  }
+
+  public void unfavoriteNote(Context ctx) {
+    String id = ctx.pathParamMap().get("id");
+
+    // Note newNote = ctx.bodyValidator(Note.class)
+    // .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    // //Boolean newFavorite = newNote.favorite;
+
+    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("favorite", false));
+
+    if (oldNote == null) {
+      ctx.status(400);
+      throw new NotFoundResponse("The requested note was not found");
+    } else {
+      ctx.status(200);
+      ctx.json(ImmutableMap.of("id", id));
+    }
   }
 
   /**

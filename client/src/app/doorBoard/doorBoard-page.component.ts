@@ -1,5 +1,5 @@
 
-import { Note, NoteStatus } from '../notes/note';
+import { Note, NoteStatus, SaveNote } from '../notes/note';
 import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
 import { DoorBoardService } from './doorBoard.service';
 import { DoorBoard } from './doorBoard';
@@ -28,6 +28,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
+  @Input() note: SaveNote;
   enabled: boolean;
   confirmDropDown = true;
   constructor(private doorBoardService: DoorBoardService, private router: Router, private noteService: NoteService,
@@ -47,6 +48,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteStatus: NoteStatus = 'active';
   public noteAddDate: Date;
   public noteExpireDate: Date;
+  public favorite: boolean;
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
