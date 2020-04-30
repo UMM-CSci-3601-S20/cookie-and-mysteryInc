@@ -14,10 +14,6 @@
       </div>
     </div>
 
-    <!-- <div class="doorboard-title">
-      <h1>{{getName()}}'s DoorBoard</h1>
-    </div> -->
-
     <div class="qrCode" style="text-align:center">
       <button mat-raised-button (click)="generateQRCode()">Generate Your DoorBoard QR Code</button>
       <ngx-qrcode *ngIf="display" id="qrCodeImage" [qrc-element-type]="elementType" [qrc-value] = "value">
