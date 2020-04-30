@@ -40,7 +40,7 @@ export class NoteService {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
-      if (filters.favorite) {
+      if (filters.favorite != undefined) {
         httpParams = httpParams.set('favorite', filters.favorite.toString());
       }
     }
@@ -54,9 +54,17 @@ export class NoteService {
    * @param notes: the list of notes being filtered
    * @param filters: filtering by `addDate` and `expireDate`
    */
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean } ): Note[] {
 
     let filteredNotes = notes;
+
+    if (filters.favorite === true) {
+      console.log('favorite notes');
+
+      notes = notes.filter(note => {
+        return note.favorite.valueOf() === true;
+      });
+    }
 
 
 
@@ -75,6 +83,7 @@ export class NoteService {
 */
     return filteredNotes;
   }
+
 
 
 

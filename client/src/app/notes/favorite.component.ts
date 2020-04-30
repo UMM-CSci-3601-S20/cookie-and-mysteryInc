@@ -59,8 +59,9 @@ export class FavoriteComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate
+        // addDate: this.noteAddDate,
+        // expireDate: this.noteExpireDate
+        favorite: this.favorite,
       });
 }
 

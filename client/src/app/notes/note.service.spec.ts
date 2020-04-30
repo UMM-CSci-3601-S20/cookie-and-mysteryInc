@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Note, NewNote } from './note';
+import { Note, NewNote, SaveNote } from './note';
 import { NoteService } from './note.service';
 
 describe('Note service: ', () => {
@@ -13,7 +13,9 @@ describe('Note service: ', () => {
       body: 'This is the body of the first test id. It is somewhat long.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'active'
+      status: 'active',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'second_id',
@@ -21,7 +23,9 @@ describe('Note service: ', () => {
       body: 'This is the second test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'deleted'
+      status: 'deleted',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'third_id',
@@ -29,7 +33,9 @@ describe('Note service: ', () => {
       body: 'Third test id body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'template'
+      status: 'template',
+      favorite: false,
+      isExpired: false,
     }
   ];
 

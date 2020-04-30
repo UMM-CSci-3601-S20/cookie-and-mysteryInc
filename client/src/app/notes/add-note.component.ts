@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NewNote, SaveNote } from './note';
+import {Note, NewNote, SaveNote } from './note';
 import { NoteService } from './note.service';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { DoorBoard } from '../doorBoard/doorBoard';
@@ -97,7 +97,7 @@ export class AddNoteComponent implements OnInit {
 
   submitForm() {
     // Body.value = '';
-    const noteToAdd: SaveNote = this.addNoteForm.value;
+    const noteToAdd: Note = this.addNoteForm.value;
     noteToAdd.status = 'active';
     noteToAdd.favorite = false;
     noteToAdd.isExpired = false;

@@ -10,13 +10,13 @@ export interface NewNote {
   status: NoteStatus;
 }
 
-export interface Note extends NewNote {
-  favorite: boolean;
+export interface Note extends NewNote, SaveNote {
+  //favorite: boolean;
   _id: string;
   addDate: Date;
 }
 
-export interface SaveNote extends NewNote, Note  {
+export interface SaveNote {
   isExpired: boolean;
   favorite: boolean;
 }

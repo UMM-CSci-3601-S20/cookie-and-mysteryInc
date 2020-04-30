@@ -18,9 +18,10 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   //public serverFilteredNotes: Note[];
   id: string;
   favorite: boolean;
-  @Input() note: SaveNote;
+  @Input() note: Note;
   @Input() simple ? = false;
   @Input() confirmFavoriteIcon = false;
+  confirmIcon: boolean;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 

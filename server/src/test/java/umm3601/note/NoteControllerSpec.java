@@ -158,21 +158,27 @@ public class NoteControllerSpec {
       + "body: \"I am running 5 minutes late to my non-existent office\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2099-04-17T04:18:09.302Z\", "
-      + "status: \"active\""
+      + "status: \"active\", "
+      + "favorite:" + false + ", "
+      + "isExpired:" + false + ", "
       + "}"));
     testNotes.add(Document.parse("{ "
       + "doorBoardID: \"" + doorBoard1ID + "\", "
       + "body: \"I am never coming to my office again\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2099-04-17T04:18:09.302Z\", "
-      + "status: \"active\""
+      + "status: \"active\", "
+      + "favorite:" + false + ", "
+      + "isExpired:" + false + ", "
       + "}"));
     testNotes.add(Document.parse("{ "
       + "doorBoardID: \"" + samsDoorBoardID + "\", "
       + "body: \"Not many come to my office I offer donuts\", "
       + "addDate: \"2020-03-07T22:03:38+0000\", "
       + "expiration: \"2019-04-17T04:18:09.302Z\", "
-      + "status: \"active\""
+      + "status: \"active\", "
+      + "favorite:" + false + ", "
+      + "isExpired:" + false + ", "
       + "}"));
 
     samsNoteId = new ObjectId();
@@ -181,7 +187,9 @@ public class NoteControllerSpec {
       .append("body", "I am sam")
       .append("addDate", "2020-03-07T22:03:38+0000")
       .append("expiration", "2099-04-17T04:18:09.302Z")
-      .append("status", "active");
+      .append("status", "active")
+      .append("favorite", false)
+      .append("isExpired", false);
 
     noteDocuments.insertMany(testNotes);
     noteDocuments.insertOne(Document.parse(sam.toJson()));
@@ -255,6 +263,20 @@ public class NoteControllerSpec {
     String result = ctx.resultString();
     Note[] resultNotes = JavalinJson.fromJson(result, Note[].class);
 
+    assertEquals(0, resultNotes.length);
+  }
+
+  @Test
+  public void filterFavorite() {
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/notes/favorite");
+
+    noteController.getFavoriteNotes(ctx);
+
+    assertEquals(200, mockRes.getStatus());
+
+    String result = ctx.resultString();
+    System.out.println(result);
+    Note[] resultNotes = JavalinJson.fromJson(result, Note[].class);
     assertEquals(0, resultNotes.length);
   }
 

@@ -205,12 +205,20 @@ public class NoteController {
   }
 
   public void getFavoriteNotes(Context ctx) {
-    checkCredentialsForGetNotesRequest(ctx);
+    //checkCredentialsForGetNotesRequest(ctx);
 
     // If we've gotten this far without throwing an exception,
     // the client has the proper credentials to make the get request.
 
+
     List<Bson> filters = new ArrayList<Bson>(); // start with a blank JSON document
+    if (ctx.queryParamMap().containsKey("favorite")) {
+      Boolean favorite = Boolean.parseBoolean(ctx.queryParam("favorite"));
+      System.out.println(favorite);
+      if ( favorite == true ){
+        filters.add(eq("favorite", favorite));
+      }
+    }
     if (ctx.queryParamMap().containsKey("doorBoardID")) {
       String targetDoorBoardID = ctx.queryParam("doorBoardID");
       System.out.println(targetDoorBoardID);
@@ -225,9 +233,13 @@ public class NoteController {
     // if (ctx.queryParamMap().containsKey("status")) {
     //   filters.add(eq("status", ctx.queryParam("status")));
     // }
-    if (ctx.queryParamMap().containsKey("favorite")) {
-      filters.add(eq("favorite", ctx.queryParam("favorite")));
-    }
+    // if (ctx.queryParamMap().containsKey("favorite")) {
+    //   Boolean favorite = Boolean.parseBoolean(ctx.queryParam("favorite"));
+    //   System.out.println(favorite);
+    //   if ( favorite == true ){
+    //     filters.add(eq("favorite", ctx.queryParam("favorite")));
+    //   }
+    // }
 
     String sortBy = ctx.queryParam("sortBy", "favorite"); //Sort by query param, default being `status`
     String sortOrder = ctx.queryParam("sortorder", "asc");

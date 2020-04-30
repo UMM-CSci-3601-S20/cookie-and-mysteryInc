@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Note } from '../app/notes/note';
+import { Note, SaveNote } from '../app/notes/note';
 import { NoteService } from '../app/notes/note.service';
 
 @Injectable()
@@ -12,7 +12,9 @@ export class MockNoteService extends NoteService {
       body: 'This is the body of the first test id. It is somewhat long.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'active'
+      status: 'active',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'second_id',
@@ -20,7 +22,9 @@ export class MockNoteService extends NoteService {
       body: 'This is the second test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'active'
+      status: 'active',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'third_id',
@@ -28,7 +32,9 @@ export class MockNoteService extends NoteService {
       body: 'Third test id body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'template'
+      status: 'template',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'fourth_id',
@@ -36,7 +42,9 @@ export class MockNoteService extends NoteService {
       body: 'This is the fourth test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'template'
+      status: 'template',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'fifth_id',
@@ -44,7 +52,9 @@ export class MockNoteService extends NoteService {
       body: 'Fifth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'draft'
+      status: 'draft',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'sixth_id',
@@ -52,7 +62,9 @@ export class MockNoteService extends NoteService {
       body: 'Sixth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'draft'
+      status: 'draft',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'seventh_id',
@@ -60,7 +72,9 @@ export class MockNoteService extends NoteService {
       body: 'Fifth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'deleted'
+      status: 'deleted',
+      favorite: false,
+      isExpired: false,
     },
     {
       _id: 'eighth_id',
@@ -68,7 +82,9 @@ export class MockNoteService extends NoteService {
       body: 'Eighth id test body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'deleted'
+      status: 'deleted',
+      favorite: false,
+      isExpired: false,
     }
   ];
 

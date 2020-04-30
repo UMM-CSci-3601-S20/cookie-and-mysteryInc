@@ -98,7 +98,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       this.serverFilteredNotes,
       {
         addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate
+        expireDate: this.noteExpireDate,
       });
 }
 
