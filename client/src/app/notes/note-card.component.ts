@@ -21,7 +21,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   @Input() simple ? = false;
   content: any;
   isClicked = false;
-  @Input() confirmIcon = false;
+  @Input() confirmPinnedIcon = false;
   constructor(private route: ActivatedRoute, private  noteService: NoteService) { }
 
  /* getNotesFromServer(): void {

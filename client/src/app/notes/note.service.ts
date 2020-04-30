@@ -24,9 +24,6 @@ export class NoteService {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
-      if (filters.body) {
-        httpParams = httpParams.set('body', filters.body);
-      }
       if (filters.status) {
         httpParams = httpParams.set('status', filters.status);
       }
@@ -84,10 +81,6 @@ export class NoteService {
     httpParams = httpParams.set('doorBoardID', id);
     console.log('NOTE SERVICE CALLED');
     return this.httpClient.delete<string>(this.noteUrl + '/' + id);
-  }
-
-  getNoteByID(id: string): Note {
-  return null;
   }
 
   editNote(editNote: Note, id: string): Observable<string> {

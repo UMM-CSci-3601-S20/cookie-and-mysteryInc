@@ -3,12 +3,12 @@
     <mat-card class="note-card" *ngIf="this.note">
 
       <mat-card-actions>
-      <span *ngIf="confirmIcon">
+      <span *ngIf="confirmPinnedIcon">
       <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmIcon=false">
       <mat-icon>bookmark</mat-icon>
       </button>
       </span>
-      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmIcon" (click)="confirmIcon=true">
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmIcon=true">
       <mat-icon>bookmark_border</mat-icon>
       </button>
 
