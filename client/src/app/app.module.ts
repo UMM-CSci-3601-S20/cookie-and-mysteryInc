@@ -61,6 +61,10 @@ import { NoteCardViewerComponent } from './viewer/note-card-viewer.component';
 //QR code
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 
+//Saved notes
+import { FavoriteComponent } from './notes/favorite.component';
+import { NoteCardFavoriteComponent } from './notes/note-card-favorite.component';
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
@@ -94,7 +98,9 @@ const MATERIAL_MODULES: any[] = [
     NavBarComponent,
     DoorBoardCardComponent,
     ViewerComponent,
-    NoteCardViewerComponent
+    NoteCardViewerComponent,
+    FavoriteComponent,
+    NoteCardFavoriteComponent
   ],
   imports: [
     BrowserModule,

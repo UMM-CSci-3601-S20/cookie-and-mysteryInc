@@ -1,0 +1,27 @@
+<div class="page">
+  <div fxLayout="row" class="top-row-container">
+
+    <div class="doorboard-title">
+      <h1>Your Saved Notes</h1>
+    </div>
+
+  <div fxLayout="row wrap" class="add-button-container">
+    <!--This is where we add our new notes. The DoorBoard ID is automatically set for each new note to match the id of the DoorBoard-->
+    <button mat-raised-button class="add-note-button" matTooltip="Return to Your DoorBoard" matTooltipPosition="below"
+      routerLink="/doorBoards/{{this.id}}"> Return to Your DoorBoard
+    </button>
+  </div>
+
+
+    <!--Notes-->
+          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container">
+
+          <app-note-card-favorite simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-favorite>
+          </div>
+
+
+
+
+
+</div>
+

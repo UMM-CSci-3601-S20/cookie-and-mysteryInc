@@ -5,10 +5,9 @@
         <mat-icon class="md-12" aria-label="DoorBoard Info">info</mat-icon>
       </button>
       <div *ngIf="!confirmDropDown" class="dropdown-content">
-        <p>Owner: {{getName()}}</p>
-        <p>Email: {{getEmail()}}</p>
-        <p>Building: {{getBuilding()}}</p>
-        <p>Office Number: {{getOfficeNumber()}}</p>
+        <p><strong>{{getName()}}</strong></p>
+        <p>{{getEmail()}}</p>
+        <p>{{getBuilding()}} {{getOfficeNumber()}}</p>
         <a href="{{getGcal()}}">{{getName()}}'s Google Calendar</a>
       </div>
     </div>
