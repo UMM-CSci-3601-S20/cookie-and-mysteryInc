@@ -32,6 +32,7 @@ export class FavoriteComponent implements OnInit, OnDestroy {
   doorBoardService: any;
   doorBoard: DoorBoard;
   public filteredNotes: Note[];
+  public favoritedNotes: Note[];
   noteAddDate: Date;
   noteExpireDate: Date;
 
@@ -59,12 +60,14 @@ export class FavoriteComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        // addDate: this.noteAddDate,
-        // expireDate: this.noteExpireDate
-        favorite: this.favorite,
+        favorite: false
       });
-}
-
+    this.favoritedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        favorite: true
+      });
+  }
 
   retrieveNotes(): void {
 

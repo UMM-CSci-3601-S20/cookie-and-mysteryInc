@@ -61,12 +61,10 @@ export class NoteService {
     if (filters.favorite === true) {
       console.log('favorite notes');
 
-      notes = notes.filter(note => {
-        return note.favorite.valueOf() === true;
+      filteredNotes = filteredNotes.filter(note => {
+        return note.favorite === filters.favorite;
       });
     }
-
-
 
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
