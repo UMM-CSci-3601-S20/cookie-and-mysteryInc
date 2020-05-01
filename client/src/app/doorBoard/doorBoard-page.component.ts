@@ -37,6 +37,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public notes: Note[];
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
+  public isExpiredNotes: Note[];
   public GcalURL: SafeResourceUrl;
 
   doorBoard: DoorBoard;
@@ -97,10 +98,23 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate,
+        isExpired: true
       });
-}
+    this.isExpiredNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isExpired: false
+      });
+  }
+
+//   public updateFilter(): void {
+//     this.filteredNotes = this.noteService.filterNotes(
+//       this.serverFilteredNotes,
+//       {
+//         addDate: this.noteAddDate,
+//         expireDate: this.noteExpireDate,
+//       });
+// }
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar

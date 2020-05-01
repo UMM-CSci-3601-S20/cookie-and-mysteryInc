@@ -54,7 +54,7 @@ export class NoteService {
    * @param notes: the list of notes being filtered
    * @param filters: filtering by `addDate` and `expireDate`
    */
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean, isExpired?: boolean } ): Note[] {
 
     let filteredNotes = notes;
 
@@ -63,6 +63,14 @@ export class NoteService {
 
       filteredNotes = filteredNotes.filter(note => {
         return note.favorite === filters.favorite;
+      });
+    }
+
+    if (filters.isExpired === false) {
+      console.log('expired notes');
+
+      filteredNotes = filteredNotes.filter(note => {
+        return note.isExpired === filters.isExpired;
       });
     }
 

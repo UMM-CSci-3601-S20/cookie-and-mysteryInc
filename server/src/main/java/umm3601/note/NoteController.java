@@ -133,14 +133,19 @@ public class NoteController {
     for(int i = 0; i < notes.size(); i++){ // running through each index of the array
       if(notes.get(i).expiration != null){ // making sure the expiration date exists
       long testExpire = Instant.parse(notes.get(i).expiration).toEpochMilli();
+      boolean favorite = notes.get(i).favorite;
       currentDateTime = Instant.now().toEpochMilli();
 
       if(checkIfExpired(testExpire) ) {
         String removeID = notes.get(i)._id;
-        noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
+        if(checkIfFavorite(favorite)){
+          noteCollection.findOneAndUpdate(eq("_id", new ObjectId(removeID)), set("isExpired", true));
+        } else {
+          noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
         }
       }
     }
+  }
   }
 
   public void getNoteByID(Context ctx) {
@@ -165,6 +170,13 @@ public class NoteController {
     if(currentDateTime >= expiredDate) {
       return true;
     }}
+    return false;
+  }
+
+  private boolean checkIfFavorite(boolean favorite) {
+    if(favorite == true) {
+      return true;
+    }
     return false;
   }
 
