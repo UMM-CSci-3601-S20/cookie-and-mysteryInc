@@ -7,10 +7,10 @@
       <mat-card-content>
         {{ this.note.body}}
       </mat-card-content>
-
+      <span *ngIf="confirmIsExpired">
       <button mat-button class="deleteBtn" (click)="deleteNoteFromServer()" mdbWave2sEffect onclick="history.go(0)">
         <mat-icon>delete</mat-icon> </button>
-
+      </span>
         <!-- <button mat-button class="repostBtn" (click)="repostNote()" mdbWave2sEffect onclick="history.go(0)">
           <mat-icon>restore</mat-icon> </button> -->
 

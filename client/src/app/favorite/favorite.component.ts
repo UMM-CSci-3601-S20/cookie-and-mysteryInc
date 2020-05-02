@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { DoorBoard } from '../doorBoard/doorBoard';
 import { NgModule } from '@angular/core';
@@ -35,6 +35,7 @@ export class FavoriteComponent implements OnInit, OnDestroy {
   public favoritedNotes: Note[];
   noteAddDate: Date;
   noteExpireDate: Date;
+  @Input() confirmIsExpired = false;
 
   constructor(private location: Location, private noteService: NoteService,
               private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute ) {

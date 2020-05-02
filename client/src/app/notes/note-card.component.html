@@ -28,9 +28,9 @@
         <button mat-button class="deleteBtn" (click)="deleteNoteFromServer()" *ngIf="!confirmFavoriteIcon" mdbWave2sEffect onclick="history.go(0)">
           <mat-icon>delete</mat-icon> </button>
         <span *ngIf="confirmFavoriteIcon">
-        <!-- <button mat-button class="deleteBtn" (click)="changeExpired()" mdbWave2sEffect onclick="history.go(0)">
+        <button mat-button class="deleteBtn" (click)="changeExpired()" (click)="this.confirmIsExpired = true" mdbWave2sEffect >
           <mat-icon>delete_forever</mat-icon>
-        </button> -->
+        </button>
         </span>
       </p>
     </mat-card-actions>
