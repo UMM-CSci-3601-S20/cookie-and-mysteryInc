@@ -27,7 +27,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FavoriteComponent } from '../notes/favorite.component';
+import { FavoriteComponent } from './favorite.component';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,

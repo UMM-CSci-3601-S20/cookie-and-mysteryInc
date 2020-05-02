@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { DoorBoard } from '../doorBoard/doorBoard';
 import { NgModule } from '@angular/core';
-import { Note, NewNote, SaveNote, NoteStatus } from './note';
+import { Note, NewNote, SaveNote, NoteStatus } from '../notes/note';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
-import { NoteService } from './note.service';
+import { NoteService } from '../notes/note.service';
 import { ActivatedRoute } from '@angular/router';
 
 

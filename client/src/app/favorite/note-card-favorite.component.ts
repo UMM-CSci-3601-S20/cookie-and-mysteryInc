@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NoteService } from '../notes/note.service';
-import { Note } from './note';
+import { Note } from '../notes/note';
 import { ActivatedRoute } from '@angular/router';
 
 // this is a template for a single note essentially

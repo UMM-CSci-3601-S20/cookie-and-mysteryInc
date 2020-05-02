@@ -11,7 +11,7 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './auth/interceptor.service';
-import { FavoriteComponent } from './notes/favorite.component';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 
 const routes: Routes = [
