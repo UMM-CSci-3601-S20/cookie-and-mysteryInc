@@ -65,6 +65,10 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { NoteCardFavoriteComponent } from './favorite/note-card-favorite.component';
 
+//Repost saved ntoe
+import { RepostNoteComponent } from './favorite/repost.component';
+
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
@@ -99,6 +103,7 @@ const MATERIAL_MODULES: any[] = [
     DoorBoardCardComponent,
     ViewerComponent,
     NoteCardViewerComponent,
+    RepostNoteComponent,
     FavoriteComponent,
     NoteCardFavoriteComponent
   ],

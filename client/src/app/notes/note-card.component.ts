@@ -55,8 +55,8 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     console.log(this.note.favorite);
   }
 
-  changeExpired(): void {
-    this.getNotesSub = this.noteService.changeExpired(this.note, this.note._id).subscribe ();
+  changeIsExpiredField(): void {
+    this.getNotesSub = this.noteService.changeIsExpiredField(this.note, this.note._id).subscribe ();
     console.log(this.note.isExpired);
     this.confirmIsExpired = this.isExpired;
     console.log(this.note.isExpired);

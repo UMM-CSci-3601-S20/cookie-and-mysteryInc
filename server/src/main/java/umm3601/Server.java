@@ -76,7 +76,7 @@ public class Server {
     server.post("api/notes/:id/unfavorite", noteController::unfavoriteNote);
 
     // Changing the value of the boolean isExpired on a specific note
-    server.post("api/notes/:id/changeExpire", noteController::changeExpire);
+    server.post("api/notes/:id/changeIsExpiredField", noteController::changeIsExpiredField);
 
     // Delete specific note
     server.delete("api/notes/:id", noteController::deleteNote);
@@ -87,6 +87,9 @@ public class Server {
     // Edit a note
     //server.patch("api/notes/edit/:id", noteController::editNote);
     server.post("api/notes/edit/:id", noteController::editNote);
+
+    // Repost a note
+    server.post("api/notes/repost/:id", noteController::repostNote);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);

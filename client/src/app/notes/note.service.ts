@@ -122,6 +122,10 @@ export class NoteService {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/edit/' + id, editNote).pipe(map(res => res.id));
   }
 
+  repostNote(repostNote: Note, id: string): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/repost/' + id, repostNote).pipe(map(res => res.id));
+  }
+
   getNoteById(id: string): Observable<Note> {
     return this.httpClient.get<Note>(this.noteUrl + '/' + id);
   }
@@ -134,10 +138,10 @@ export class NoteService {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/unfavorite', unfavoriteNote).pipe(map(res => res.id));
   }
 
-  changeExpired(isExpired: Note, id: string): Observable<string> {
+  changeIsExpiredField(isExpired: Note, id: string): Observable<string> {
     console.log(id);
     console.log('Got to Note.service.ts');
-    return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/changeExpire', isExpired).pipe(map(res => res.id));
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/changeIsExpiredField', isExpired).pipe(map(res => res.id));
   }
 
 }
