@@ -1,21 +1,17 @@
 <div class="page">
   <div>
     <div class="dropdown">
-      <button mat-fab class="info-fab" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
-        <mat-icon class="md-12" aria-label="DoorBoard Info">info</mat-icon>
+      <button mat-raised-button class="info-button" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+        <h1>{{getName()}}'s DoorBoard</h1>
       </button>
       <div *ngIf="!confirmDropDown" class="dropdown-content">
-        <p>Owner: {{getName()}}</p>
-        <p>Email: {{getEmail()}}</p>
-        <p>Building: {{getBuilding()}}</p>
-        <p>Office Number: {{getOfficeNumber()}}</p>
+      <br>
+      <div>
+        <h3> Email: {{getEmail()}} </h3>
+        <h3> Office: {{getBuilding()}} {{getOfficeNumber()}}</h3>
+      </div>
       </div>
     </div>
-
-    <div class="doorboard-title">
-      <h1>{{getName()}}'s DoorBoard</h1>
-    </div>
-  </div>
 
     <!--Notes-->
     <div class="grid-container">

@@ -54,8 +54,7 @@
             <h3 mat-subheader>DoorBoards</h3>
             <a mat-list-item *ngFor="let doorBoard of this.filteredDoorBoards" [routerLink]="['/doorBoards', doorBoard._id]" class="doorBoard-list-item">
               <h3 matLine class="doorBoard-list-name"> {{doorBoard.name}} </h3>
-              <p matLine class="doorBoard-list-building"> {{doorBoard.building}} </p>
-              <p matLine class="doorBoard-list-officenumber">{{doorBoard.officeNumber}}</p>
+              <p matLine class="doorBoard-list-building-officeNumber"> {{doorBoard.building}}, {{doorBoard.officeNumber}} </p>
             </a>
           </mat-nav-list>
         </mat-card-content>
