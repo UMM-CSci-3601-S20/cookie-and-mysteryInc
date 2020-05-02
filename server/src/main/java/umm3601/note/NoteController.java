@@ -396,6 +396,16 @@ public class NoteController {
   }
 
   /**
+   * Change isExpired Boolean value to true
+   */
+  public void changeExpire(Context ctx){
+    String id = ctx.pathParamMap().get("id");
+    System.out.println("Got to Note Controller");
+    noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isExpired", true));
+    boolean confirmIsExpired = "isExpired" != null;
+  }
+
+  /**
    * Edit an existing note
    */
   public void editNote(Context ctx) {

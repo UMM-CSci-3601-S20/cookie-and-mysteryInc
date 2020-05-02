@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { Note, NoteStatus, NewNote, SaveNote } from './note';
 @Injectable()
 export class NoteService {
   readonly noteUrl: string = environment.API_URL + 'notes';
-
+  @Input() isExpired = false;
   constructor(private httpClient: HttpClient) {}
 
 
@@ -114,8 +114,6 @@ export class NoteService {
     return this.httpClient.delete<string>(this.noteUrl + '/' + id);
   }
 
-  //favoriteNote(
-
   getNoteByID(id: string): Note {
   return null;
   }
@@ -128,11 +126,18 @@ export class NoteService {
     return this.httpClient.get<Note>(this.noteUrl + '/' + id);
   }
 
-  favoriteNote(favoriteNote: Note, id: string): Observable<string>{
+  favoriteNote(favoriteNote: Note, id: string): Observable<string> {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/favorite', favoriteNote).pipe(map(res => res.id));
   }
 
-  unfavoriteNote(unfavoriteNote: Note, id: string): Observable<string>{
+  unfavoriteNote(unfavoriteNote: Note, id: string): Observable<string> {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/unfavorite', unfavoriteNote).pipe(map(res => res.id));
   }
+
+  changeExpired(isExpired: Note, id: string): Observable<string> {
+    console.log(id);
+    console.log('Got to Note.service.ts');
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/' + id + '/changeExpire', isExpired).pipe(map(res => res.id));
+  }
+
 }

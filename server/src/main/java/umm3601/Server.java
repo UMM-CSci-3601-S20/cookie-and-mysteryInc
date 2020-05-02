@@ -66,14 +66,17 @@ public class Server {
 
     server.get("api/notes/favorite", noteController::getFavoriteNotes);
 
-    //get a single note
+    // Get a single note
     server.get("api/notes/:id", noteController::getNoteByID);
 
-    //favoriting a note
+    // favoriting a note
     server.post("api/notes/:id/favorite", noteController::favoriteNote);
 
-    //unfavoriting a note
+    // unfavoriting a note
     server.post("api/notes/:id/unfavorite", noteController::unfavoriteNote);
+
+    // Changing the value of the boolean isExpired on a specific note
+    server.post("api/notes/:id/changeExpire", noteController::changeExpire);
 
     // Delete specific note
     server.delete("api/notes/:id", noteController::deleteNote);

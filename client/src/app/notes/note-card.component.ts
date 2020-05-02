@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { NoteService } from '../notes/note.service';
 import { Note, NewNote, SaveNote } from './note';
 import { ActivatedRoute } from '@angular/router';
-
 // this is a template for a single note essentially
 @Component({
   selector: 'app-note-card',
@@ -21,8 +20,9 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   @Input() note: Note;
   @Input() simple ? = false;
   @Input() confirmFavoriteIcon = false;
+  @Input() isExpired = false;
+  @Input() confirmIsExpired = false;
   confirmIcon: boolean;
-
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
  /* getNotesFromServer(): void {
@@ -45,16 +45,22 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     );
   }
 
-  favoriteNote(): void{
+  favoriteNote(): void {
     this.getNotesSub = this.noteService.favoriteNote(this.note, this.note._id).subscribe ();
     console.log(this.note.favorite);
   }
 
-  unfavoriteNote(): void{
+  unfavoriteNote(): void {
     this.getNotesSub = this.noteService.unfavoriteNote(this.note, this.note._id).subscribe ();
     console.log(this.note.favorite);
   }
 
+  changeExpired(): void {
+    this.getNotesSub = this.noteService.changeExpired(this.note, this.note._id).subscribe ();
+    console.log(this.note.isExpired);
+    this.confirmIsExpired = this.isExpired;
+    console.log(this.note.isExpired);
+  }
   ngOnInit(): void {
    // this.getNotesFromServer();
   }
