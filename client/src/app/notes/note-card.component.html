@@ -25,10 +25,10 @@
           <mat-icon aria-label="unFavorite note" [ngStyle]="{'color':'yellow'}">star</mat-icon>
         </button>
         </span>
-        <button mat-button class="deleteBtn" matTooltip="Delete Note" (click)="deleteNoteFromServer()" *ngIf="!confirmFavoriteIcon" mdbWave2sEffect onclick="history.go(0)">
+        <button mat-button class="deleteBtn" matTooltip="Delete note" (click)="deleteNoteFromServer()" *ngIf="!confirmFavoriteIcon" mdbWave2sEffect onclick="history.go(0)">
           <mat-icon>delete</mat-icon> </button>
         <span *ngIf="confirmFavoriteIcon">
-        <button mat-button class="deleteBtn" matTooltip="Remove Favorited Note" (click)="changeExpired()" (click)="this.confirmIsExpired = true" mdbWave2sEffect >
+        <button mat-button class="deleteBtn" matTooltip="Remove favorited note" (click)="changeExpired()" (click)="this.confirmIsExpired = true" mdbWave2sEffect onclick="history.go(0)">
           <mat-icon [ngStyle]="{'color':'red'}"> highlight_off</mat-icon>
         </button>
         </span>

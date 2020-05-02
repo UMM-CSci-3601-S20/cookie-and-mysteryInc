@@ -18,6 +18,7 @@ export class NoteCardFavoriteComponent implements OnInit, OnDestroy {
   @Input() note: Note;
   @Input() simple ? = false;
   @Input() confirmIsExpired = false;
+  confirmDelete = false;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 

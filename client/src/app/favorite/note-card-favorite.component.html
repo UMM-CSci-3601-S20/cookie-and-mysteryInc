@@ -1,5 +1,6 @@
     <!--Each message is its own mat-card-->
-    <mat-card class="note-card-viewer" *ngIf="this.note">
+    <span *ngIf="!confirmIsExpired">
+    <mat-card class="note-card-viewer" id="favNoteNotExp" *ngIf="this.note" matTooltip="Note is still active on the owner page">
       <mat-card-content id="noteCardTimestamp" align="end">
       <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
       </mat-card-content>
@@ -18,3 +19,39 @@
      <!-- Time stamp needs to be in here when it is implemented-->
 
     </mat-card>
+    </span>
+
+    <span *ngIf="confirmIsExpired">
+      <mat-card class="note-card-viewer-exp" id="favNoteExp" *ngIf="this.note">
+        <mat-card-content id="noteCardTimestamp" align="end">
+        <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
+        </mat-card-content>
+
+        <mat-card-content>
+          {{ this.note.body}}
+        </mat-card-content>
+        <!-- <span *ngIf="confirmIsExpired">
+        <button mat-button class="deleteBtn" matTooltip="Delete Saved Note" (click)="deleteNoteFromServer()" (click)="confirmDelete=true" mdbWave2sEffect onclick="history.go(0)">
+          <mat-icon>delete</mat-icon> </button>
+        </span> -->
+        <mat-card-actions align="start">
+          <p align='center'>
+            <span *ngIf="confirmDelete">
+            <P>Are you sure you want to delete?</P>
+            <button mat-button  class="btn-danger" (click)="deleteNoteFromServer()" mdbWave2sEffect onclick="history.go(0)">Yes</button>
+            <button mat-button class="btn-primary" (click)="confirmDelete=false" mdbWave2sEffect>No</button>
+            </span>
+
+            <button mat-button class="deleteBtn" *ngIf="!confirmDelete" (click)="confirmDelete=true" mdbWave2sEffect matTooltip="Delete note">
+              <mat-icon>delete</mat-icon>
+            </button>
+        </p>
+        </mat-card-actions>
+          <!-- <button mat-button class="repostBtn" (click)="repostNote()" mdbWave2sEffect onclick="history.go(0)">
+            <mat-icon>restore</mat-icon> </button> -->
+
+
+       <!-- Time stamp needs to be in here when it is implemented-->
+
+      </mat-card>
+    </span>
