@@ -231,14 +231,14 @@ public class NoteController {
         filters.add(eq("favorite", favorite));
       }
     }
-    if (ctx.queryParamMap().containsKey("doorBoardID")) {
-      String targetDoorBoardID = ctx.queryParam("doorBoardID");
-      System.out.println(targetDoorBoardID);
-      filters.add(eq("doorBoardID", targetDoorBoardID));
-      List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
-      // from a specific owner id
-      filterExpiredNotes(notes); // filtering out and deleting expired notes
-    }
+    // if (ctx.queryParamMap().containsKey("doorBoardID")) {
+    //   String targetDoorBoardID = ctx.queryParam("doorBoardID");
+    //   System.out.println(targetDoorBoardID);
+    //   filters.add(eq("doorBoardID", targetDoorBoardID));
+    //   List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
+    //   // from a specific owner id
+    //   filterExpiredNotes(notes); // filtering out and deleting expired notes
+    // }
     // if (ctx.queryParamMap().containsKey("body")) {
     //   filters.add(regex("body", ctx.queryParam("body"), "i"));
     // }

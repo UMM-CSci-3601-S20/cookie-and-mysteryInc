@@ -40,7 +40,7 @@ export class NoteService {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
-      if (filters.favorite != undefined) {
+      if (filters.favorite) {
         httpParams = httpParams.set('favorite', filters.favorite.toString());
       }
     }

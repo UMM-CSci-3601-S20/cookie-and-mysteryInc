@@ -83,7 +83,7 @@ export class MockNoteService extends NoteService {
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
       status: 'deleted',
-      favorite: false,
+      favorite: true,
       isExpired: false,
     }
   ];
@@ -106,6 +106,34 @@ export class MockNoteService extends NoteService {
    return of(notesObtained);
 
   }
+
+  getFavoriteNotes(DoorBoardID: string): Observable<Note[]> {
+    let notesObtained: Note[];
+    let amount = 0;
+    for(let i = 0; i < 8; i++){
+       if (DoorBoardID === MockNoteService.testNotes[i].doorBoardID && true === MockNoteService.testNotes[i].favorite) {
+         notesObtained[amount] = MockNoteService.testNotes[i];
+         amount++;
+       }
+     }
+    return of(notesObtained);
+
+   }
+
+   filterNotes(testNotes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean, isExpired?: boolean } ): Note[] {
+     let filteredNotes: Note[];
+     let DoorBoardID: string;
+     let amount = 0;
+     for (let i = 0; i < 8; i++){
+       if (DoorBoardID === MockNoteService.testNotes[i].doorBoardID && true === MockNoteService.testNotes[i].favorite &&
+        false === MockNoteService.testNotes[i].isExpired) {
+          filteredNotes[amount] = MockNoteService.testNotes[i];
+          amount++;
+         }
+     }
+     return filteredNotes;
+  }
+
   getNoteByID( _id: string): Note {
     let noteToReturn;
     for(let i = 0; i < 8; i++){

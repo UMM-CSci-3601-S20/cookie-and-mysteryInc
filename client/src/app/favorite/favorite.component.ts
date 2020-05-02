@@ -4,7 +4,6 @@ import { DoorBoard } from '../doorBoard/doorBoard';
 import { NgModule } from '@angular/core';
 import { Note, NewNote, SaveNote, NoteStatus } from '../notes/note';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { NoteService } from '../notes/note.service';
@@ -29,7 +28,6 @@ export class FavoriteComponent implements OnInit, OnDestroy {
   noteStatus: NoteStatus;
   noteBody: string;
   getDoorBoardSub: any;
-  doorBoardService: any;
   doorBoard: DoorBoard;
   public filteredNotes: Note[];
   public favoritedNotes: Note[];
@@ -37,8 +35,8 @@ export class FavoriteComponent implements OnInit, OnDestroy {
   noteExpireDate: Date;
   @Input() confirmIsExpired = false;
 
-  constructor(private location: Location, private noteService: NoteService,
-              private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute ) {
+  constructor(private doorBoardService: DoorBoardService, private location: Location, private noteService: NoteService,
+              private router: Router, private route: ActivatedRoute ) {
 
   }
 

@@ -267,20 +267,6 @@ public class NoteControllerSpec {
   }
 
   @Test
-  public void filterFavorite() {
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/notes/favorite");
-
-    noteController.getFavoriteNotes(ctx);
-
-    assertEquals(200, mockRes.getStatus());
-
-    String result = ctx.resultString();
-    System.out.println(result);
-    Note[] resultNotes = JavalinJson.fromJson(result, Note[].class);
-    assertEquals(0, resultNotes.length);
-  }
-
-  @Test
   public void getActiveNotesForDoorBoard1() {
     mockReq.setQueryString("doorBoardID=" + doorBoard1ID + "&status=active");
 

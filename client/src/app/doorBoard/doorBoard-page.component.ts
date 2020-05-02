@@ -60,16 +60,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   url: string;
   value: string;
   display: boolean;
-  // generateQRCode() {
-  //   if (this.qrcodename === '') {
-  //     this.display = false;
-  //     alert('Please enter a url');
-  //     return;
-  //   } else {
-  //     this.value = this.qrcodename + '/viewer';
-  //     this.display = true;
-  //   }
-  // }
+
   generateQRCode() {
     this.value = this.thisUrl + '/viewer';
     this.display = true;
@@ -106,15 +97,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
         isExpired: false
       });
   }
-
-//   public updateFilter(): void {
-//     this.filteredNotes = this.noteService.filterNotes(
-//       this.serverFilteredNotes,
-//       {
-//         addDate: this.noteAddDate,
-//         expireDate: this.noteExpireDate,
-//       });
-// }
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar
