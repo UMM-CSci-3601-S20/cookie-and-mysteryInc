@@ -97,14 +97,23 @@ margin: 1em;
 
 button {
   //padding: 10px;
-  background-color: skyblue;
+  text-align: center;
+  margin:auto;
+  color: white;
+  background-color: rgb(0, 67, 95);
   //margin-top: 10px;
 }
+
+.info-fab {
+  background-color: palevioletred;
+}
+
 a {
-  padding: 10px;
-  background-color: skyblue;
-  margin-top: 10px;
+  // padding: 10px;
+  background-color: rgb(0, 67, 95);
+  // margin-top: 10px;
   text-decoration: none;
+  color: white;
 }
 
 .note-card-container {
@@ -117,3 +126,9 @@ a {
 //   display: flex;
 //   flex-direction: column;
 // }
+
+.divider {
+  width: 2px;
+  height: auto;
+  display: inline-block;
+}

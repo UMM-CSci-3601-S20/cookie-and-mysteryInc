@@ -14,7 +14,8 @@ export class DoorBoardService {
 
   constructor(private httpClient: HttpClient) {
   }
-  getDoorBoards(filters?: { name?: string, email?: string, building?: string, officeNumber?: string, sub?: string  }): Observable<DoorBoard[]> {
+  getDoorBoards(filters?: { name?: string, email?: string, building?: string, officeNumber?: string,
+    sub?: string  }): Observable<DoorBoard[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.name) {

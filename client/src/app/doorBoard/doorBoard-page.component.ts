@@ -33,6 +33,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   finishInit = false;
   enabled: boolean;
   confirmDropDown = true;
+  confirmQRDropDown = true;
   constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
               private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
 
@@ -59,6 +60,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   value: string;
   display: boolean;
   href: string;
+
   generateQRCode() {
     if (this.qrcodename === '') {
       this.display = false;
@@ -69,8 +71,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       this.display = true;
     }
   }
-
-
+  
   downloadImage() {
     this.href = document.getElementsByTagName('img')[0].src;
   }
