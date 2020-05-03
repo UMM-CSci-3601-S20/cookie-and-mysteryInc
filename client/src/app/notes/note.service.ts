@@ -66,31 +66,18 @@ export class NoteService {
       });
     }
 
-    if (filters.isExpired === false) {
-      console.log('expired notes');
+    if (filters.isPinned === false && filters.isExpired === false) {
+        console.log('expired notes');
 
-      filteredNotes = filteredNotes.filter(note => {
-        return note.isExpired === filters.isExpired;
+        filteredNotes = filteredNotes.filter(note => {
+        return note.isPinned === filters.isPinned;
       });
     }
 
     if (filters.isPinned === true) {
     filteredNotes = filteredNotes.filter(note => {
         return note.isPinned === filters.isPinned;
-    })};
-   /* // Filter by addDate
-    if (filters.addDate.toISOString()) {
-      filteredNotes = filteredNotes.filter(note => {
-        return note.addDate.indexOf(filters.addDate) !== -1;
-      });
-    }
-    // Filter by expireDate
-    if (filters.expireDate) {
-      filteredNotes = filteredNotes.filter(note => {
-        return note.expireDate.toISOString().indexOf(filters.expireDate.toISOString()) !== -1;
-      });
-    }
-*/
+    })}
     return filteredNotes;
   }
 
