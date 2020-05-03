@@ -16,6 +16,7 @@ describe('Note service: ', () => {
       status: 'active',
       favorite: false,
       isExpired: false,
+      isPinned: true ,
     },
     {
       _id: 'second_id',
@@ -26,6 +27,7 @@ describe('Note service: ', () => {
       status: 'deleted',
       favorite: false,
       isExpired: false,
+      isPinned: false ,
     },
     {
       _id: 'third_id',
@@ -36,6 +38,7 @@ describe('Note service: ', () => {
       status: 'template',
       favorite: false,
       isExpired: false,
+      isPinned: true ,
     }
   ];
 
@@ -43,6 +46,7 @@ describe('Note service: ', () => {
       doorBoardID: 'test-id',
       body: 'Fourth body.',
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'active'
   };
 
@@ -124,4 +128,22 @@ describe('Note service: ', () => {
       req.flush({id: 'foo'});
     });
   });
+
+  describe('The pinNote method', () => {
+    it('calls /api/notes/pin/:id', () => {
+      noteService.pinNote(testNotes[0], 'first_id' ).subscribe(id => {
+        expect(id).toBe('first_id');
+      });
+      const req = httpTestingController.expectOne(request =>
+          request.url.startsWith(noteService.noteUrl + '/pin/first_id')
+        );
+
+      expect(req.request.method).toEqual('POST');
+
+      expect(req.request.body).toEqual(testNotes[0]);
+
+      req.flush({id: 'first_id'});
+    });
+ });
+
 });

@@ -49,6 +49,7 @@ describe('NoteCardComponent', () => {
     status : 'active',
     favorite: false,
     isExpired: false,
+    isPinned: true,
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -77,6 +78,10 @@ describe('NoteCardComponent', () => {
 
   it('contains a expiration date \'2099-04-17T04:18:09.302Z\'', () => {
     expect(testNote.expiration === '2099-04-17T04:18:09.302Z').toBe(true);
+  });
+
+  it('test_id isPinned is true' , () => {
+    expect(testNote.isPinned === true ).toBe(true);
   });
 
 });

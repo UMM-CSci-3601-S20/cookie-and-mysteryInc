@@ -26,7 +26,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
   enabled: boolean;
-
+  public isPinned: boolean;
   constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
               private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
 
@@ -36,6 +36,7 @@ export class ViewerComponent implements OnInit, OnDestroy {
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
   public isExpiredNotes: Note[];
+  public pinnedNotes: Note[];
   public GcalURL: SafeResourceUrl;
 
   doorBoard: DoorBoard;
@@ -80,13 +81,21 @@ export class ViewerComponent implements OnInit, OnDestroy {
       this.serverFilteredNotes,
       {
         isExpired: true
+        isPinned: false
       });
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isPinned: true
+      });
+}
     this.isExpiredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
         isExpired: false
       });
   }
+
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar

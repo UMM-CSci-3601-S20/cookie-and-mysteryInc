@@ -25,6 +25,9 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   confirmIcon: boolean;
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
 
+  @Input() confirmPinnedIcon = false;
+  isClicked = false;
+  content: any;
  /* getNotesFromServer(): void {
     //this.getNotesSub = this.noteService.getNotesByDoorBoard( this.id )
     .subscribe(notes =>
@@ -41,7 +44,6 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     }, err => {
         console.log(err);
       }
-
     );
   }
 
@@ -61,6 +63,18 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     this.confirmIsExpired = this.isExpired;
     console.log(this.note.isExpired);
   }
+  pinNote(): void {
+    this.noteService.pinNote(this.note, this.note._id).subscribe(result => {
+      console.log('Note pin changed')
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  addToSummary(content){
+    content.isSelected = true;
+}
+
   ngOnInit(): void {
    // this.getNotesFromServer();
   }

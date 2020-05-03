@@ -15,6 +15,7 @@ export class MockNoteService extends NoteService {
       status: 'active',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'second_id',
@@ -25,6 +26,7 @@ export class MockNoteService extends NoteService {
       status: 'active',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'third_id',
@@ -35,6 +37,7 @@ export class MockNoteService extends NoteService {
       status: 'template',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'fourth_id',
@@ -45,6 +48,7 @@ export class MockNoteService extends NoteService {
       status: 'template',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'fifth_id',
@@ -55,6 +59,7 @@ export class MockNoteService extends NoteService {
       status: 'draft',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'sixth_id',
@@ -65,6 +70,7 @@ export class MockNoteService extends NoteService {
       status: 'draft',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'seventh_id',
@@ -75,6 +81,7 @@ export class MockNoteService extends NoteService {
       status: 'deleted',
       favorite: false,
       isExpired: false,
+      isPinned: true,
     },
     {
       _id: 'eighth_id',
@@ -85,6 +92,7 @@ export class MockNoteService extends NoteService {
       status: 'deleted',
       favorite: true,
       isExpired: false,
+      isPinned: true,
     }
   ];
 

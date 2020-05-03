@@ -92,4 +92,5 @@ describe('DoorBoardPageComponent', () => {
   //   const app = fixture.debugElement.componentInstance;
   //   expect(app.title).toEqual('generate-qrcode');
   // });
+
 });

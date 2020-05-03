@@ -88,6 +88,9 @@ public class Server {
     //server.patch("api/notes/edit/:id", noteController::editNote);
     server.post("api/notes/edit/:id", noteController::editNote);
 
+    // Pin a note
+    server.post("api/notes/pin/:id", noteController::pinNote);
+
     // Repost a note
     server.post("api/notes/repost/:id", noteController::repostNote);
 

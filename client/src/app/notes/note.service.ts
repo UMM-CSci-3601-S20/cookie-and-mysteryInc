@@ -24,12 +24,10 @@ export class NoteService {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
-      if (filters.body) {
-        httpParams = httpParams.set('body', filters.body);
-      }
       if (filters.status) {
         httpParams = httpParams.set('status', filters.status);
       }
+
     }
     return this.httpClient.get<Note[]>(this.noteUrl, {
       params: httpParams,
@@ -55,6 +53,7 @@ export class NoteService {
    * @param filters: filtering by `addDate` and `expireDate`
    */
   filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean, isExpired?: boolean } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, isPinned?: boolean } ): Note[] {
 
     let filteredNotes = notes;
 
@@ -74,6 +73,9 @@ export class NoteService {
       });
     }
 
+    filteredNotes = filteredNotes.filter(note => {
+        return note.isPinned === filters.isPinned;
+    });
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
       filteredNotes = filteredNotes.filter(note => {
@@ -114,16 +116,16 @@ export class NoteService {
     return this.httpClient.delete<string>(this.noteUrl + '/' + id);
   }
 
-  getNoteByID(id: string): Note {
-  return null;
-  }
-
   editNote(editNote: Note, id: string): Observable<string> {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/edit/' + id, editNote).pipe(map(res => res.id));
   }
 
   repostNote(repostNote: Note, id: string): Observable<string> {
     return this.httpClient.post<{id: string}>(this.noteUrl + '/repost/' + id, repostNote).pipe(map(res => res.id));
+  }
+
+  pinNote(pinNote: Note, id: string): Observable<string> {
+    return this.httpClient.post<{id: string}>(this.noteUrl + '/pin/' + id, pinNote).pipe(map(res => res.id));
   }
 
   getNoteById(id: string): Observable<Note> {

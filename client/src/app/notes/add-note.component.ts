@@ -116,6 +116,7 @@ export class AddNoteComponent implements OnInit {
     console.log(this.doorBoard_id);
     noteToAdd.doorBoardID = this.doorBoard_id;
     noteToAdd.expiration = this.selectedTime;
+    noteToAdd.isPinned = false;
     console.log("New note =" + JSON.stringify(noteToAdd));
     this.noteService.addNewNote(noteToAdd).subscribe(newID => {
       // Notify the DoorBoard component that a note has been added.

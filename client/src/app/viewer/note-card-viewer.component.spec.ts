@@ -49,6 +49,7 @@ describe('NoteCardComponent', () => {
     status : 'active',
     favorite: false,
     isExpired: false,
+    isPinned: true,
   };
   beforeEach(() => {
     TestBed.configureTestingModule({

@@ -7,6 +7,7 @@ export interface NewNote {
   doorBoardID: string;
   body: string;
   expiration: string;
+  isPinned: boolean;
   status: NoteStatus;
 }
 

@@ -161,6 +161,7 @@ public class NoteControllerSpec {
       + "status: \"active\", "
       + "favorite:" + false + ", "
       + "isExpired:" + false + ", "
+      + "isPinned: true,"
       + "}"));
     testNotes.add(Document.parse("{ "
       + "doorBoardID: \"" + doorBoard1ID + "\", "
@@ -170,6 +171,7 @@ public class NoteControllerSpec {
       + "status: \"active\", "
       + "favorite:" + false + ", "
       + "isExpired:" + false + ", "
+      + "isPinned: true,"
       + "}"));
     testNotes.add(Document.parse("{ "
       + "doorBoardID: \"" + samsDoorBoardID + "\", "
@@ -179,6 +181,7 @@ public class NoteControllerSpec {
       + "status: \"active\", "
       + "favorite:" + false + ", "
       + "isExpired:" + false + ", "
+      + "isPinned: true,"
       + "}"));
 
     samsNoteId = new ObjectId();
@@ -190,6 +193,7 @@ public class NoteControllerSpec {
       .append("status", "active")
       .append("favorite", false)
       .append("isExpired", false);
+      .append("isPinned", true)
 
     noteDocuments.insertMany(testNotes);
     noteDocuments.insertOne(Document.parse(sam.toJson()));
@@ -516,6 +520,7 @@ public class NoteControllerSpec {
       + "\"doorBoardID\": \"" + new ObjectId() + "\", "
       + "\"body\": \"Faily McFailface\", "
       + "\"expiration\": \"2025-04-17T04:18:09.302Z\", "
+      + "\"isPinned\": true,"
       + "\"status\": \"active\""
       + "}";
 
@@ -540,6 +545,7 @@ public class NoteControllerSpec {
       + "\"body\": \"Faily McFailface\", "
       + "\"addDate\": \"2020-03-07T22:03:38+0000\", "
       + "\"expiration\": \"2025-04-17T04:18:09.302Z\", "
+      + "\"isPinned\": true,"
       + "\"status\": \"active\""
       + "}";
 

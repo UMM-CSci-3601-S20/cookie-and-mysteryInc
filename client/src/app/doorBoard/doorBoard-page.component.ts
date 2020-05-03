@@ -38,6 +38,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
   public isExpiredNotes: Note[];
+  public pinnedNotes: Note[];
   public GcalURL: SafeResourceUrl;
 
   doorBoard: DoorBoard;
@@ -50,6 +51,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteAddDate: Date;
   public noteExpireDate: Date;
   public favorite: boolean;
+  public isPinned: boolean;
   public noteBody: string;
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
@@ -76,7 +78,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
       this.id,{
         status: this.noteStatus,
-        body: this.noteBody
+        body: this.noteBody,
       }).subscribe(returnedNotes => {
         this.serverFilteredNotes = returnedNotes;
         this.updateFilter();
@@ -89,6 +91,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
+        isPinned: false
         isExpired: true
       });
     this.isExpiredNotes = this.noteService.filterNotes(
@@ -97,6 +100,12 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
         isExpired: false
       });
   }
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isPinned: true
+      });
+}
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar
