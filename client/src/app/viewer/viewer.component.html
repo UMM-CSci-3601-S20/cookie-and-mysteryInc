@@ -22,13 +22,11 @@
   <p>Pinned Notes</p>
   <app-note-card-viewer simple="true" *ngFor="let note of this.pinnedNotes"   class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
 </div>
-          <app-note-card-viewer simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card-viewer" [note]="note" fxFlex="1 1 250px"></app-note-card-viewer>
-
 
 <!--Notes-->
 <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
   <p>All Notes</p>
-  <app-note-card-viewer simple="true" *ngFor="let note of this.filteredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
+  <app-note-card-viewer simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
 </div>
 
     <!--google calendar and related-->

@@ -9,6 +9,7 @@ import { Note, NoteStatus, NewNote, SaveNote } from './note';
 export class NoteService {
   readonly noteUrl: string = environment.API_URL + 'notes';
   @Input() isExpired = false;
+  @Input() isPinned = false;
   constructor(private httpClient: HttpClient) {}
 
 
@@ -52,8 +53,8 @@ export class NoteService {
    * @param notes: the list of notes being filtered
    * @param filters: filtering by `addDate` and `expireDate`
    */
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean, isExpired?: boolean } ): Note[] {
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, isPinned?: boolean } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean,
+    isExpired?: boolean, isPinned?: boolean } ): Note[] {
 
     let filteredNotes = notes;
 

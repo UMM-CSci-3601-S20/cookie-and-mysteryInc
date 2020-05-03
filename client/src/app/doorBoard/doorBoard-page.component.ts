@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { MatRadioChange } from '@angular/material/radio';
-import {TextFieldModule} from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 
 
@@ -32,7 +32,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   enabled: boolean;
   confirmDropDown = true;
   constructor(private doorBoardService: DoorBoardService, private router: Router, private noteService: NoteService,
-              private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
+    private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
 
   public notes: Note[];
   public serverFilteredNotes: Note[];
@@ -56,7 +56,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public getCurrentSub: Subscription;
   public currentSub: string = 'invalid';
 
-  qrcodename : string;
+  qrcodename: string;
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
   url: string;
@@ -69,43 +69,42 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   }
 
 
-  downloadImage(){
+  downloadImage() {
     this.href = document.getElementsByTagName('img')[0].src;
   }
 
   public getNotesFromServer(): void {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
-      this.id,{
-        status: this.noteStatus,
-        body: this.noteBody,
-      }).subscribe(returnedNotes => {
-        this.serverFilteredNotes = returnedNotes;
-        this.updateFilter();
-      }, err => {
-        console.log(err);
-      });
+      this.id, {
+      status: this.noteStatus,
+      body: this.noteBody,
+    }).subscribe(returnedNotes => {
+      this.serverFilteredNotes = returnedNotes;
+      this.updateFilter();
+    }, err => {
+      console.log(err);
+    });
   }
 
   public updateFilter(): void {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        isPinned: false
-        isExpired: true
+        isPinned: false,
+        isExpired: false
       });
     this.isExpiredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        isExpired: false
+        isExpired: true
       });
-  }
     this.pinnedNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
         isPinned: true
       });
-}
+  }
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar
@@ -138,8 +137,8 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   }
 
   public getSub(): string {
-    if (this.doorBoard){
-    return this.doorBoard.sub;
+    if (this.doorBoard) {
+      return this.doorBoard.sub;
     } else {
       return null;
     }
@@ -190,17 +189,17 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       if (this.getNotesSub) {
         this.getNotesSub.unsubscribe();
       }
-      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe( notes => this.notes = notes);
+      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe(notes => this.notes = notes);
       this.getNotesFromServer();
       if (this.getDoorBoardSub) {
         this.getDoorBoardSub.unsubscribe();
       }
-      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
-      this.doorBoard = doorBoard;
-      console.log(this.doorBoard.email);
-      this.createGmailConnection(this.doorBoard.email);
+      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe(async (doorBoard: DoorBoard) => {
+        this.doorBoard = doorBoard;
+        console.log(this.doorBoard.email);
+        this.createGmailConnection(this.doorBoard.email);
+      });
     });
-  });
   }
 
   ngOnDestroy(): void {
