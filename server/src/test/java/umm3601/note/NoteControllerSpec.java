@@ -192,8 +192,8 @@ public class NoteControllerSpec {
       .append("expiration", "2099-04-17T04:18:09.302Z")
       .append("status", "active")
       .append("favorite", false)
-      .append("isExpired", false);
-      .append("isPinned", true)
+      .append("isExpired", false)
+      .append("isPinned", true);
 
     noteDocuments.insertMany(testNotes);
     noteDocuments.insertOne(Document.parse(sam.toJson()));
