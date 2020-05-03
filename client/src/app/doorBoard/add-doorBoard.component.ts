@@ -28,7 +28,6 @@ export class AddDoorBoardComponent implements OnInit {
       {type: 'required', message: 'Name is required'},
       {type: 'minlength', message: 'Name must be more than 1 character long'},
       {type: 'maxlength', message: 'Name cannot be more than 50 characters long'},
-      {type: 'pattern', message: 'Name must contain only numbers and letters'},
     ],
 
     email: [
@@ -40,13 +39,11 @@ export class AddDoorBoardComponent implements OnInit {
       { type: 'required', message: 'building is required' },
       {type: 'minlength', message: 'Building must be at least 2 characters long'},
       {type: 'maxlength', message: 'Building cannot be more than 50 characters long'},
-      {type: 'pattern', message: 'Building must contain only numbers and letters'},
     ],
     officeNumber: [
       { type: 'required', message: 'Office number is required' },
       {type: 'minlength', message: 'Office number must be at least 1 characters long'},
       {type: 'maxlength', message: 'Office number cannot be more than 25 characters long'},
-      {type: 'pattern', message: 'Office number must contain only numbers and letters'},
     ],
     sub: [
     ],
@@ -65,8 +62,7 @@ export class AddDoorBoardComponent implements OnInit {
       name: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(1),
-        Validators.maxLength(50),
-        Validators.pattern('^[\\w\\s]+$'),
+        Validators.maxLength(100),
       ])),
       // We don't need a special validator just for our app here, but there is a default one for email.
       // We will require the email, though.
@@ -77,16 +73,14 @@ export class AddDoorBoardComponent implements OnInit {
 
       building: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(1),
         Validators.maxLength(50),
-        Validators.pattern('^[\\w\\s]+$'),
       ])),
 
       officeNumber: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(50),
-        Validators.pattern('^[\\w\\s]+$')
       ])),
 
       sub: new FormControl('', Validators.compose([

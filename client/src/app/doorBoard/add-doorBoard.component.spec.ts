@@ -94,17 +94,11 @@ describe('AddDoorBoardComponent', () => {
     // setting upper limits on things like name lengths just
     // because there are people with really long names.
     it('should fail on really long names', () => {
-      nameControl.setValue('x'.repeat(100));
+      nameControl.setValue('x'.repeat(200));
       expect(nameControl.valid).toBeFalsy();
       // Annoyingly, Angular uses lowercase 'l' here
       // when it's an upper case 'L' in `Validators.maxLength(2)`.
       expect(nameControl.hasError('maxlength')).toBeTruthy();
-    });
-
-    it('should not allow a name to contain a symbol', () => {
-      nameControl.setValue('bad@email.com');
-      expect(nameControl.valid).toBeFalsy();
-      expect(nameControl.hasError('pattern')).toBeTruthy();
     });
 
     it('should allow digits in the name', () => {
@@ -130,30 +124,24 @@ describe('AddDoorBoardComponent', () => {
       expect(buildingControl.valid).toBeTruthy();
     });
 
-    it('should fail on single character buildings', () => {
-      buildingControl.setValue('x');
+    it('should fail on empty buildings', () => {
+      buildingControl.setValue('');
       expect(buildingControl.valid).toBeFalsy();
       // Annoyingly, Angular uses lowercase 'l' here
       // when it's an upper case 'L' in `Validators.minLength(2)`.
-      expect(buildingControl.hasError('minlength')).toBeTruthy();
     });
 
     // In the real world, you'd want to be pretty careful about
     // setting upper limits on things like name lengths just
     // because there are people with really long names.
     it('should fail on really long building names', () => {
-      buildingControl.setValue('x'.repeat(100));
+      buildingControl.setValue('x'.repeat(150));
       expect(buildingControl.valid).toBeFalsy();
       // Annoyingly, Angular uses lowercase 'l' here
       // when it's an upper case 'L' in `Validators.maxLength(2)`.
       expect(buildingControl.hasError('maxlength')).toBeTruthy();
     });
 
-    it('should not allow a building to contain a symbol', () => {
-      buildingControl.setValue('bad@email.com');
-      expect(buildingControl.valid).toBeFalsy();
-      expect(buildingControl.hasError('pattern')).toBeTruthy();
-    });
 
     it('should allow digits in the building', () => {
       buildingControl.setValue('ProQUickScopeMonster360');
@@ -214,11 +202,7 @@ describe('AddDoorBoardComponent', () => {
       expect(officeNumberControl.hasError('maxlength')).toBeTruthy();
     });
 
-    it('should not allow a name to contain a symbol', () => {
-      officeNumberControl.setValue('bad@email.com');
-      expect(officeNumberControl.valid).toBeFalsy();
-      expect(officeNumberControl.hasError('pattern')).toBeTruthy();
-    });
+
   });
 
 });
