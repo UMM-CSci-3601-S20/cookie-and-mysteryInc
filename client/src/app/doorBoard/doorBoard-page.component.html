@@ -53,9 +53,11 @@
 
 
     <!--Notes-->
+
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
             <p>All Notes</p>
-            <app-note-card simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card" [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned" fxFlex="1 1 280px"></app-note-card>
+            <app-note-card simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card"
+            [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned"fxFlex="1 1 280px"></app-note-card>
           </div>
 
 

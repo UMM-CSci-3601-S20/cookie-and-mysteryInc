@@ -53,8 +53,8 @@ export class NoteService {
    * @param notes: the list of notes being filtered
    * @param filters: filtering by `addDate` and `expireDate`
    */
-  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean,
-    isExpired?: boolean, isPinned?: boolean } ): Note[] {
+  filterNotes(notes: Note[], filters: { addDate?: Date, expireDate?: Date, favorite?: boolean, isExpired?: boolean,
+     isPinned?: boolean } ): Note[] {
 
     let filteredNotes = notes;
 

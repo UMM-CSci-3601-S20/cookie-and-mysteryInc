@@ -1,4 +1,3 @@
-
 import { Note, NoteStatus, SaveNote } from '../notes/note';
 import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
 import { DoorBoardService } from './doorBoard.service';
@@ -92,7 +91,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       this.serverFilteredNotes,
       {
         isPinned: false,
-        isExpired: false
+        isExpired: true
       });
     this.isExpiredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,

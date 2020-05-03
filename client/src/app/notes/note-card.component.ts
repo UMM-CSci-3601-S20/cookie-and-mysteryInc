@@ -65,7 +65,7 @@ export class NoteCardComponent implements OnInit, OnDestroy {
   }
   pinNote(): void {
     this.noteService.pinNote(this.note, this.note._id).subscribe(result => {
-      console.log('Note pin changed')
+      console.log('Note pin changed');
     }, err => {
       console.log(err);
     });
