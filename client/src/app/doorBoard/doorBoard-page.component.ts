@@ -45,7 +45,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
   getNotesSub: Subscription;
   getDoorBoardSub: Subscription;
-  getAuthSub: Subscription;
 
   public noteStatus: NoteStatus = 'active';
   public noteAddDate: Date;
@@ -136,13 +135,12 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public getLoginSub(): Observable<string> {
     console.log('called get LOGINSUB');
     const currentSub = this.auth.userProfile$.pipe(
-
       map(profile => {
         if (profile) {
           console.log('Login = ' + JSON.stringify(profile.sub).replace(/['"]+/g, ''));
           return JSON.stringify(profile.sub).replace(/['"]+/g, '');
         } else {
-          console.log('This was nulll....');
+          console.log('This was null');
           return null;
         }
       })
@@ -195,25 +193,22 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       doorboardSub = this.doorBoard.sub;
       console.log(this.doorBoard.email);
       this.createGmailConnection(this.doorBoard.email);
-      console.log('line 198');
-      if (this.getAuthSub) {
-    this.getAuthSub.unsubscribe();
-  }
-      let attempt = 0;
-      this.getAuthSub = this.compareSubs(this.doorBoard.sub).subscribe( (authVal: boolean) => {
-        attempt++;
-        console.log('got to 206 + attempt:' + attempt);
-        let result: boolean;
-        console.log(authVal);
-        result = authVal;
-        if (result) {
-     console.log('I think you are on to something');
-     this.validUser = true;
- } else {
-   console.log('You are not logged in to this page');
-   this.validUser = false;
-  }
-      });
+//
+//       let attempt = 0;
+//       this.compareSubs(this.doorBoard.sub).subscribe( (authVal: boolean) => {
+//         attempt++;
+//         console.log('got to 206 + attempt:' + attempt);
+//         let result: boolean;
+//         console.log(authVal);
+//         result = authVal;
+//         if (result) {
+//      console.log('I think you are on to something');
+//      this.validUser = true;
+//  } else  {
+//    console.log('You are not logged in to this page');
+//    this.validUser = false;
+//   }
+//       });
   });
 
 
@@ -227,9 +222,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     if (this.getDoorBoardSub) {
       this.getDoorBoardSub.unsubscribe();
     }
-    if (this.getAuthSub) {
-      this.getAuthSub.unsubscribe();
-    }
+
   }
 
   unsub(): void {
@@ -239,10 +232,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
     if (this.getDoorBoardSub) {
       this.getDoorBoardSub.unsubscribe();
-    }
-
-    if (this.getAuthSub) {
-      this.getAuthSub.unsubscribe();
     }
   }
 
