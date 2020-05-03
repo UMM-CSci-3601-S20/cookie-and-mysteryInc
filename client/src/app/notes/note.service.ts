@@ -74,9 +74,10 @@ export class NoteService {
       });
     }
 
+    if (filters.isPinned === true) {
     filteredNotes = filteredNotes.filter(note => {
         return note.isPinned === filters.isPinned;
-    });
+    })};
    /* // Filter by addDate
     if (filters.addDate.toISOString()) {
       filteredNotes = filteredNotes.filter(note => {

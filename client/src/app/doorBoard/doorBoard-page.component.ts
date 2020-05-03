@@ -96,7 +96,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.isExpiredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        isExpired: true
+        isExpired: false
       });
     this.pinnedNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
