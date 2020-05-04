@@ -2,7 +2,7 @@ import { browser, by, element } from 'protractor';
 
 export class DoorBoardPage {
   navigateTo() {
-    return browser.get('/doorBoards');
+    return browser.get('');
   }
 
   getUrl() {

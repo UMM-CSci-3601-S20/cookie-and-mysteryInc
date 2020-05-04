@@ -14,15 +14,15 @@ describe('DoorBoard list', () => {
     expect(page.getDoorBoardTitle()).toEqual('Search DoorBoards');
   });
 
-  // it('Should type something in the name filter and check that it returned correct elements', async () => {
-  //   await page.typeInput('doorBoard-name-input', 'Prospero Bruce');
-  //   page.getDoorBoardListItems().each(e => {
-  //     expect(e.element(by.className('doorBoard-list-name')).getText()).toEqual('Prospero Bruce');
-  //   });
-  // });
+  it('Should type something in the name filter and check that it returned correct elements', async () => {
+    await page.typeInput('doorBoard-name-input', 'Prospero Bruce');
+    page.getDoorBoardListItems().each(e => {
+      expect(e.element(by.className('doorBoard-list-name')).getText()).toEqual('Prospero Bruce');
+    });
+  });
 
   it('Should type something in the building filter and check that it returned correct elements', async () => {
-    await page.typeInput('doorBoard-building-input', 'White House, 112');
+    await page.typeInput('doorBoard-building-input', 'White House');
     page.getDoorBoardListItems().each(e => {
       expect(e.element(by.className('doorBoard-list-building-officeNumber')).getText()).toEqual('White House, 112');
     });
@@ -31,7 +31,7 @@ describe('DoorBoard list', () => {
 
 
   it('Should type something partial in the building filter and check that it returned correct elements', async () => {
-    //   await page.typeInput('doorBoard-building-input', 'House');
+    await page.typeInput('doorBoard-building-input', 'House');
 
     // Go through each of the cards that are being shown and get the buildings
     const buildings = await page.getDoorBoardListItems().map
