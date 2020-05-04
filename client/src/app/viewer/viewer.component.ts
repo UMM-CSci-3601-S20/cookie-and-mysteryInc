@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 import { map } from 'rxjs/operators';
 
 import { MatRadioChange } from '@angular/material/radio';
-import {TextFieldModule} from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 
 @Component({
@@ -26,15 +26,17 @@ export class ViewerComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
   enabled: boolean;
-
+  public isPinned: boolean;
   constructor(private doorBoardService: DoorBoardService, private noteService: NoteService,
-              private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
+    private route: ActivatedRoute, private sanitizer: DomSanitizer, private auth: AuthService) { }
 
 
 
   public notes: Note[];
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
+  public isExpiredNotes: Note[];
+  public pinnedNotes: Note[];
   public GcalURL: SafeResourceUrl;
 
   doorBoard: DoorBoard;
@@ -63,25 +65,37 @@ export class ViewerComponent implements OnInit, OnDestroy {
   public getNotesFromServer(): void {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
-      this.id,{
-        status: this.noteStatus,
-        body: this.noteBody
-      }).subscribe(returnedNotes => {
-        this.serverFilteredNotes = returnedNotes;
-        this.updateFilter();
-      }, err => {
-        console.log(err);
-      });
+      this.id, {
+      status: this.noteStatus,
+      body: this.noteBody
+    }).subscribe(returnedNotes => {
+      this.serverFilteredNotes = returnedNotes;
+      this.updateFilter();
+    }, err => {
+      console.log(err);
+    });
   }
 
   public updateFilter(): void {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate
+        isExpired: true,
+        isPinned: false
       });
-}
+    this.isExpiredNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isPinned: false,
+        isExpired: false
+      });
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isExpired: true
+      });
+  }
+
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar
@@ -107,9 +121,15 @@ export class ViewerComponent implements OnInit, OnDestroy {
     return this.doorBoard.email;
   }
 
+  public getGcal(): string {
+    let gmailUrl = this.getEmail().replace(/@/g, '%40');
+    gmailUrl = 'https://calendar.google.com/calendar/embed?mode=WEEK&showPrint=0&src=' + gmailUrl;
+    return gmailUrl;
+  }
+
   public getSub(): string {
-    if (this.doorBoard){
-    return this.doorBoard.sub;
+    if (this.doorBoard) {
+      return this.doorBoard.sub;
     } else {
       return null;
     }
@@ -158,11 +178,11 @@ export class ViewerComponent implements OnInit, OnDestroy {
       if (this.getDoorBoardSub) {
         this.getDoorBoardSub.unsubscribe();
       }
-      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
-      this.doorBoard = doorBoard;
-      this.createGmailConnection(this.doorBoard.email);
+      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe(async (doorBoard: DoorBoard) => {
+        this.doorBoard = doorBoard;
+        this.createGmailConnection(this.doorBoard.email);
+      });
     });
-  });
   }
 
 

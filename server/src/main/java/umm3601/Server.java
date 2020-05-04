@@ -64,10 +64,19 @@ public class Server {
     // List notes, filtered using query parameters
     server.get("api/notes", noteController::getNotesByDoorBoard);
 
-    //get a single note
+    server.get("api/notes/favorite", noteController::getFavoriteNotes);
+
+    // Get a single note
     server.get("api/notes/:id", noteController::getNoteByID);
 
+    // favoriting a note
+    server.post("api/notes/:id/favorite", noteController::favoriteNote);
 
+    // unfavoriting a note
+    server.post("api/notes/:id/unfavorite", noteController::unfavoriteNote);
+
+    // Changing the value of the boolean isExpired on a specific note
+    server.post("api/notes/:id/changeIsExpiredField", noteController::changeIsExpiredField);
 
     // Delete specific note
     server.delete("api/notes/:id", noteController::deleteNote);
@@ -78,6 +87,12 @@ public class Server {
     // Edit a note
     //server.patch("api/notes/edit/:id", noteController::editNote);
     server.post("api/notes/edit/:id", noteController::editNote);
+
+    // Pin a note
+    server.post("api/notes/pin/:id", noteController::pinNote);
+
+    // Repost a note
+    server.post("api/notes/repost/:id", noteController::repostNote);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);

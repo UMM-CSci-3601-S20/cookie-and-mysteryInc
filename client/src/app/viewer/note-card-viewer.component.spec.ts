@@ -46,7 +46,10 @@ describe('NoteCardComponent', () => {
     body: 'Filler text',
     addDate: new Date(),
     expiration:  '2099-04-17T04:18:09.302Z',
-    status : 'active'
+    status : 'active',
+    favorite: false,
+    isExpired: false,
+    isPinned: true,
   };
   beforeEach(() => {
     TestBed.configureTestingModule({

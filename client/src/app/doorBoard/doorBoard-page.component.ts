@@ -1,5 +1,4 @@
-
-import { Note, NoteStatus } from '../notes/note';
+import { Note, NoteStatus, SaveNote } from '../notes/note';
 import { OnInit, Component, OnDestroy, Input, NgModule } from '@angular/core';
 import { DoorBoardService } from './doorBoard.service';
 import { DoorBoard } from './doorBoard';
@@ -9,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
@@ -26,9 +26,11 @@ import { async } from '@angular/core/testing';
 })
 
 export class DoorBoardPageComponent implements OnInit, OnDestroy {
+  thisUrl = location.href;
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
+  @Input() note: SaveNote;
   validUser = true;
   finishInit = false;
   enabled: boolean;
@@ -40,16 +42,20 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public notes: Note[];
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
+  public isExpiredNotes: Note[];
+  public pinnedNotes: Note[];
   public GcalURL: SafeResourceUrl;
   doorBoard: DoorBoard;
   id: string;
-
+  public href: string;
   getNotesSub: Subscription;
   getDoorBoardSub: Subscription;
 
   public noteStatus: NoteStatus = 'active';
   public noteAddDate: Date;
   public noteExpireDate: Date;
+  public favorite: boolean;
+  public isPinned: boolean;
   public noteBody: string;
   public getCurrentSub: Subscription;
 
@@ -62,14 +68,8 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   href: string;
 
   generateQRCode() {
-    if (this.qrcodename === '') {
-      this.display = false;
-      alert('Please enter a url');
-      return;
-    } else {
-      this.value = this.qrcodename + '/viewer';
-      this.display = true;
-    }
+    this.value = this.thisUrl + '/viewer';
+    this.display = true;
   }
   
   downloadImage() {
@@ -94,10 +94,21 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     this.filteredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
-        addDate: this.noteAddDate,
-        expireDate: this.noteExpireDate
+        isPinned: false,
+        isExpired: true
       });
-}
+    this.isExpiredNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isExpired: false,
+        isPinned: false
+      });
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isPinned: true
+      });
+  }
 
   public createGmailConnection(doorBoardEmail: string): void {
     let gmailUrl = doorBoardEmail.replace(/@/g, '%40'); // Convert doorBoard e-mail to acceptable format for connection to gCalendar
@@ -121,6 +132,12 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   }
   public getEmail(): string {
     return this.doorBoard.email;
+  }
+
+  public getGcal(): string {
+    let gmailUrl = this.getEmail().replace(/@/g, '%40');
+    gmailUrl = 'https://calendar.google.com/calendar/embed?mode=WEEK&showPrint=0&src=' + gmailUrl;
+    return gmailUrl;
   }
 
   public getSub(): string {

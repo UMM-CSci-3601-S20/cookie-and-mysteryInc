@@ -2,6 +2,9 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "cSpell.words": [
         "CSCI",
+        "maxlength",
+        "minlength",
+        "pmap",
         "sidenav",
         "todos"
     ]

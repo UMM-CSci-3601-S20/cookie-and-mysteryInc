@@ -1,7 +1,3 @@
-export interface Note extends NewNote {
-  _id: string;
-  addDate: Date;
-}
 
 /**
  * When we create a new note, not all of the fields exist yet. Some of
@@ -11,7 +7,19 @@ export interface NewNote {
   doorBoardID: string;
   body: string;
   expiration: string;
+  isPinned: boolean;
   status: NoteStatus;
+}
+
+export interface Note extends NewNote, SaveNote {
+  //favorite: boolean;
+  _id: string;
+  addDate: Date;
+}
+
+export interface SaveNote {
+  isExpired: boolean;
+  favorite: boolean;
 }
 
 export type NoteStatus = 'active' | 'template' | 'draft' | 'deleted';

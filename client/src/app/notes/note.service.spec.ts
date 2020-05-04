@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Note, NewNote } from './note';
+import { Note, NewNote, SaveNote } from './note';
 import { NoteService } from './note.service';
 
 describe('Note service: ', () => {
@@ -13,7 +13,10 @@ describe('Note service: ', () => {
       body: 'This is the body of the first test id. It is somewhat long.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'active'
+      status: 'active',
+      favorite: false,
+      isExpired: false,
+      isPinned: true ,
     },
     {
       _id: 'second_id',
@@ -21,7 +24,10 @@ describe('Note service: ', () => {
       body: 'This is the second test id.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'deleted'
+      status: 'deleted',
+      favorite: false,
+      isExpired: false,
+      isPinned: false ,
     },
     {
       _id: 'third_id',
@@ -29,7 +35,10 @@ describe('Note service: ', () => {
       body: 'Third test id body.',
       addDate: new Date(),
       expiration: '2025-03-06T22:03:38+0000',
-      status: 'template'
+      status: 'template',
+      favorite: false,
+      isExpired: false,
+      isPinned: true ,
     }
   ];
 
@@ -37,6 +46,7 @@ describe('Note service: ', () => {
       doorBoardID: 'test-id',
       body: 'Fourth body.',
       expiration: '2025-03-06T22:03:38+0000',
+      isPinned: true,
       status: 'active'
   };
 
@@ -118,4 +128,22 @@ describe('Note service: ', () => {
       req.flush({id: 'foo'});
     });
   });
+
+  describe('The pinNote method', () => {
+    it('calls /api/notes/pin/:id', () => {
+      noteService.pinNote(testNotes[0], 'first_id' ).subscribe(id => {
+        expect(id).toBe('first_id');
+      });
+      const req = httpTestingController.expectOne(request =>
+          request.url.startsWith(noteService.noteUrl + '/pin/first_id')
+        );
+
+      expect(req.request.method).toEqual('POST');
+
+      expect(req.request.body).toEqual(testNotes[0]);
+
+      req.flush({id: 'first_id'});
+    });
+ });
+
 });

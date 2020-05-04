@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockNoteService } from '../../testing/note.service.mock';
-import { Note } from './note';
+import { Note, SaveNote } from './note';
 import { NoteCardComponent } from './note-card.component';
 import { NoteService } from './note.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,7 +46,10 @@ describe('NoteCardComponent', () => {
     body: 'Filler text',
     addDate: new Date(),
     expiration:  '2099-04-17T04:18:09.302Z',
-    status : 'active'
+    status : 'active',
+    favorite: false,
+    isExpired: false,
+    isPinned: true,
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -75,6 +78,10 @@ describe('NoteCardComponent', () => {
 
   it('contains a expiration date \'2099-04-17T04:18:09.302Z\'', () => {
     expect(testNote.expiration === '2099-04-17T04:18:09.302Z').toBe(true);
+  });
+
+  it('test_id isPinned is true' , () => {
+    expect(testNote.isPinned === true ).toBe(true);
   });
 
 });

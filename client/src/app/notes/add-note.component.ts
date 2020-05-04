@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NewNote } from './note';
+import {Note, NewNote, SaveNote } from './note';
 import { NoteService } from './note.service';
 import { DoorBoardService } from '../doorBoard/doorBoard.service';
 import { DoorBoard } from '../doorBoard/doorBoard';
@@ -48,6 +48,7 @@ export class AddNoteComponent implements OnInit {
   building: string;
   officeNumber: string;
   status: string;
+  favorite: boolean;
 
   min: Date; // Earliest allowed date to be selected
   max: Date; // lasted date allowed to be selected
@@ -96,8 +97,10 @@ export class AddNoteComponent implements OnInit {
 
   submitForm() {
     // Body.value = '';
-    const noteToAdd: NewNote = this.addNoteForm.value;
+    const noteToAdd: Note = this.addNoteForm.value;
     noteToAdd.status = 'active';
+    noteToAdd.favorite = false;
+    noteToAdd.isExpired = false;
     const currentDate = new Date();
     const newDate = new Date(currentDate.setHours(currentDate.getHours() + 5)); // open to change to what is needed
 
@@ -113,6 +116,7 @@ export class AddNoteComponent implements OnInit {
     console.log(this.doorBoard_id);
     noteToAdd.doorBoardID = this.doorBoard_id;
     noteToAdd.expiration = this.selectedTime;
+    noteToAdd.isPinned = false;
     console.log("New note =" + JSON.stringify(noteToAdd));
     this.noteService.addNewNote(noteToAdd).subscribe(newID => {
       // Notify the DoorBoard component that a note has been added.

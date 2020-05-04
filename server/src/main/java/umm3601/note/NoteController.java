@@ -7,6 +7,7 @@ import static com.mongodb.client.model.Filters.regex;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -101,6 +102,7 @@ public class NoteController {
    * @param ctx a Javalin HTTP context
    */
 
+
   public void deleteNote(Context ctx) {
     String id = ctx.pathParam("id");
 
@@ -133,14 +135,19 @@ public class NoteController {
     for(int i = 0; i < notes.size(); i++){ // running through each index of the array
       if(notes.get(i).expiration != null){ // making sure the expiration date exists
       long testExpire = Instant.parse(notes.get(i).expiration).toEpochMilli();
+      boolean favorite = notes.get(i).favorite;
       currentDateTime = Instant.now().toEpochMilli();
 
       if(checkIfExpired(testExpire) ) {
         String removeID = notes.get(i)._id;
-        noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
+        if(checkIfFavorite(favorite)){
+          noteCollection.findOneAndUpdate(eq("_id", new ObjectId(removeID)), set("isExpired", true));
+        } else {
+          noteCollection.deleteOne(eq("_id",new ObjectId(removeID)));
         }
       }
     }
+  }
   }
 
   public void getNoteByID(Context ctx) {
@@ -165,6 +172,13 @@ public class NoteController {
     if(currentDateTime >= expiredDate) {
       return true;
     }}
+    return false;
+  }
+
+  private boolean checkIfFavorite(boolean favorite) {
+    if(favorite == true) {
+      return true;
+    }
     return false;
   }
 
@@ -196,7 +210,54 @@ public class NoteController {
       filters.add(eq("status", ctx.queryParam("status")));
     }
 
+
+
     String sortBy = ctx.queryParam("sortBy", "status"); //Sort by query param, default being `status`
+    String sortOrder = ctx.queryParam("sortorder", "asc");
+
+    ctx.json(noteCollection.find(filters.isEmpty() ? new Document() : and(filters))
+      .sort(sortOrder.equals("desc") ?  Sorts.descending(sortBy) : Sorts.ascending(sortBy))
+      .into(new ArrayList<>()));
+  }
+
+  public void getFavoriteNotes(Context ctx) {
+    //checkCredentialsForGetNotesRequest(ctx);
+
+    // If we've gotten this far without throwing an exception,
+    // the client has the proper credentials to make the get request.
+
+
+    List<Bson> filters = new ArrayList<Bson>(); // start with a blank JSON document
+    if (ctx.queryParamMap().containsKey("favorite")) {
+      Boolean favorite = Boolean.parseBoolean(ctx.queryParam("favorite"));
+      System.out.println(favorite);
+      if ( favorite == true ){
+        filters.add(eq("favorite", favorite));
+      }
+    }
+    // if (ctx.queryParamMap().containsKey("doorBoardID")) {
+    //   String targetDoorBoardID = ctx.queryParam("doorBoardID");
+    //   System.out.println(targetDoorBoardID);
+    //   filters.add(eq("doorBoardID", targetDoorBoardID));
+    //   List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
+    //   // from a specific owner id
+    //   filterExpiredNotes(notes); // filtering out and deleting expired notes
+    // }
+    // if (ctx.queryParamMap().containsKey("body")) {
+    //   filters.add(regex("body", ctx.queryParam("body"), "i"));
+    // }
+    // if (ctx.queryParamMap().containsKey("status")) {
+    //   filters.add(eq("status", ctx.queryParam("status")));
+    // }
+    // if (ctx.queryParamMap().containsKey("favorite")) {
+    //   Boolean favorite = Boolean.parseBoolean(ctx.queryParam("favorite"));
+    //   System.out.println(favorite);
+    //   if ( favorite == true ){
+    //     filters.add(eq("favorite", ctx.queryParam("favorite")));
+    //   }
+    // }
+
+    String sortBy = ctx.queryParam("sortBy", "favorite"); //Sort by query param, default being `status`
     String sortOrder = ctx.queryParam("sortorder", "asc");
 
     ctx.json(noteCollection.find(filters.isEmpty() ? new Document() : and(filters))
@@ -261,6 +322,7 @@ public class NoteController {
       .check((note) -> note.doorBoardID != null) // The doorBoardID shouldn't be present; you can't choose who you're posting the note as.
       .check((note) -> note.body != null && note.body.length() > 1) // Make sure the body is not empty -- consider using StringUtils.isBlank to also get all-whitespace notes?
       .check((note) -> note.status.matches("^(active|draft|deleted|template)$")) // Status should be one of these
+      .check((note)-> note.isPinned == false || note.isPinned == true)
       .get();
       System.out.println("We validated good");
 
@@ -296,6 +358,57 @@ public class NoteController {
 
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newNote._id));
+  }
+
+  /**
+   * favorite an existing note
+   * @param ctx
+   */
+  public void favoriteNote(Context ctx) {
+    String id = ctx.pathParamMap().get("id");
+
+    // Note newNote = ctx.bodyValidator(Note.class)
+    // .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    //Boolean newFavorite = newNote.favorite;
+
+    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("favorite", true));
+
+    if (oldNote == null) {
+      ctx.status(400);
+      throw new NotFoundResponse("The requested note was not found");
+    } else {
+      ctx.status(200);
+      ctx.json(ImmutableMap.of("id", id));
+    }
+  }
+
+  public void unfavoriteNote(Context ctx) {
+    String id = ctx.pathParamMap().get("id");
+
+    // Note newNote = ctx.bodyValidator(Note.class)
+    // .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    // //Boolean newFavorite = newNote.favorite;
+
+    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("favorite", false));
+
+    if (oldNote == null) {
+      ctx.status(400);
+      throw new NotFoundResponse("The requested note was not found");
+    } else {
+      ctx.status(200);
+      ctx.json(ImmutableMap.of("id", id));
+    }
+  }
+
+  /**
+   * Change isExpired Boolean value to true
+   */
+  public void changeIsExpiredField(Context ctx){
+    String id = ctx.pathParamMap().get("id");
+    System.out.println("Got to Note Controller");
+    //noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", false));
+    noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isExpired", true));
+    boolean confirmIsExpired = "isExpired" != null;
   }
 
   /**
@@ -342,6 +455,50 @@ public class NoteController {
       ctx.status(200);
       ctx.json(ImmutableMap.of("id", id));
     }
+  }
+
+  public void repostNote(Context ctx) {
+    String id = ctx.pathParamMap().get("id");
+
+    Note newNote= ctx.bodyValidator(Note.class)
+    .check((note) -> note.body.length() >= 2 && note.body.length() <= 300).get();
+    String newBody = newNote.body;
+    String newExpirationDate = newNote.expiration;
+
+    Note oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("body", newBody));
+    noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isExpired", false));
+    System.out.println("OLD EXPIRE: " + oldNote.expiration);
+    oldNote = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", newExpirationDate));
+    System.out.println("NEW EXPIRE: " + oldNote.expiration);
+    if (oldNote == null) {
+      ctx.status(400);
+      throw new NotFoundResponse("The requested note was not found");
+    } else {
+      ctx.status(200);
+      ctx.json(ImmutableMap.of("id", id));
+    }
+  }
+
+  public void pinNote(Context ctx){
+    String id = ctx.pathParamMap().get("id");
+    Note noteToChange = ctx.bodyValidator(Note.class).get();
+    if(!noteToChange.isPinned){// if the isPinned is specifically not true then we will make it true to pin it
+      System.out.println(noteToChange.expiration);
+      noteToChange.isPinned = true;
+      noteToChange.expiration = null;
+      System.out.println(noteToChange.expiration);
+    }
+    else if(noteToChange.isPinned){
+      noteToChange.isPinned = false;
+      //Date newDate = new Date();
+      //Date otherDate = new Date(newDate.setHours(newDate.getHours() + 5));
+      //Date newDate = Instant.now().toEpochMilli() + 19000000;
+      //noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", newDate));
+      //System.out.println(newDate);
+    }
+     Note noteChanged = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", noteToChange.isPinned));
+    ctx.status(200);
+    ctx.json(ImmutableMap.of("id", id));
   }
 
     /**

@@ -11,6 +11,8 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './auth/interceptor.service';
+import { FavoriteComponent } from './favorite/favorite.component';
+import { RepostNoteComponent } from './favorite/repost.component';
 
 
 const routes: Routes = [
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path: 'notes/edit/:id', component: EditNoteComponent, canActivate: [AuthGuard]},
   {path: 'your-doorBoard', component: DoorBoardComponent, canActivate: [AuthGuard]},
   {path: 'doorBoards/:id/viewer', component: ViewerComponent},
+  {path: 'doorBoards/:id/favorite', component: FavoriteComponent},
+  {path: 'notes/repost/:id', component: RepostNoteComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

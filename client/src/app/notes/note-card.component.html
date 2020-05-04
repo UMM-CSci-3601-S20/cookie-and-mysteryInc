@@ -1,12 +1,25 @@
 
     <!--Each message is its own mat-card-->
     <mat-card class="note-card" *ngIf="this.note">
+
+      <mat-card-actions>
+      <span *ngIf="confirmPinnedIcon">
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmPinnedIcon=false">
+      <mat-icon>bookmark</mat-icon>
+      </button>
+      </span>
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmPinnedIcon=true">
+      <mat-icon>bookmark_border</mat-icon>
+      </button>
+
+      </mat-card-actions>
       <mat-card-content id="noteCardTimestamp" align="end">
       <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
       </mat-card-content>
 
       <mat-card-content>
         {{ this.note.body}}
+
       </mat-card-content>
 
 
@@ -17,7 +30,21 @@
         <button mat-button class="note-action edit" matTooltip="Edit Note" matTooltipPosition="above" [routerLink]="'/notes/' + 'edit/' + note._id ">
           <mat-icon aria-label="Edit note">create</mat-icon>
         </button>
-        <button mat-button class="deleteBtn" matTooltip="Delete Note" (click)="deleteNoteFromServer()" mdbWave2sEffect onclick="history.go(0)"> <mat-icon>delete</mat-icon> </button>
+        <button mat-button class = "note-action not-favorite" (click)="favoriteNote()" onclick="history.go(0)" *ngIf="!confirmFavoriteIcon" (click)="confirmIcon=true" matTooltip = "Favorite Note">
+          <mat-icon aria-label = "favorite note" >star_border</mat-icon>
+        </button>
+        <span *ngIf="confirmFavoriteIcon">
+        <button mat-button class="note-action favorite" (click)="unfavoriteNote()" onclick="history.go(0)" (click)="confirmIcon=false" matTooltip = "Unfavorite note">
+          <mat-icon aria-label="unFavorite note" [ngStyle]="{'color':'yellow'}">star</mat-icon>
+        </button>
+        </span>
+        <button mat-button class="deleteBtn" matTooltip="Delete note" (click)="deleteNoteFromServer()" onclick="history.go(0)"  *ngIf="!confirmFavoriteIcon" mdbWave2sEffect>
+          <mat-icon>delete</mat-icon> </button>
+        <span *ngIf="confirmFavoriteIcon">
+        <button mat-button class="deleteBtn" matTooltip="Remove favorited note" (click)="changeIsExpiredField()" onclick="history.go(0)" (click)="this.confirmIsExpired = true" mdbWave2sEffect>
+          <mat-icon [ngStyle]="{'color':'red'}"> highlight_off</mat-icon>
+        </button>
+        </span>
       </p>
     </mat-card-actions>
     </mat-card>
