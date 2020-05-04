@@ -21,10 +21,10 @@ white-space: pre-wrap;
 
 .add-button-container {
 align-content: center;
-margin-left: 11em;
+margin-left: 7em;
 margin-right: -50px;
+margin-top: 70px;
 position: relative;
-
 }
 
 .qrCode {
@@ -32,23 +32,20 @@ position: relative;
 
   }
 
-// .add-note-button {
-//   padding-left: 30em;
+.add-note-button {
+  margin: 5px;
+}
 
-// }
+.viewer-page-button {
+  margin: 5px;
+}
 
-// .viewer-page-button {
-//   padding-left: 30em;
-
-// }
-
-// .favorite-button {
-//   margin-top: 10px;
-
-// }
+.favorite-button {
+  margin: 5px;
+}
 
 .return-button {
-  margin-top: 10px;
+  margin: 5px;
 
 }
 
@@ -94,7 +91,9 @@ button {
   text-align: center;
   margin:auto;
   color: white;
-  background-color: rgb(0, 67, 95);
+  background-color: #1764c1;
+
+  //background-color: rgb(0, 33, 223);
   //margin-top: 10px;
 }
 
@@ -104,7 +103,8 @@ button {
 
 a {
   // padding: 10px;
-  background-color: rgb(0, 67, 95);
+  background-color: #1764c1;
+  //background-color: rgb(0, 33, 223);
   // margin-top: 10px;
   text-decoration: none;
   color: white;

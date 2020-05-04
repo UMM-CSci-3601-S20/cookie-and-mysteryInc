@@ -1,6 +1,7 @@
 <!-- example from
 https://github.com/AngularTemplates/angular-forms-and-validations/blob/master/src/app/form-component/form.component.html
 is potentially helpful and contributed to the shaping of this example -->
+
 <div *ngIf="auth.userProfile$ | async as profile">
 
 <div fxLayout="row">
@@ -48,7 +49,7 @@ is potentially helpful and contributed to the shaping of this example -->
           </mat-form-field>
 
           <mat-form-field >
-            <mat-label>Edit Email</mat-label>
+            <mat-label>Email</mat-label>
             <input matInput #input id="emailField" placeholder="Email"
                   formControlName="email"  [(ngModel)]= "profile.email" readonly required>
             <mat-error *ngFor="let validation of add_doorBoard_validation_messages.email">
@@ -68,6 +69,10 @@ is potentially helpful and contributed to the shaping of this example -->
                   [disabled]="!addDoorBoardForm.valid" type="submit">
                   SUBMIT
           </button>
+          <button mat-button id="confirmAddNoteButton" type="button" color="primary"
+            onclick="history.back()">
+                      CANCEL
+              </button>
         </mat-card-actions>
     </mat-card>
   </form>

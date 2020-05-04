@@ -5,11 +5,11 @@
       <mat-card-actions>
       <span *ngIf="confirmPinnedIcon">
       <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmPinnedIcon=false">
-      <mat-icon>turned_in</mat-icon>
+      <mat-icon [ngStyle]="{'color':'green'}">pin_drop</mat-icon>
       </button>
       </span>
       <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmPinnedIcon=true">
-      <mat-icon >turned_in_not</mat-icon>
+      <mat-icon >place</mat-icon>
       </button>
 
       </mat-card-actions>
