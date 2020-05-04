@@ -83,15 +83,16 @@ export class ViewerComponent implements OnInit, OnDestroy {
         isExpired: true,
         isPinned: false
       });
-    this.pinnedNotes = this.noteService.filterNotes(
-      this.serverFilteredNotes,
-      {
-        isPinned: true
-      });
     this.isExpiredNotes = this.noteService.filterNotes(
       this.serverFilteredNotes,
       {
+        isPinned: false,
         isExpired: false
+      });
+    this.pinnedNotes = this.noteService.filterNotes(
+      this.serverFilteredNotes,
+      {
+        isExpired: true
       });
   }
 

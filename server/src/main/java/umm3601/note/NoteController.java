@@ -7,6 +7,7 @@ import static com.mongodb.client.model.Filters.regex;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -405,6 +406,7 @@ public class NoteController {
   public void changeIsExpiredField(Context ctx){
     String id = ctx.pathParamMap().get("id");
     System.out.println("Got to Note Controller");
+    //noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", false));
     noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isExpired", true));
     boolean confirmIsExpired = "isExpired" != null;
   }
@@ -459,10 +461,18 @@ public class NoteController {
     String id = ctx.pathParamMap().get("id");
     Note noteToChange = ctx.bodyValidator(Note.class).get();
     if(!noteToChange.isPinned){// if the isPinned is specifically not true then we will make it true to pin it
+      System.out.println(noteToChange.expiration);
       noteToChange.isPinned = true;
+      noteToChange.expiration = null;
+      System.out.println(noteToChange.expiration);
     }
     else if(noteToChange.isPinned){
       noteToChange.isPinned = false;
+      //Date newDate = new Date();
+      //Date otherDate = new Date(newDate.setHours(newDate.getHours() + 5));
+      //Date newDate = Instant.now().toEpochMilli() + 19000000;
+      //noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", newDate));
+      //System.out.println(newDate);
     }
      Note noteChanged = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", noteToChange.isPinned));
     ctx.status(200);
