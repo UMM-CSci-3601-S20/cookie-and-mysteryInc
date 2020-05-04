@@ -6,67 +6,63 @@
 .page {
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
-grid-template-rows: .25fr .05fr 1fr 1fr;
+grid-template-rows: .15fr .025fr .25fr .25fr;
 // flex-wrap: wrap;
 }
 
 .top-row-container {
 grid-area: 1/1/2/4;
-background-color: orange;
+margin-bottom: 2.5em;
 }
 
 .add-button-container {
   grid-area: 2/1/3/4;
-  margin-bottom: 5em;
-  // align-content: center;
-  // margin-left: 10em;
-  // margin-top: 30px;
-  // position: relative;
+  margin-bottom: 2.5em;
   }
-// .all-note-container {
-// grid-area: 2/1/3/3;
-// }
+
+.all-note-container {
+grid-area: 3/1/4/4;
+display: inline-grid;
+}
+
+#pinnedNoteTextTitle{
+  text-align: center;
+}
+
+#notesTextTitle{
+  text-align: center;
+}
 
 .note-pinned-container {
-grid-area: 3/1/4/4;
-background-color: red;
-margin-bottom: 5em;
-}
-
-.note-unpinned-container {
-  grid-area: 4/1/5/4;
-  background-color: blue;
-}
-.dropDown {
-background-color: red;
-align-content: left;
+//grid-area: 3/1/4/4;
+margin-bottom: 2.5em;
 }
 
 .note-card {
 margin: 0.5rem;
 max-width: 20rem;
 white-space: pre-wrap;
+box-shadow: 0 0px 8px 5px rgba(241, 64, 188, 0.884), 0 0px 10px 5px rgba(241, 64, 188, 0.884);
 }
 
 .qrCode {
   margin-left: 5em;
-
   }
 
 .add-note-button {
-  margin-left: 5px;
+  margin: 5px;
 }
 
 .viewer-page-button {
-  margin-left: 5px;
+  margin: 5px;
 }
 
 .favorite-button {
-  margin-left: 5px;
+  margin: 5px;
 }
 
 .return-button {
-  margin-left: 5px;
+  margin: 5px;
 
 }
 
@@ -108,14 +104,9 @@ white-space: pre-wrap;
 }
 
 button {
-  //padding: 10px;
   text-align: center;
-  // margin:auto;
   color: white;
   background-color: #1764c1;
-
-  //background-color: rgb(0, 33, 223);
-  //margin-top: 10px;
 }
 
 .info-fab {
@@ -123,19 +114,10 @@ button {
 }
 
 a {
-  // padding: 10px;
   background-color: #1764c1;
-  //background-color: rgb(0, 33, 223);
-  // margin-top: 10px;
   text-decoration: none;
   color: white;
 }
-
-// .note-card-container {
-//   display: flex;
-//   flex-direction: column;
-//   //flex-wrap: wrap;
-// }
 
 @media screen and (max-width: 550px) {
 }

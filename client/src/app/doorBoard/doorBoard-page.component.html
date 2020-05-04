@@ -50,7 +50,7 @@
 
           <!--Pinned Notes-->
          <div class="all-note-container">
-          <div class="pinnedNoteText"><h2>Pinned Notes</h2></div>
+          <div class="pinnedNoteText" id="pinnedNoteTextTitle"><h2>Pinned Notes</h2></div>
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-pinned-container" >
             <app-note-card simple="true" *ngFor="let note of this.pinnedNotes"   class="note-card" [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned"  fxFlex="1 1 280px"></app-note-card>
           </div>
@@ -59,7 +59,7 @@
 
 
           <!--Notes-->
-          <h2>Unpinned Notes</h2>
+          <div class="notesText" id="notesTextTitle"> <h2>Notes</h2></div>
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-unpinned-container" >
             <app-note-card simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card"
             [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned"fxFlex="1 1 280px"></app-note-card>

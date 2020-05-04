@@ -24,14 +24,14 @@
   </div>
 
  <!--Pinned Notes-->
+ <div class="pinnedNoteText"><h2>Pinned Notes</h2></div>
  <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
-  <h2>Pinned Notes</h2>
   <app-note-card-viewer simple="true" *ngFor="let note of this.pinnedNotes"   class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
 </div>
 
 <!--Notes-->
+<h2>Notes</h2>
 <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
-  <h2>Other Notes</h2>
   <app-note-card-viewer simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card" [note]="note" fxFlex="1 1 280px"></app-note-card-viewer>
 </div>
 
