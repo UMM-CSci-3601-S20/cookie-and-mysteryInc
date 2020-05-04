@@ -27,7 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 // Home
-import { HomeComponent } from './home/home.component';
+//import { HomeComponent } from './home/home.component';
 
 // DoorBoard
 import { DoorBoardListComponent } from './doorBoard/doorBoard-list.component';
@@ -91,7 +91,7 @@ const MATERIAL_MODULES: any[] = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    //HomeComponent,
     DoorBoardListComponent,
     AddDoorBoardComponent,
     DoorBoardPageComponent,
