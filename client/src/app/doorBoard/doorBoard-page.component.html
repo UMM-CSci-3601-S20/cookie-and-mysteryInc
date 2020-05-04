@@ -2,18 +2,39 @@
   <div fxLayout="row" class="top-row-container">
 
     <div class="dropdown">
-      <button mat-raised-button class="info-button" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
+      <button mat-raised-button class="info-button" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" *ngIf="this.doorBoard"class="dropbtn">
         <h1>{{getName()}}'s DoorBoard</h1>
       </button>
 
       <div *ngIf="!confirmDropDown" class="dropdown-content">
       <br>
       <div>
-        <h3> Email: {{getEmail()}} </h3>
-        <h3> Office: {{getBuilding()}} {{getOfficeNumber()}}</h3>
-        <a href="{{getGcal()}}">{{getName()}}'s Google Calendar</a>
+        <h3><mat-icon>mail_outline</mat-icon> {{getEmail()}} </h3>
+        <h3><mat-icon>apartment</mat-icon> Office: {{getBuilding()}} {{getOfficeNumber()}}</h3>
+        <div><mat-icon>event_note</mat-icon>
+        <a mat-raised-button id="gCal" href="{{getGcal()}}" onclick="window.open(this.href,'_blank');return false;">View {{getName()}}'s Google Calendar</a>
       </div>
+    </div>
       </div>
+    </div>
+
+    <div fxLayout="row wrap" class="add-button-container">
+      <!--This is where we add our new notes. The DoorBoard ID is automatically set for each new note to match the id of the DoorBoard-->
+      <button mat-raised-button class="add-note-button" matTooltip="Add Note" matTooltipPosition="below"
+        routerLink="/doorBoard/{{this.id}}/notes/new">Add New Note
+      </button>
+
+      <button mat-raised-button class="viewer-page-button" matTooltip="Viewer Page" matTooltipPosition="below"
+        routerLink="/doorBoards/{{this.id}}/viewer">Viewer Page
+      </button>
+
+      <button mat-raised-button class="favorite-button" matTooltip="View Favorited Notes" matTooltipPosition="below"
+        routerLink="/doorBoards/{{this.id}}/favorite">Favorite Notes
+      </button>
+
+      <button mat-raised-button class="return-button" routerLink="/doorBoards" matTooltip="Return to List of Owners" matTooltipPosition="below">
+        Return to List of Owners
+      </button>
     </div>
 
     <div class="qrCode" style="text-align:center">
@@ -26,40 +47,23 @@
     <router-outlet></router-outlet>
   </div>
 
-  <div fxLayout="row wrap" class="add-button-container">
-    <!--This is where we add our new notes. The DoorBoard ID is automatically set for each new note to match the id of the DoorBoard-->
-    <button mat-raised-button class="add-note-button" matTooltip="Add Note" matTooltipPosition="below"
-      routerLink="/doorBoard/{{this.id}}/notes/new">Add New Note
-    </button>
-
-    <button mat-raised-button class="viewer-page-button" matTooltip="Viewer Page" matTooltipPosition="below"
-      routerLink="/doorBoards/{{this.id}}/viewer">Viewer Page
-    </button>
-
-    <button mat-raised-button class="favorite-button" matTooltip="View Favorited Notes" matTooltipPosition="below"
-      routerLink="/doorBoards/{{this.id}}/favorite">Favorite Notes
-    </button>
-
-    <button mat-raised-button class="return-button" routerLink="/doorBoards" matTooltip="Return to List of Owners" matTooltipPosition="below">
-      Return to List of Owners
-    </button>
-  </div>
-    <!--Pinned Notes-->
-          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
-            <p>Pinned Notes</p>
+          <!--Pinned Notes-->
+         <div class="all-note-container">
+          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-pinned-container" >
+            <h2>Pinned Notes</h2>
             <app-note-card simple="true" *ngFor="let note of this.pinnedNotes"   class="note-card" [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned"  fxFlex="1 1 280px"></app-note-card>
           </div>
-<!-- pinned notes should have a null expiration -->
+          <!-- pinned notes should have a null expiration -->
 
 
 
-    <!--Notes-->
-          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container" >
-            <p>Unpinned Notes</p>
+          <!--Notes-->
+          <div fxLayout="row wrap" fxLayoutGap="30px" class="note-container" >
+            <h2>Unpinned Notes</h2>
             <app-note-card simple="true" *ngFor="let note of this.isExpiredNotes" class="note-card"
             [note]="note" [confirmFavoriteIcon]="note.favorite" [confirmPinnedIcon]="note.isPinned"fxFlex="1 1 280px"></app-note-card>
           </div>
-
+         </div>
 
 
 

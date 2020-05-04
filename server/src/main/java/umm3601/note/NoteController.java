@@ -131,7 +131,6 @@ public class NoteController {
 
 
   private void filterExpiredNotes(List<Note> notes) {
-    System.out.println("Filtering out expired notes!!!!!");
     for(int i = 0; i < notes.size(); i++){ // running through each index of the array
       if(notes.get(i).expiration != null){ // making sure the expiration date exists
       long testExpire = Instant.parse(notes.get(i).expiration).toEpochMilli();
@@ -197,7 +196,6 @@ public class NoteController {
     List<Bson> filters = new ArrayList<Bson>(); // start with a blank JSON document
     if (ctx.queryParamMap().containsKey("doorBoardID")) {
       String targetDoorBoardID = ctx.queryParam("doorBoardID");
-      System.out.println(targetDoorBoardID);
       filters.add(eq("doorBoardID", targetDoorBoardID));
       List<Note> notes = noteCollection.find(and(filters)).into(new ArrayList<>()); // creating an Array List of notes from database
       // from a specific owner id
@@ -406,7 +404,7 @@ public class NoteController {
   public void changeIsExpiredField(Context ctx){
     String id = ctx.pathParamMap().get("id");
     System.out.println("Got to Note Controller");
-    //noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", false));
+    noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", false));
     noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isExpired", true));
     boolean confirmIsExpired = "isExpired" != null;
   }
@@ -483,13 +481,16 @@ public class NoteController {
     String id = ctx.pathParamMap().get("id");
     Note noteToChange = ctx.bodyValidator(Note.class).get();
     if(!noteToChange.isPinned){// if the isPinned is specifically not true then we will make it true to pin it
-      System.out.println(noteToChange.expiration);
       noteToChange.isPinned = true;
       noteToChange.expiration = null;
-      System.out.println(noteToChange.expiration);
     }
     else if(noteToChange.isPinned){
+      System.out.println("PINN WAS FALSE AND CALLED!!");
       noteToChange.isPinned = false;
+      Instant timeToMessWith = Instant.now();
+      timeToMessWith = Instant.ofEpochMilli(Instant.now().toEpochMilli() + 18000000);
+      System.out.println("NEW TIME = " + timeToMessWith.toString());
+      noteToChange.expiration = timeToMessWith.toString();
       //Date newDate = new Date();
       //Date otherDate = new Date(newDate.setHours(newDate.getHours() + 5));
       //Date newDate = Instant.now().toEpochMilli() + 19000000;
@@ -497,6 +498,8 @@ public class NoteController {
       //System.out.println(newDate);
     }
      Note noteChanged = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("isPinned", noteToChange.isPinned));
+     noteChanged = noteCollection.findOneAndUpdate(eq("_id", new ObjectId(id)), set("expiration", noteToChange.expiration));
+
     ctx.status(200);
     ctx.json(ImmutableMap.of("id", id));
   }

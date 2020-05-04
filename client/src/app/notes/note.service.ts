@@ -21,7 +21,7 @@ export class NoteService {
    * @returns a list of the notes belonging to this doorBoard, filtered by body and status
    *
    */
-  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string , status?: NoteStatus}): Observable<Note[]> {
+  getNotesByDoorBoard(doorBoardID: string, filters?: { body?: string , status?: NoteStatus, isExpired?: boolean }): Observable<Note[]> {
     let httpParams: HttpParams = new HttpParams();
     httpParams = httpParams.set('doorBoardID', doorBoardID);  // Ensure we are getting notes belonging to this doorBoard
     if (filters) {
@@ -66,7 +66,7 @@ export class NoteService {
       });
     }
 
-    if (filters.isPinned === false && filters.isExpired === false) {
+    if ( filters.isExpired === false && filters.isPinned === false) {
         console.log('expired notes');
 
         filteredNotes = filteredNotes.filter(note => {
@@ -74,6 +74,23 @@ export class NoteService {
       });
     }
 
+  //   if ( filters.favorite === true && filters.isPinned === true) {
+  //     console.log('expired notes');
+
+  //     filteredNotes = filteredNotes.filter(note => {
+  //     return note.isPinned === filters.isPinned;
+  //   });
+  // }
+
+// removing a note works with this filter
+    if ( filters.isExpired === false) {
+      console.log('expired notes');
+
+      filteredNotes = filteredNotes.filter(note => {
+      return note.isExpired === filters.isExpired;
+    });
+  }
+// gives us pinned notes on the owner page
     if (filters.isPinned === true) {
     filteredNotes = filteredNotes.filter(note => {
         return note.isPinned === filters.isPinned;

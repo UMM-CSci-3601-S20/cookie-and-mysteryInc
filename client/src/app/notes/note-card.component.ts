@@ -64,6 +64,11 @@ export class NoteCardComponent implements OnInit, OnDestroy {
     console.log(this.note.isExpired);
   }
   pinNote(): void {
+    const currentDate = new Date();
+    const newDate = new Date(currentDate.setHours(currentDate.getHours() + 5)); // open to change to what is needed
+    if(this.note.isPinned){
+      this.note.expiration = newDate.toJSON();
+    }
     this.noteService.pinNote(this.note, this.note._id).subscribe(result => {
       console.log('Note pin changed');
     }, err => {

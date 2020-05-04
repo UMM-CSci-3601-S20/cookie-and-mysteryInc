@@ -5,11 +5,11 @@
       <mat-card-actions>
       <span *ngIf="confirmPinnedIcon">
       <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmPinnedIcon=false">
-      <mat-icon>bookmark</mat-icon>
+      <mat-icon>turned_in</mat-icon>
       </button>
       </span>
       <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmPinnedIcon=true">
-      <mat-icon>bookmark_border</mat-icon>
+      <mat-icon >turned_in_not</mat-icon>
       </button>
 
       </mat-card-actions>
@@ -19,7 +19,6 @@
 
       <mat-card-content>
         {{ this.note.body}}
-
       </mat-card-content>
 
 

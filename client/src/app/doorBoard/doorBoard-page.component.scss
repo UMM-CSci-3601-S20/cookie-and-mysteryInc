@@ -9,7 +9,8 @@
 }
 
 .page {
-display: flex;
+display: grid;
+grid-gap: 3em;
 flex-wrap: wrap;
 }
 
@@ -131,4 +132,8 @@ a {
   width: 2px;
   height: auto;
   display: inline-block;
+}
+
+@media screen and (max-width: 550px) {
+
 }
