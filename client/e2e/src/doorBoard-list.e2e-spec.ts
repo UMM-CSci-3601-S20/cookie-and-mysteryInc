@@ -1,5 +1,5 @@
-import {DoorBoardPage} from './doorBoard-list.po';
-import {browser, protractor, by, element} from 'protractor';
+import { DoorBoardPage } from './doorBoard-list.po';
+import { browser, protractor, by, element } from 'protractor';
 
 describe('DoorBoard list', () => {
   let page: DoorBoardPage;
@@ -30,11 +30,12 @@ describe('DoorBoard list', () => {
 
 
 
-  // it('Should type something partial in the company filter and check that it returned correct elements', async () => {
-  //   await page.typeInput('doorBoard-building-input', 'House');
+  it('Should type something partial in the building filter and check that it returned correct elements', async () => {
+    //   await page.typeInput('doorBoard-building-input', 'House');
 
     // Go through each of the cards that are being shown and get the buildings
-    const buildings = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-building-officeNumber')).getText());
+    const buildings = await page.getDoorBoardListItems().map
+      (e => e.element(by.className('doorBoard-list-building-officeNumber')).getText());
 
     // We should see these buildings
     expect(buildings).toContain('White House, 112');
@@ -44,7 +45,8 @@ describe('DoorBoard list', () => {
 
   // it('Should click on a doorBoard and go to the correct URL', async () => {
   //   const doorBoardOneName = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-name')).getText());
-  //   const doorBoardOneBuilding = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-building')).getText());
+  //   const doorBoardOneBuilding = await page.getDoorBoardListItems().map
+    //    (e => e.element(by.className('doorBoard-list-building')).getText());
 
   //   await page.clickViewDoorBoard();
 
