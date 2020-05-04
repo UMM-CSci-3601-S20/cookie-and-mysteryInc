@@ -12,6 +12,9 @@ import { map } from 'rxjs/operators';
 
 import { MatRadioChange } from '@angular/material/radio';
 import {TextFieldModule} from '@angular/cdk/text-field';
+import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { async } from '@angular/core/testing';
+// import { threadId } from 'worker_threads';
 
 
 
@@ -26,6 +29,8 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-input-rename
   @Input('cdkTextareaAutosize')
+  validUser = true;
+  finishInit = false;
   enabled: boolean;
   confirmDropDown = true;
   confirmQRDropDown = true;
@@ -36,7 +41,6 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public serverFilteredNotes: Note[];
   public filteredNotes: Note[];
   public GcalURL: SafeResourceUrl;
-
   doorBoard: DoorBoard;
   id: string;
 
@@ -48,9 +52,8 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public noteExpireDate: Date;
   public noteBody: string;
   public getCurrentSub: Subscription;
-  public currentSub: string = 'invalid';
 
-  qrcodename : string;
+  qrcodename: string;
   title = 'generate-qrcode';
   elementType: 'url' | 'canvas' | 'img' = 'url';
   url: string;
@@ -68,7 +71,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
       this.display = true;
     }
   }
-
+  
   downloadImage() {
     this.href = document.getElementsByTagName('img')[0].src;
   }
@@ -76,7 +79,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   public getNotesFromServer(): void {
     this.unsub();
     this.getNotesSub = this.noteService.getNotesByDoorBoard(
-      this.id,{
+      this.id, {
         status: this.noteStatus,
         body: this.noteBody
       }).subscribe(returnedNotes => {
@@ -121,7 +124,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   }
 
   public getSub(): string {
-    if (this.doorBoard){
+    if (this.doorBoard) {
     return this.doorBoard.sub;
     } else {
       return null;
@@ -131,11 +134,14 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
 
   public getLoginSub(): Observable<string> {
+    console.log('called get LOGINSUB');
     const currentSub = this.auth.userProfile$.pipe(
       map(profile => {
         if (profile) {
+          console.log('Login = ' + JSON.stringify(profile.sub).replace(/['"]+/g, ''));
           return JSON.stringify(profile.sub).replace(/['"]+/g, '');
         } else {
+          console.log('This was null');
           return null;
         }
       })
@@ -144,9 +150,11 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   }
 
 
-  public compareSubs(): Observable<boolean> {
-    return this.getLoginSub().pipe(map(val => val !== null && this.doorBoard !== null && val === this.getSub()));
+  public compareSubs(doorboardSubString: string): Observable<boolean> {
+    console.log('doorboardSubString = ' + doorboardSubString);
+    return  this.getLoginSub().pipe(map((val =>  (val !== null && doorboardSubString !== null  && val === doorboardSubString))));
   }
+
 
 
   radioChange($event: MatRadioChange) {
@@ -168,22 +176,44 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe doorBoard's notes
+    let doorboardSub: string;
+    this.unsub();
     this.route.paramMap.subscribe((pmap) => {
       this.id = pmap.get('id');
+
       if (this.getNotesSub) {
         this.getNotesSub.unsubscribe();
       }
-      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe( notes => this.notes = notes);
+      this.getNotesSub = this.noteService.getNotesByDoorBoard(this.id).subscribe(  notes => this.notes = notes);
       this.getNotesFromServer();
       if (this.getDoorBoardSub) {
         this.getDoorBoardSub.unsubscribe();
       }
-      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe( async (doorBoard: DoorBoard) => {
+      this.getDoorBoardSub = this.doorBoardService.getDoorBoardById(this.id).subscribe(  async (doorBoard: DoorBoard) => {
       this.doorBoard = doorBoard;
+      doorboardSub = this.doorBoard.sub;
       console.log(this.doorBoard.email);
       this.createGmailConnection(this.doorBoard.email);
-    });
+//
+//       let attempt = 0;
+//       this.compareSubs(this.doorBoard.sub).subscribe( (authVal: boolean) => {
+//         attempt++;
+//         console.log('got to 206 + attempt:' + attempt);
+//         let result: boolean;
+//         console.log(authVal);
+//         result = authVal;
+//         if (result) {
+//      console.log('I think you are on to something');
+//      this.validUser = true;
+//  } else  {
+//    console.log('You are not logged in to this page');
+//    this.validUser = false;
+//   }
+//       });
   });
+
+
+    });
   }
 
   ngOnDestroy(): void {
@@ -193,6 +223,7 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
     if (this.getDoorBoardSub) {
       this.getDoorBoardSub.unsubscribe();
     }
+
   }
 
   unsub(): void {

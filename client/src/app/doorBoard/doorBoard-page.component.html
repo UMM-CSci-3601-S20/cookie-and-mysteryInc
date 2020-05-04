@@ -5,6 +5,7 @@
       <button mat-raised-button class="info-button" matTooltip="DoorBoard Info" matTooltipPosition="left" (click)="toggleDropDown()" class="dropbtn">
         <h1>{{getName()}}'s DoorBoard</h1>
       </button>
+
       <div *ngIf="!confirmDropDown" class="dropdown-content">
       <br>
       <div>
@@ -51,5 +52,6 @@
         scrolling="auto"></iframe>
     </div>
   </div>
+
 </div>
 
