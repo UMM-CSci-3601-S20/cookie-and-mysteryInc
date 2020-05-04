@@ -65,13 +65,13 @@ export class DoorBoardPageComponent implements OnInit, OnDestroy {
   url: string;
   value: string;
   display: boolean;
-  href: string;
+  //href: string;
 
   generateQRCode() {
     this.value = this.thisUrl + '/viewer';
     this.display = true;
   }
-  
+
   downloadImage() {
     this.href = document.getElementsByTagName('img')[0].src;
   }
