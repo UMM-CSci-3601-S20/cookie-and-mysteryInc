@@ -77,7 +77,7 @@ export class AddNoteComponent implements OnInit {
       body: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(1),
-        Validators.maxLength(1000),
+        Validators.maxLength(300),
       ])),
       expiration: new FormControl('', Validators.compose([
       ])),

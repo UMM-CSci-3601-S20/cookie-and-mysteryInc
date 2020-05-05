@@ -1,11 +1,9 @@
-.doorBoard-card-title {
-  margin: 3px;
-  text-size-adjust: 0.75rem;
-  line-height: 0.7rem;
+
+.top-row-container {
+ grid-area: 1/1/2/4;
 }
 
 .return-button {
-  //margin: 1em;
   color: white;
   background-color: #1764C1;
 }
@@ -15,111 +13,26 @@
 }
 
 .page {
-display: flex;
-flex-wrap: wrap;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: .25fr 1fr ;
 }
 
-.top-row-container {
-//background-color: orange;
-}
-
-.dropDown {
-background-color: red;
-align-content: left;
-}
-
-.doorBoard-title {
-text-align: center;
-margin-left: 10em;
-}
-
-.qrCode {
-margin-left: 50em;
-
+.note-cards-container{
+display: inline-grid;
+grid-area: 2/1/3/4
 }
 
 .note-card {
-margin: 0.5rem;
-max-width: 20rem;
-white-space: pre-wrap;
-}
-
-// .fxLayout{
-// justify-content: center;
-// }
-
-.add-button-container {
-align-content: center;
-margin: 1em;
-
-}
-
-// .gcal-embed iframe {
-  //   width: max-content;
-  //   min-width: 30rem;
-  //   max-width: 60rem;
-  // }
-
-  .gcal-grid-container {
-    display: grid;
-    margin: 5rem;
-  }
-
-  .gcal-embed {
-    min-width: 478px;
-    width: 100%;
-    }
-
-    .gcal-embed iframe {
-    min-width: 478px;
-    position: absolute;
-    width: 55%;
-    height: 100%;
-    }
-
-
-.grid-container {
-  display: grid;
   margin: 0.5rem;
-}
-
-.note-card {
-  // margin: 0.5rem;
-  // max-width: 20rem;
-  // white-space: pre-wrap;
+  max-width: 20rem;
+  white-space: pre-wrap;
   display: flex;
   flex-direction: row;
 }
 
-// controls the list of notes
-// .fxLayout{
-//   justify-content: center;
-// }
-
-
-.note-list-add-date {
-  font-size: smallest;
-}
-
-button {
-  //padding: 10px;
-  background-color: skyblue;
-  //margin-top: 10px;
-}
 a {
   padding: 10px;
-  //background-color: skyblue;
   margin-top: 10px;
   text-decoration: none;
 }
-
-.note-card-container {
-  display: flex;
-  flex-direction: column;
-  //flex-wrap: wrap;
-}
-
-// .note-card {
-//   display: flex;
-//   flex-direction: column;
-// }

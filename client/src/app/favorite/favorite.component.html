@@ -1,9 +1,9 @@
 
 <div class="page">
   <div fxLayout="row" class="top-row-container">
-
+  <div class="top-row-container">
     <div class="doorboard-title">
-      <h1>Your Saved Notes</h1>
+      <h1>Your Favorite Notes</h1>
     </div>
 
   <div fxLayout="row wrap" class="add-button-container">
@@ -12,17 +12,11 @@
       routerLink="/doorBoards/{{this.id}}"> Return to Your DoorBoard
     </button>
   </div>
-
+</div>
 
     <!--Notes-->
           <div fxLayout="row wrap" fxLayoutGap="30px" class="note-cards-container">
-
           <app-note-card-favorite simple="true" *ngFor="let note of this.favoritedNotes" class="note-card" [note]="note" [confirmIsExpired]="note.isExpired"fxFlex="1 1 280px"></app-note-card-favorite>
           </div>
-
-
-
-
-
 </div>
 

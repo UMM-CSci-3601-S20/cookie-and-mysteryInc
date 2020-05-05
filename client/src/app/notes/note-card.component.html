@@ -4,17 +4,17 @@
 
       <mat-card-actions>
       <span *ngIf="confirmPinnedIcon">
-      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmPinnedIcon=false">
-      <mat-icon [ngStyle]="{'color':'green'}">pin_drop</mat-icon>
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" (click)="confirmPinnedIcon=false" matTooltip = "Unpin Note" matTooltipPosition="above">
+      <mat-icon [ngStyle]="{'color':'#1764C1'}">pin_drop</mat-icon>
       </button>
       </span>
-      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmPinnedIcon=true">
+      <button class="pinBtn"(click)="pinNote()" onclick="history.go(0)" *ngIf="!confirmPinnedIcon" (click)="confirmPinnedIcon=true"  matTooltip = "Pin Note" matTooltipPosition="above">
       <mat-icon >place</mat-icon>
       </button>
 
       </mat-card-actions>
       <mat-card-content id="noteCardTimestamp" align="end">
-      <p matLine class="note-list-add-date">Created on {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
+      <p class="note-list-add-date">Created {{note.addDate | date:'MMM d'}} at {{note.addDate | date:'h:mm aa'}}</p>
       </mat-card-content>
 
       <mat-card-content>
@@ -26,21 +26,21 @@
 
     <mat-card-actions align="start">
       <p>
-        <button mat-button class="note-action edit" matTooltip="Edit Note" matTooltipPosition="above" [routerLink]="'/notes/' + 'edit/' + note._id ">
+        <button mat-button class="note-action edit" matTooltip="Edit Note"  [routerLink]="'/notes/' + 'edit/' + note._id ">
           <mat-icon aria-label="Edit note">create</mat-icon>
         </button>
         <button mat-button class = "note-action not-favorite" (click)="favoriteNote()" onclick="history.go(0)" *ngIf="!confirmFavoriteIcon" (click)="confirmIcon=true" matTooltip = "Favorite Note">
           <mat-icon aria-label = "favorite note" >star_border</mat-icon>
         </button>
         <span *ngIf="confirmFavoriteIcon">
-        <button mat-button class="note-action favorite" (click)="unfavoriteNote()" onclick="history.go(0)" (click)="confirmIcon=false" matTooltip = "Unfavorite note">
+        <button mat-button class="note-action favorite" (click)="unfavoriteNote()" onclick="history.go(0)" (click)="confirmIcon=false" matTooltip = "Unfavorite Note">
           <mat-icon aria-label="unFavorite note" [ngStyle]="{'color':'yellow'}">star</mat-icon>
         </button>
         </span>
-        <button mat-button class="deleteBtn" matTooltip="Delete note" (click)="deleteNoteFromServer()" onclick="history.go(0)"  *ngIf="!confirmFavoriteIcon" mdbWave2sEffect>
+        <button mat-button class="deleteBtn" matTooltip="Delete Note" (click)="deleteNoteFromServer()" onclick="history.go(0)"  *ngIf="!confirmFavoriteIcon" mdbWave2sEffect>
           <mat-icon>delete</mat-icon> </button>
         <span *ngIf="confirmFavoriteIcon">
-        <button mat-button class="deleteBtn" matTooltip="Remove favorited note" (click)="changeIsExpiredField()" onclick="history.go(0)" (click)="this.confirmIsExpired = true" mdbWave2sEffect>
+        <button mat-button class="deleteBtn" matTooltip="Remove Favorited Note" (click)="changeIsExpiredField()" onclick="history.go(0)" (click)="this.confirmIsExpired = true" mdbWave2sEffect>
           <mat-icon [ngStyle]="{'color':'red'}"> highlight_off</mat-icon>
         </button>
         </span>
