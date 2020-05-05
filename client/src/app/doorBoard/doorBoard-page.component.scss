@@ -6,7 +6,7 @@
 .page {
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
-grid-template-rows: .15fr .025fr .25fr .25fr;
+grid-template-rows: .10fr .025fr .25fr .25fr;
 // flex-wrap: wrap;
 }
 
@@ -42,7 +42,6 @@ margin-bottom: 2.5em;
 margin: 0.5rem;
 max-width: 20rem;
 white-space: pre-wrap;
-box-shadow: 0 0px 8px 5px rgba(241, 64, 188, 0.884), 0 0px 10px 5px rgba(241, 64, 188, 0.884);
 }
 
 .qrCode {

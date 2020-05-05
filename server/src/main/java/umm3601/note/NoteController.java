@@ -479,6 +479,11 @@ public class NoteController {
 
   public void pinNote(Context ctx){
     String id = ctx.pathParamMap().get("id");
+    // DoorBoard doorBoard;
+    // String currentUserSub = jwtProcessor.verifyJwtFromHeader(ctx).getSubject();
+    // if (!doorBoard.sub.equals(currentUserSub)) {
+    //   throw new ForbiddenResponse("You can only pin and unpin notes to your own DoorBoard.");
+    // }
     Note noteToChange = ctx.bodyValidator(Note.class).get();
     if(!noteToChange.isPinned){// if the isPinned is specifically not true then we will make it true to pin it
       noteToChange.isPinned = true;
