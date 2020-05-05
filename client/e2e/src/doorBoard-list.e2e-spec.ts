@@ -5,11 +5,15 @@ describe('DoorBoard list', () => {
   let page: DoorBoardPage;
   const EC = protractor.ExpectedConditions;
 
+  let originalTimeout;
   beforeEach(() => {
     page = new DoorBoardPage();
     page.navigateTo();
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
   });
-
+  afterEach(function() {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+  });
   it('Should have the correct title', () => {
     expect(page.getDoorBoardTitle()).toEqual('Search DoorBoards');
   });
