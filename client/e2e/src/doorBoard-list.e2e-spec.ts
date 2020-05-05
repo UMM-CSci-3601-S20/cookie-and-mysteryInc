@@ -43,18 +43,23 @@ describe('DoorBoard list', () => {
   });
 
 
-  // it('Should click on a doorBoard and go to the correct URL', async () => {
-  //   const doorBoardOneName = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-name')).getText());
-  //   const doorBoardOneBuilding = await page.getDoorBoardListItems().map
-    //    (e => e.element(by.className('doorBoard-list-building')).getText());
+  /*it('Should click on a doorBoard and go to the correct URL', async () => {
+    const doorBoardOneName = await page.getDoorBoardListItems().map(e => e.element(by.className('doorBoard-list-name')).getText());
+    const doorBoardOneBuilding = await page.getDoorBoardListItems().map
+       (e => e.element(by.className('doorBoard-list-building-officeNumber')).getText());
 
-  //   await page.clickViewDoorBoard();
+    await page.clickViewDoorBoard();
 
-  //   // Wait until the URL contains 'doorBoards/' (note the ending slash)
-  //   await browser.wait(EC.urlContains('doorBoards/'), 10000);
+    // Wait until the URL contains 'doorBoards/' (note the ending slash)
+    await browser.wait(EC.urlContains('doorBoards/'), 10000);
 
-  //   // When the view profile button on the first doorBoard card is clicked, the URL should have a valid mongo ID
-  //   const url = await page.getUrl();
-  //   expect(RegExp('.*\/doorBoards\/[0-9a-fA-F]{24}$', 'i').test(url)).toBe(true);
-  // });
+    // When the view profile button on the first doorBoard card is clicked, the URL should have a valid mongo ID
+    const url = await page.getUrl();
+
+    expect(url.includes('doorBoards/')).toBe(true);
+    expect(url.includes('/viewer')).toBe(true);
+
+
+
+  });*/
 });
