@@ -1,4 +1,4 @@
-# How to Deploy DoorBoard Using Digital Ocean
+# How to Deploy DoorBoard Using DigitalOcean
 
 ## Summary
 
