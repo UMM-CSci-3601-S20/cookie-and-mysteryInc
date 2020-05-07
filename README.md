@@ -18,6 +18,7 @@ DoorBoard allows unique owners through an authentication process. Once authentic
 
 ## Documentation
 [How to Deploy DoorBoard Using Digital Ocean](DEPLOYMENT.md) 
+[Brochure](brochure.pdf)
 
 ## Testing and Continuous Integration
 DoorBoard uses Jasmine and Karma for unit testing through the Angular CLI. TravisCI is configured to run these tests. 
