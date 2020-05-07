@@ -17,7 +17,7 @@ DoorBoard allows unique owners through an authentication process. Once authentic
 - Time Stamps) View when a note was posted
 
 ## Documentation
-- [How to Deploy DoorBoard Using Digital Ocean](DEPLOYMENT.md) 
+- [How to Deploy DoorBoard Using DigitalOcean](DEPLOYMENT.md) 
 - [Brochure](brochure.pdf)
 
 ## Testing and Continuous Integration
