@@ -17,9 +17,10 @@ DoorBoard allows unique owners through an authentication process. Once authentic
 - Time Stamps) View when a note was posted.
 
 ## Documentation
+- [Auth0.md](Auth0.md) (Start development here)
 - [How to Deploy DoorBoard Using DigitalOcean](DEPLOYMENT.md) 
 - [Brochure](brochure.pdf)
-- [Auth0.md](Auth0.md)
+
 
 ## Testing and Continuous Integration
 DoorBoard uses Jasmine and Karma for unit testing through the Angular CLI. TravisCI is configured to run these tests. 
