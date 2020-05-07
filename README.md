@@ -16,7 +16,7 @@ DoorBoard allows unique owners through an authentication process. Once authentic
 - QR Code) Owners can generate and download a QR code linking to a page displaying their notes.
 - Time Stamps) View when a note was posted.
 
-## Documentation
+## Documentation/Deployment
 - [Auth0.md](Auth0.md) (Start development here)
 - [How to Deploy DoorBoard Using DigitalOcean](DEPLOYMENT.md) 
 - [Brochure](brochure.pdf)
