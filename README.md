@@ -1,11 +1,3 @@
-## Table of Contents
-- What is DoorBoard?
-- How can DoorBoard be Used?
-- Features
-- Documentation
-- Testing and Continuous Integration
-- Browswer Support
-- Authors
 
 ## What is DoorBoard?
 DoorBoard is an announcement app that can display changes in someone’s schedule along with other messages. It was created as a convenient way for professors to communicate with students if they were not at their office. DoorBoard is an alternate solution to sticky notes on an office door allowing greater flexibility via remote posts from owners. 
