@@ -4,18 +4,14 @@
 
 This document is, essentially, a short guide to setting up a "droplet" on [DigitalOcean](https://www.digitalocean.com)
 to be used as a tool for deploying simple web applications. This is by no means a
-comprehensive guide, and you are encouraged to reach out to classmates, faculty, and
-TAs (through Slack, for example) with questions.
-
-The majority of the information here will be presented in the form of bulleted lists,
-because we all know none of us actually read walls of text.
+comprehensive guide.
 
 Most of this will happen in a terminal window, which is yet another reason to take
 some time to learn how to use the Unix shell.
 
 ### Some terminology:
 
-You're going to see the word "droplet" used a lot here. Digital ocean is in the
+You're going to see the word "droplet" used a lot here. DigitalOcean is in the
 business of hosting Virtual Private Servers (VPS), which they have decided to call
 "droplets." The term isn't terribly important, and for the most part just refers
 specifically to the VPSs hosted by DigitalOcean and all the features which that
@@ -49,7 +45,6 @@ One for the Java server, one for hosting the client files, and one for the datab
 - Finally, only make one droplet and choose a name for it.
 - It will take a couple seconds to make the droplet.
 - You will then be able to see it on your [Droplets](https://cloud.digitalocean.com/droplets) page and get the IP for it.
-
 
 ## Step 3: Setting up your droplet and running your project
 - SSH to your droplet by running ``ssh root@[my ip here]`` (using the IP of your droplet) and enter the password emailed to you.
