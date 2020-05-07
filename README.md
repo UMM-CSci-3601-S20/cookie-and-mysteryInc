@@ -5,7 +5,7 @@ DoorBoard is an announcement app that can display changes in someone’s schedul
 ## How can DoorBoard be Used?
 DoorBoard can be used by faculty and staff as a way to post last minute scheduling announcements or other information remotely and conveniently to visitors. DoorBoard’s capabilities can create specific messages online with a QR code which can be quickly scanned by viewers, sending the viewer to the owner’s DoorBoard URL to view their messages. 
 
-DoorBoard allows unique owners through an authentication process. Once authenticated an owner can set expiration dates and tailor their messages according to their needs. DoorBoard invites owners to also save favorite notes, and have the ability to pin specific notes for convenience.
+DoorBoard allows unique owners through an authentication process. Once authenticated an owner can set expiration dates and tailor their messages according to their needs. DoorBoard invites owners to also save notes, and have the ability to pin specific notes for convenience.
 
 ## Features
 - Authentication) DoorBoard utilizes the service Auth0. It ensures that you’re the only one altering your DoorBoard page.
