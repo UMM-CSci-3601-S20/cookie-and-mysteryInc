@@ -35,3 +35,20 @@ DoorBoard works great in Google Chrome. It doesn't work as well with Microsoft E
 
 ## Authors
 DoorBoard was built by a team of students for a software design class at the University of Minnesota Morris. See the GitHub contributors page.
+
+## Built With 
+
+DoorBoard is powered by:
+- Angular
+- Angular Material
+- Authentication
+
+Other libraries used:
+- ngx-qrcode2
+
+Tools:
+- Angular CLI
+- TypeScript
+- Karma
+- Jasmine
+
